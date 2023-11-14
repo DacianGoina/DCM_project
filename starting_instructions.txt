@@ -1,0 +1,17 @@
+Here are some basic information for the project. 
+
+1. The aim of the project is to build a machine learning model able to classify the type of a document given as input. The user should be able to pass the document through a web client interface and to receive the response - type of the document, e.g historical document, political document, scientific document etc. The model will be deployed using a model as a service type tool, e.g BentoML. The connection of the web client with the service (BentoML instance) will be done most probably using HTTP architecture (with REST API)
+
+2. The pdf file with project description provided from classroom is added into this repository.
+
+3. For the beginning we'll use a dataset from kaggle for constructing the model (data preprocessing, training, testing, evaluation etc): https://www.kaggle.com/datasets/jensenbaxter/10dataset-text-document-classification - this a quite small dataset (1000 documents), but it is balanced: 100 documents per category. Depending on the time availability we'll search for a bigger dataset or we'll construct another one ourselves. The data from the dataset presented above will be uploaded into the repository, into the directory called "data"
+
+4. In the first stages of the work we'll use a python notebook tool (Jupyter) and then we'll move the results to concrete .py files. The notebook will be also included into the repository
+
+5. For project management we'll use Jira or Github issues (to be discussed).
+
+
+Short-period TO-DO:
+1. create a basic visual schema for the proposed solution application architecture
+
+2. implement python functions to preprocess a text (for the beginning only the raw text, then we'll include methods to parse files - e.g text files etc, but is import to have the preprocessing flow in order because at the end the model will use text, it won't care about the source - as a black box )
