@@ -5,3 +5,6 @@ Document classification model deployed through a Machine Learning Operations ser
 ## **Team members:**
 - Anamaria Bica
 - Dacian Goina
+
+
+Jira: https://dcm-fmi-uvt.atlassian.net
