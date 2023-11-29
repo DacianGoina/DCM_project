@@ -2,6 +2,9 @@ import os
 import pandas as pd
 
 # IO functions
+
+# IN: str file path
+# OUT: dict with file content
 def read_txt_file(file_path):
     '''
     Return the content from the file from the given path. We assume the first line is the document title and the
@@ -17,9 +20,21 @@ def read_txt_file(file_path):
         result['content'] = file_obj.read()
     return result
 
+# IN: directory str path
+# OUT: pandas dataframe with 3 cols: title, content, type
+# the given directory have the structure:
+#   main_directory
+#       subdirectory_category1
+#           file
+#           file
+#           ...
+#       subdirectory_category2
+#       subdirectory_category3
+#       ...
 def read_raw_data(main_directory_path):
-    " read all files from all directories from the given path;  return a pandas df with 3 columns: document title, content and type (label) "
-    df = pd.DataFrame(columns=['title','content','type'])
+    " read all files from all directories from the given path;"
+    # return a pandas df with 3 columns: document title, content and type (label) "
+    df = pd.DataFrame(columns=['file_path','title','content','type'])
     directories = os.listdir(main_directory_path)
 
     new_files_contents = []
@@ -31,7 +46,7 @@ def read_raw_data(main_directory_path):
             file_path = directory_path + "\\" + file
             file_content = read_txt_file(file_path)
 
-            whole_file_content_as_dict = pd.DataFrame({'title':file_content['title'], 'content':file_content['content'], 'type':directory}, index = [0])
+            whole_file_content_as_dict = pd.DataFrame({'file_path':file_path,'title':file_content['title'], 'content':file_content['content'], 'type':directory}, index = [0])
             new_files_contents.append(whole_file_content_as_dict)
 
     df = pd.concat([df] + new_files_contents, ignore_index=True)
