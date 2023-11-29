@@ -11,7 +11,12 @@ import re
 # IN: str
 # OUT: True, False: numeric (e.g 45, 4.5) or NOT
 def is_str_numeric(s):
+    infinity_const = 'infinity'
+
     try:
+        if infinity_const in s.lower():
+            return False
+
         # try converting to float
         float_value = float(s)
         return True
@@ -251,6 +256,12 @@ def str_symbol_to_spoken_words(tokens):
     return new_tokens
 
 # IN: list of str tokens
+# OUT: list of str token
+def remove_str_tokens_len_less_than_threshold(tokens, threshold_value):
+    tokens = [token for token in tokens if len(token)>= threshold_value]
+    return tokens
+
+# IN: list of str tokens
 # OUT: list of spacy tokens
 def str_tokens_to_spacy_tokens(tokens, nlp_model):
     # convert string tokens back into spacy entities
@@ -265,3 +276,8 @@ def spacy_tokens_to_str_tokens(tokens):
     # convert tokens from spacy entity to built-in string
     tokens = [token.text for token in tokens]
     return tokens
+
+# IN: list of str tokens
+# OUT: str
+def str_tokens_to_str(tokens):
+    return ' '.join(tokens)
