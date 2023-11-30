@@ -1,16 +1,12 @@
 # dummy text classification
 from text_preprocessing_utilities import *
 from io_utilities import *
-import spacy
+from model_utilities import *
 
+import spacy
 import pandas as pd
-from sklearn.feature_extraction.text import CountVectorizer,TfidfVectorizer
-from sklearn.base import TransformerMixin
-from sklearn.pipeline import Pipeline
-from sklearn.model_selection import train_test_split
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score
+
+
 
 def custom_tokenizer(raw_text, nlp_model):
 
@@ -75,74 +71,15 @@ def process_df(df, nlp_model):
     data = pd.concat([data] + data_rows, ignore_index=True)
     return data
 
-# IN: df with content and label col
-# OUT: X_train, test, Y_train, test
-def split_model_data(X = None, y = None, test_size_value = 0.25, random_state_val = 0):
-    # X = data['content']
-    # y = data['label']
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size_value, random_state=random_state_val)
-    return X_train, X_test, y_train, y_test
 
-# prepare model data using bag of words strategy
-# IN: X data (as str containing tokens)
-# OUT: X data in bag of words vector format
-def prepare_model_data_bow(X):
-    cv = CountVectorizer()
-    X_cv = cv.fit_transform(X)
-    return X_cv
+
+
 
 # def prepare_model_data_bow(X_train, X_test):
 #     cv = CountVectorizer()
 #     X_train_cv = cv.fit_transform(X_train)
 #     X_test_cv = cv.fit_transform(X_test)
 #     return X_train_cv, X_test_cv
-
-# effectively training and testing of the data on a giving classifier
-def train_and_test_model(X_train, X_test, y_train, y_test, classifier):
-    classifier.fit(X_train, y_train)
-
-    print("X_train :",X_train.shape)
-    print("X_test :",X_test.shape)
-
-    y_pred = classifier.predict(X_test)
-
-    accuracy_value = accuracy_score(y_test, y_pred)
-    print("accuracy: ", accuracy_value)
-
-
-nlp_model = spacy.load("en_core_web_sm")
-
-# df = read_raw_data('../data')
-# data = process_df(df, nlp_model)
-# print(data)
-# data.to_csv('file_name.csv', index=False, encoding='utf-8')
-
-data = pd.read_csv('file_name.csv')
-data = data.dropna()
-print(data['content'])
-vectorized_text_data = prepare_model_data_bow(data['content'])
-print(vectorized_text_data.shape)
-
-X_train, X_test, y_train, y_test = split_model_data(X = vectorized_text_data, y = data['label'], test_size_value = 0.25, random_state_val = 0)
-
-# print(data.shape)
-# X_train, X_test, y_train, y_test = split_model_data(data, 0.25, 1)
-
-
-
-# here is a NaN value apparently
-# rows_with_nan = data[data.isna().any(axis=1)]
-# print(rows_with_nan)
-
-# X_train = prepare_model_data_bow(X_train)
-# X_test = prepare_model_data_bow(X_test)
-
-# X_train, X_test = prepare_model_data_bow(X_train, X_test)
-
-
-
-rf = RandomForestClassifier()
-train_and_test_model(X_train, X_test, y_train, y_test, rf)
 
 
 
