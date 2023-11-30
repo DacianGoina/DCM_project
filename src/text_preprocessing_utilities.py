@@ -5,6 +5,8 @@
 
 import spacy
 from num2words import num2words
+from validate_email_address import validate_email
+from dateutil import parser
 import re
 
 
@@ -27,6 +29,39 @@ def is_str_numeric(s):
             return True
         except ValueError:
             return False
+
+# IN: str
+# OUT: True, False depending if the input string represent a valid date or not
+def is_str_valid_date(val):
+    if len(val) < 10:
+        return False
+    try:
+        # try to parse
+        parser.parse(val)
+        return True
+    except ValueError:
+        return False
+
+# IN: str val
+# OUT: True, False is val represent a fraction, e.g 1/2, 11/33, 11/32
+def is_str_fraction(val):
+    pattern = re.compile("(?:^|\s)([0-9]+/[0-9]+)(?:\s|$)")
+    return bool(pattern.match(val))
+
+# def is_str_fraction(text):
+#     pattern = re.compile(r'\b\d+/\d+\b')
+#     fractions = re.findall(pattern, text)
+#     if len(fractions) == 1:
+#         return True
+#     return False
+
+
+# IN: str
+# OUT: list of str tokens
+# Extract only lowercase words from str (e.g 'one', 'house', without '-' or other characters)
+def get_lowercase_words_from_str(val):
+    words = re.findall('[a-z]+', val)
+    return words
 
 # IN: str
 # OUT: str
@@ -180,11 +215,10 @@ def str_years_to_spoken_words(tokens):
     new_tokens = []
 
     for token in tokens:
-        if token.isnumeric() and len(token) == 4:
+        if token.isnumeric() and len(token) == 4 and int(token) >= valid_year_min_value and int(token) <= valid_year_max_value:
             year = int(token)
-            if year >= valid_year_min_value and year <= valid_year_max_value:
-                year_as_words = num2words(year, to = 'year')
-                new_tokens.append(year_as_words)
+            year_as_words = num2words(year, to = 'year')
+            new_tokens.append(year_as_words)
         else:
             # just append it like this
             new_tokens.append(token)
@@ -194,7 +228,7 @@ def str_years_to_spoken_words(tokens):
 # IN: list of str tokens
 # OUT: list of str tokens
 def str_numeric_values_to_spoken_words(tokens):
-    # conver numerical values (eg. '54', '2.5') to spoken words
+    # convert numerical values (eg. '54', '2.5') to spoken words
     new_tokens = []
 
     for token in tokens:
@@ -242,7 +276,7 @@ def str_ordinal_numbers_to_spoken_words(tokens):
 
 # IN: list of str tokens
 # OUT: list of str tokens
-def str_symbol_to_spoken_words(tokens):
+def str_currency_to_spoken_words(tokens):
     new_tokens = []
 
     symbols = {'%':'percentage', '€':'euros', '$':'dollars', 'CHF':'swiss francs', 'USD':'dollars', 'EUR':'euros',
@@ -256,9 +290,64 @@ def str_symbol_to_spoken_words(tokens):
     return new_tokens
 
 # IN: list of str tokens
+# OUT: list of str tokens
+def str_remove_common_chars(tokens):
+    common_chars = ['\'', '"']
+    tokens =[token for token in tokens if token not in common_chars]
+    return tokens
+
+# IN: list of str tokens
 # OUT: list of str token
 def remove_str_tokens_len_less_than_threshold(tokens, threshold_value):
     tokens = [token for token in tokens if len(token)>= threshold_value]
+    return tokens
+
+# IN: list of str tokens
+# OUT: list of str tokens
+# OBS: this produce some chained tokens, e.g 'one-half' and not 'one' 'half'
+def str_fraction_to_spoken_words(tokens):
+    new_tokens = []
+
+    for token in tokens:
+        if is_str_fraction(token):
+            if token == '1/2':
+                value = 'one-half'
+                value_splited = get_lowercase_words_from_str(value)
+                new_tokens.extend(value_splited)
+            else:
+                if token == '2rcirc':
+                    print('da')
+
+                fraction_parts = token.split('/')
+                numerator = int(fraction_parts[0])
+                denominator = int(fraction_parts[1])
+
+                # convert to spoken words
+                numerator_as_words = num2words(numerator)
+                denominator_as_words = num2words(denominator, to = "ordinal")
+
+                # extract only words, without '-' and others
+                numerator_splited = get_lowercase_words_from_str(numerator_as_words)
+                denominator_splited= get_lowercase_words_from_str(denominator_as_words)
+
+                new_tokens.extend(numerator_splited)
+                new_tokens.extend(denominator_splited)
+        else:
+            new_tokens.append(token)
+
+    return new_tokens
+
+# IN: list of str tokens
+# OUT: list of str tokens
+# replace email addresses with '[EMAIL]' tag constant value
+def str_emails_to_email_tag(tokens):
+    email_tag = '[email]'
+    tokens = [token if validate_email(token) is False else email_tag for token in tokens ]
+    return tokens
+
+def str_dates_to_date_tag(tokens):
+    calendar_date_tag = '[c_date]' # calendar date
+    tokens = [token if is_str_valid_date(token) is False else calendar_date_tag for token in tokens]
     return tokens
 
 # IN: list of str tokens

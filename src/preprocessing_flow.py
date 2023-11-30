@@ -1,15 +1,12 @@
 # dummy text classification
 from text_preprocessing_utilities import *
 from io_utilities import *
-from model_utilities import *
 
 import spacy
 import pandas as pd
 
 
-
-def custom_tokenizer(raw_text, nlp_model):
-
+def custom_tokenizer(raw_text = None, nlp_model = None, consider_numbers_as_stopwords = True):
     # convert to lower case
     raw_text = to_lowercase(raw_text)
 
@@ -25,6 +22,25 @@ def custom_tokenizer(raw_text, nlp_model):
     # remove junk extra spaces
     tokens = str_remove_junk_spaces(tokens)
 
+    # remove common chars
+    tokens = str_remove_common_chars(tokens)
+
+    # handle email addresses
+    tokens = str_emails_to_email_tag(tokens)
+
+    # handle calendaristic dates
+    tokens = str_dates_to_date_tag(tokens)
+
+    # remove stopwords before start preprocessing numbers
+    # in this way, we'll keep tokens like 'three', 'four'
+    # AND also keep some stopwords, e.g in '2004' -> 'two thousand and four' keep the end
+    if consider_numbers_as_stopwords == False:
+        tokens = str_tokens_to_spacy_tokens(tokens, nlp_model)
+        # remove stop words
+        tokens = remove_spacy_stopwords(tokens)
+
+        tokens = spacy_tokens_to_str_tokens(tokens)
+
     # handle years value - convert years into spoken words
     tokens = str_years_to_spoken_words(tokens)
 
@@ -34,11 +50,14 @@ def custom_tokenizer(raw_text, nlp_model):
     # convert the left numerical values (int, float) into spoken words
     tokens = str_numeric_values_to_spoken_words(tokens)
 
+    # convert fractions to spoken words
+    tokens = str_fraction_to_spoken_words(tokens)
+
     # replace other symbols as 'USD', '%', '€' etc
-    tokens = str_symbol_to_spoken_words(tokens)
+    tokens = str_currency_to_spoken_words(tokens)
 
     # remove tokens with length = 1
-    tokens = remove_str_tokens_len_less_than_threshold(tokens, 1)
+    tokens = remove_str_tokens_len_less_than_threshold(tokens, 2)
 
     # convert str tokens to spacy tokens
     tokens = str_tokens_to_spacy_tokens(tokens, nlp_model)
@@ -46,13 +65,12 @@ def custom_tokenizer(raw_text, nlp_model):
     # remove punctuations
     tokens = remove_spacy_punctuations(tokens)
 
-    # remove stop words
-    tokens = remove_spacy_stopwords(tokens)
+    if consider_numbers_as_stopwords == True:
+        tokens = remove_spacy_stopwords(tokens)
 
     # lemmatization
     tokens = lemmatize_spacy_tokens(tokens)
     # after this, the tokens are not longer spacy.tokens.token.Token, but built-in java string
-
 
     return tokens
 
@@ -72,20 +90,54 @@ def process_df(df, nlp_model):
     return data
 
 
-
-
-
-# def prepare_model_data_bow(X_train, X_test):
-#     cv = CountVectorizer()
-#     X_train_cv = cv.fit_transform(X_train)
-#     X_test_cv = cv.fit_transform(X_test)
-#     return X_train_cv, X_test_cv
-
-
-
-# path = 'C:\\Users\\Dacian\\Desktop\\MLO_DCM\\data\\space\\space_17.txt'
+# nlp_model = spacy.load("en_core_web_sm")
+# path = 'C:\\Users\\Dacian\\Desktop\\MLO_DCM\\data\\food\\food_14.txt'
 # data = read_txt_file(path)
-# custom_tokenizer(data['content'],nlp_model)
+# res = custom_tokenizer(data['content'],nlp_model, consider_numbers_as_stopwords=False)
+# print(res)
+
+
+
+
+# str1 = 'the 43/12  of the 7876/323  and hgfh67/dss'
+# print(num2words(323, to="ordinal"))
+# tokens = str1.split(' ')
+# tokens = str_fraction_to_spoken_words(tokens)
+# print(tokens)
+
+# import re
+# def dummy_f(val):
+#     return bool(re.search("\b\d+/\d+\b", val))
+
+# put space or beginning line and white space and line end
+
+# print(dummy_f('1/2Rcirc'))
+# print(dummy_f('5431/2aaa'))
+# print(dummy_f('1432/24'))
+# print(dummy_f(' a12/44g '))
+
+
+# print(is_str_fraction('93/04/01'))
+# print(is_str_fraction('1/2Rcirc'))
+# print(is_str_fraction('132/243423'))
+# print(is_str_fraction('fds1432/24fdsf'))
+# print(is_str_fraction(' a12/44g '))
+
+# inp = "11/423"
+# print(num2words(423, to="ordinal"))
+# print(num2words(423))
+# print(is_str_fraction(inp))
+# res =inp.split('/')
+# print(res)
+#
+# i  = 'four hundred and twenty-three'
+# import re
+# tt = re.findall('[a-z]+', i)
+#
+# print(tt.extend([1,11]))
+# print(tt)
+
+
 
 
 # #df = read_raw_data('../data')
@@ -98,61 +150,10 @@ def process_df(df, nlp_model):
 # print(doc)
 
 
-# tokens = custom_tokenizer(doc, nlp_model)
-# print(tokens)
-
-# # Custom transformer using spaCy
-# class predictors(TransformerMixin):
-#     def transform(self, X, **transform_params):
-#         # Cleaning Text
-#         return X
-#
-#     def fit(self, X, y=None, **fit_params):
-#         return self
-#
-#     def get_params(self, deep=True):
-#         return {}
-#
-# l = []
-# #bow_vector = CountVectorizer(tokenizer = custom_tokenizer, ngram_range=(1,1))
-# bow_vector = CountVectorizer(tokenizer = spacy_tokenizer, ngram_range=(1,1))
-# tfidf_vector = TfidfVectorizer(tokenizer = spacy_tokenizer)
-# from sklearn.linear_model import RandomForestClassifier
-# classifier = RandomForestClassifier()
-# # Create pipeline using Bag of Words
-# pipe = Pipeline([
-#                  ('vectorizer', bow_vector),
-#                  ('classifier', classifier)])
-#
-# X = df_amazon['verified_reviews'] # the features we want to analyze
-# ylabels = df_amazon['feedback'] # the labels, or answers, we want to test against
-# X_train, X_test, y_train, y_test = train_test_split(X, ylabels, test_size=0.3)
-#
-# # model generation
-# pipe.fit(X_train,y_train)
-# from sklearn import metrics
-# # Predicting with a test dataset
-# predicted = pipe.predict(X_test)
-# print("accuracy: ",accuracy_score(y_test, predicted))
-
-
-
-#bow_vector.fit_transform(l) # fit data into count vector
-
 
 ## BE CARE; spacy consider common number as 'four', 'five' as common words;
 ## to overcome this, we can remove stopwords before converting into spoken words OR use a custom stopwords lists
 
-
-
-
-
-
-#
-# res_tokens = custom_tokenizer(first_doc, nlp_model)
-#
-# print(type(res_tokens))
-# print(res_tokens)
 
 
 # from num2words import num2words

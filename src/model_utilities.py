@@ -55,7 +55,7 @@ def train_and_test_model(X_train, X_test, y_train, y_test, classifier):
 
 def dummy_classification():
     nlp_model = spacy.load("en_core_web_sm")
-    data = pd.read_csv('file_name.csv')
+    data = pd.read_csv('file_name_v2.csv')
     data = data.dropna()
     vectorized_text_data = encode_str_data_bow(data['content'])
     print(vectorized_text_data.shape)
