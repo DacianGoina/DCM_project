@@ -7,14 +7,14 @@ import spacy
 from num2words import num2words
 from validate_email_address import validate_email
 from dateutil import parser
+from collections import Counter
+from consts_values import *
 import re
 
 
 # IN: str
 # OUT: True, False: numeric (e.g 45, 4.5) or NOT
 def is_str_numeric(s):
-    infinity_const = 'infinity'
-
     try:
         if infinity_const in s.lower():
             return False
@@ -141,23 +141,39 @@ def handle_str_numerical_values(word, method='text'):
     return word
 
 # IN: list of str tokens
-# OUT: ...
-def handle_rare_tokens_and_typos(words, threshold=2, replacement='[UNK]'):
-    '''
-   Decide if we want to replace rare words or not
+# OUT: dict, d[token] := frequency of token in tokens
+def get_str_tokens_freq(tokens):
+    freq = dict()
+    freq = {token: tokens.count(token) for token in set(tokens)}
+    return freq
 
-   :param text:
-   :param threshold:
-   :param replacement:
-   :return:
-   :rtype:
-   '''
-    word_freq = {word: words.count(word) for word in set(words)}
-    rare_words = [word for word, freq in word_freq.items() if freq <= threshold]
+# IN: list of lists of tokens: [ [], [], [], ... ]
+# OUT: dict, d[token] := frequency of token counting tokens from all lists
+def get_str_tokens_freq_for_lists(lists_of_tokens):
+    main_dict = dict()
+    for tokens in lists_of_tokens:
+        local_dict = get_str_tokens_freq(tokens)
+        main_dict = dict(Counter(main_dict) + Counter(local_dict))
 
-    processed_words = [replacement if word in rare_words else word for word in words]
+    return main_dict
 
-    return processed_words
+# IN: dict of frequencies, d[token] := frequency of token
+# OUT: dict of frequencies, d[token] := frequency of token but only with tokens with frequency <= than given threshold
+def get_rare_tokens(dict_of_freq, threshold):
+    res = {token:dict_of_freq[token] for token in dict_of_freq.keys() if dict_of_freq[token] <= threshold}
+    return res
+
+# IN: list of str tokens, dict of tokens frequencies, token value for replacement
+# OUT: tokens, but without items that appear in the dict_of_freq: these will be removed or replaced
+# if replace_with = None, then remove tokens, else replace with the replace_with str value
+def handle_rare_str_tokens(tokens = None, dict_of_freq = None, replace_with = rare_token_replacement_tag):
+    rare_tokens_list = list(dict_of_freq.keys())
+    if replace_with == None: # remove rare tokens
+        tokens = [token for token in tokens if token not in rare_tokens_list]
+    else: # replace rare tokens with a constant value
+        tokens = [token if token not in rare_tokens_list else rare_token_replacement_tag for token in tokens]
+
+    return tokens
 
 
 # part of speech for every word
@@ -315,9 +331,6 @@ def str_fraction_to_spoken_words(tokens):
                 value_splited = get_lowercase_words_from_str(value)
                 new_tokens.extend(value_splited)
             else:
-                if token == '2rcirc':
-                    print('da')
-
                 fraction_parts = token.split('/')
                 numerator = int(fraction_parts[0])
                 denominator = int(fraction_parts[1])
@@ -341,12 +354,10 @@ def str_fraction_to_spoken_words(tokens):
 # OUT: list of str tokens
 # replace email addresses with '[EMAIL]' tag constant value
 def str_emails_to_email_tag(tokens):
-    email_tag = '[email]'
     tokens = [token if validate_email(token) is False else email_tag for token in tokens ]
     return tokens
 
 def str_dates_to_date_tag(tokens):
-    calendar_date_tag = '[c_date]' # calendar date
     tokens = [token if is_str_valid_date(token) is False else calendar_date_tag for token in tokens]
     return tokens
 

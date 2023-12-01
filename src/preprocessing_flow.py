@@ -4,7 +4,7 @@ from io_utilities import *
 
 import spacy
 import pandas as pd
-
+from consts_values import *
 
 def custom_tokenizer(raw_text = None, nlp_model = None, consider_numbers_as_stopwords = True):
     # convert to lower case
@@ -76,92 +76,52 @@ def custom_tokenizer(raw_text = None, nlp_model = None, consider_numbers_as_stop
 
 # IN: df with content, label, maybe other cols; content with raw data
 # OUT: df with content, label; content is a single str with preprocessed tokens
-def process_df(df, nlp_model):
+def process_df(df = None, nlp_model = None):
     data = pd.DataFrame(columns=['content','label'])
     data_rows = []
+    tokens_lists = []
+
+    # obtain and process tokens for every doc
     for content, label, file_path in zip(df['content'], df['type'], df['file_path']):
         print("current file: ", file_path)
         tokens = custom_tokenizer(content, nlp_model)
-        tokens_as_single_str = str_tokens_to_str(tokens)
+        tokens_lists.append(tokens)
+
+    # get rare tokens for all docs overall
+    tokens_freq = get_str_tokens_freq_for_lists(tokens_lists)
+    rare_tokens = get_rare_tokens(dict_of_freq=tokens_freq, threshold=2)
+
+    # replace rare tokens with specific tag
+    # create rows for new df
+    for tokens, label in zip(tokens_lists, df['type']):
+        tokens_copy = tokens.copy()
+        tokens_copy = handle_rare_str_tokens(tokens = tokens_copy, dict_of_freq = rare_tokens, replace_with = rare_token_replacement_tag)
+        tokens_as_single_str = str_tokens_to_str(tokens_copy)
         new_record = pd.DataFrame({'content':tokens_as_single_str, 'label':label}, index = [0])
         data_rows.append(new_record)
 
+    # append new rows to dataset
     data = pd.concat([data] + data_rows, ignore_index=True)
     return data
 
 
-# nlp_model = spacy.load("en_core_web_sm")
+nlp_model = spacy.load("en_core_web_sm")
 # path = 'C:\\Users\\Dacian\\Desktop\\MLO_DCM\\data\\food\\food_14.txt'
 # data = read_txt_file(path)
 # res = custom_tokenizer(data['content'],nlp_model, consider_numbers_as_stopwords=False)
 # print(res)
 
+# df = read_raw_data('../data')
+# data = process_df(df, nlp_model)
+# print(data)
+# data.to_csv('file_name_v3.csv', index=False, encoding='utf-8')
 
 
+txt = 'overcrowding is not tooling banking tooling-up'
+tokens = get_spacy_tokens_from_raw_text(txt, nlp_model)
+tokens = lemmatize_spacy_tokens(tokens)
+print(tokens)
 
-# str1 = 'the 43/12  of the 7876/323  and hgfh67/dss'
-# print(num2words(323, to="ordinal"))
-# tokens = str1.split(' ')
-# tokens = str_fraction_to_spoken_words(tokens)
-# print(tokens)
-
-# import re
-# def dummy_f(val):
-#     return bool(re.search("\b\d+/\d+\b", val))
-
-# put space or beginning line and white space and line end
-
-# print(dummy_f('1/2Rcirc'))
-# print(dummy_f('5431/2aaa'))
-# print(dummy_f('1432/24'))
-# print(dummy_f(' a12/44g '))
-
-
-# print(is_str_fraction('93/04/01'))
-# print(is_str_fraction('1/2Rcirc'))
-# print(is_str_fraction('132/243423'))
-# print(is_str_fraction('fds1432/24fdsf'))
-# print(is_str_fraction(' a12/44g '))
-
-# inp = "11/423"
-# print(num2words(423, to="ordinal"))
-# print(num2words(423))
-# print(is_str_fraction(inp))
-# res =inp.split('/')
-# print(res)
-#
-# i  = 'four hundred and twenty-three'
-# import re
-# tt = re.findall('[a-z]+', i)
-#
-# print(tt.extend([1,11]))
-# print(tt)
-
-
-
-
-# #df = read_raw_data('../data')
-# file_content = read_txt_file('C:\\Users\\Dacian\\Desktop\\MLO_DCM\\data\\business\\business_10.txt')
-# #file_content = read_txt_file('C:\\Users\\Dacian\\Desktop\\MLO_DCM\\data\\space\\space_50.txt')
-#
-#
-# # doc = df.iloc[1]['content']
-# doc = file_content['content']
-# print(doc)
-
-
-
+## TODO
 ## BE CARE; spacy consider common number as 'four', 'five' as common words;
 ## to overcome this, we can remove stopwords before converting into spoken words OR use a custom stopwords lists
-
-
-
-# from num2words import num2words
-
-# print(num2words(1990, to = 'year'))
-# print(num2words(1990))
-
-# print(type(num2words(1990, to = 'year')))
-# print(num2words(2004 , to = 'year'))
-# print(num2words(23, to = 'ordinal'))
-# print(num2words(0.30))
