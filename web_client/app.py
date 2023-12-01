@@ -3,11 +3,13 @@ import requests
 
 app = Flask(__name__)
 
-app.secret_key = 'super_secret_key'  # for session management, required for flash messages
 
-def dummy_GET_REQUEST():
-    endpoint_url = "https://catfact.ninja/fact"
-    response = requests.get(endpoint_url, headers = None, params = None, timeout=10)
+
+SECRET_KEY = '192b9bdd22ab9ed4d12e236c78afcb9a393ec15f71bbf5dc987d54727823bcbf'
+app.secret_key = SECRET_KEY  # for session management, required for flash messages
+
+def GET_request(endpoint_uri = None, request_headers = None, request_params = None): 
+    response = requests.get(endpoint_uri, headers = request_headers, params = request_params, timeout=10)
     if response.status_code != 200:  
         return("GET failed")
     else:
@@ -36,7 +38,7 @@ def upload_file():
         file_content = file.read()
         
         # do something with file's text
-        get_result = dummy_GET_REQUEST()
+        get_result = GET_request("https://catfact.ninja/fact")
         print(file_content)
         flash(get_result)
     return render_template('index.html')
