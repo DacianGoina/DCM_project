@@ -1,0 +1,7 @@
+pip install validate-email-address
+pip install spacy
+pip install num2words
+pip install numpy
+pip install pandas
+pip install scikit-learn
+pip install python-dateutil

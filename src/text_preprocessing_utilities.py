@@ -5,6 +5,10 @@
 
 import spacy
 from num2words import num2words
+from validate_email_address import validate_email
+from dateutil import parser
+from collections import Counter
+from consts_values import *
 import re
 
 
@@ -12,6 +16,9 @@ import re
 # OUT: True, False: numeric (e.g 45, 4.5) or NOT
 def is_str_numeric(s):
     try:
+        if infinity_const in s.lower():
+            return False
+
         # try converting to float
         float_value = float(s)
         return True
@@ -22,6 +29,39 @@ def is_str_numeric(s):
             return True
         except ValueError:
             return False
+
+# IN: str
+# OUT: True, False depending if the input string represent a valid date or not
+def is_str_valid_date(val):
+    if len(val) < 10:
+        return False
+    try:
+        # try to parse
+        parser.parse(val)
+        return True
+    except ValueError:
+        return False
+
+# IN: str val
+# OUT: True, False is val represent a fraction, e.g 1/2, 11/33, 11/32
+def is_str_fraction(val):
+    pattern = re.compile("(?:^|\s)([0-9]+/[0-9]+)(?:\s|$)")
+    return bool(pattern.match(val))
+
+# def is_str_fraction(text):
+#     pattern = re.compile(r'\b\d+/\d+\b')
+#     fractions = re.findall(pattern, text)
+#     if len(fractions) == 1:
+#         return True
+#     return False
+
+
+# IN: str
+# OUT: list of str tokens
+# Extract only lowercase words from str (e.g 'one', 'house', without '-' or other characters)
+def get_lowercase_words_from_str(val):
+    words = re.findall('[a-z]+', val)
+    return words
 
 # IN: str
 # OUT: str
@@ -101,23 +141,39 @@ def handle_str_numerical_values(word, method='text'):
     return word
 
 # IN: list of str tokens
-# OUT: ...
-def handle_rare_tokens_and_typos(words, threshold=2, replacement='[UNK]'):
-    '''
-   Decide if we want to replace rare words or not
+# OUT: dict, d[token] := frequency of token in tokens
+def get_str_tokens_freq(tokens):
+    freq = dict()
+    freq = {token: tokens.count(token) for token in set(tokens)}
+    return freq
 
-   :param text:
-   :param threshold:
-   :param replacement:
-   :return:
-   :rtype:
-   '''
-    word_freq = {word: words.count(word) for word in set(words)}
-    rare_words = [word for word, freq in word_freq.items() if freq <= threshold]
+# IN: list of lists of tokens: [ [], [], [], ... ]
+# OUT: dict, d[token] := frequency of token counting tokens from all lists
+def get_str_tokens_freq_for_lists(lists_of_tokens):
+    main_dict = dict()
+    for tokens in lists_of_tokens:
+        local_dict = get_str_tokens_freq(tokens)
+        main_dict = dict(Counter(main_dict) + Counter(local_dict))
 
-    processed_words = [replacement if word in rare_words else word for word in words]
+    return main_dict
 
-    return processed_words
+# IN: dict of frequencies, d[token] := frequency of token
+# OUT: dict of frequencies, d[token] := frequency of token but only with tokens with frequency <= than given threshold
+def get_rare_tokens(dict_of_freq, threshold):
+    res = {token:dict_of_freq[token] for token in dict_of_freq.keys() if dict_of_freq[token] <= threshold}
+    return res
+
+# IN: list of str tokens, dict of tokens frequencies, token value for replacement
+# OUT: tokens, but without items that appear in the dict_of_freq: these will be removed or replaced
+# if replace_with = None, then remove tokens, else replace with the replace_with str value
+def handle_rare_str_tokens(tokens = None, dict_of_freq = None, replace_with = rare_token_replacement_tag):
+    rare_tokens_list = list(dict_of_freq.keys())
+    if replace_with == None: # remove rare tokens
+        tokens = [token for token in tokens if token not in rare_tokens_list]
+    else: # replace rare tokens with a constant value
+        tokens = [token if token not in rare_tokens_list else rare_token_replacement_tag for token in tokens]
+
+    return tokens
 
 
 # part of speech for every word
@@ -175,11 +231,10 @@ def str_years_to_spoken_words(tokens):
     new_tokens = []
 
     for token in tokens:
-        if token.isnumeric() and len(token) == 4:
+        if token.isnumeric() and len(token) == 4 and int(token) >= valid_year_min_value and int(token) <= valid_year_max_value:
             year = int(token)
-            if year >= valid_year_min_value and year <= valid_year_max_value:
-                year_as_words = num2words(year, to = 'year')
-                new_tokens.append(year_as_words)
+            year_as_words = num2words(year, to = 'year')
+            new_tokens.append(year_as_words)
         else:
             # just append it like this
             new_tokens.append(token)
@@ -189,7 +244,7 @@ def str_years_to_spoken_words(tokens):
 # IN: list of str tokens
 # OUT: list of str tokens
 def str_numeric_values_to_spoken_words(tokens):
-    # conver numerical values (eg. '54', '2.5') to spoken words
+    # convert numerical values (eg. '54', '2.5') to spoken words
     new_tokens = []
 
     for token in tokens:
@@ -237,7 +292,7 @@ def str_ordinal_numbers_to_spoken_words(tokens):
 
 # IN: list of str tokens
 # OUT: list of str tokens
-def str_symbol_to_spoken_words(tokens):
+def str_currency_to_spoken_words(tokens):
     new_tokens = []
 
     symbols = {'%':'percentage', '€':'euros', '$':'dollars', 'CHF':'swiss francs', 'USD':'dollars', 'EUR':'euros',
@@ -249,6 +304,62 @@ def str_symbol_to_spoken_words(tokens):
             new_tokens.append(token)
 
     return new_tokens
+
+# IN: list of str tokens
+# OUT: list of str tokens
+def str_remove_common_chars(tokens):
+    common_chars = ['\'', '"']
+    tokens =[token for token in tokens if token not in common_chars]
+    return tokens
+
+# IN: list of str tokens
+# OUT: list of str token
+def remove_str_tokens_len_less_than_threshold(tokens, threshold_value):
+    tokens = [token for token in tokens if len(token)>= threshold_value]
+    return tokens
+
+# IN: list of str tokens
+# OUT: list of str tokens
+# OBS: this produce some chained tokens, e.g 'one-half' and not 'one' 'half'
+def str_fraction_to_spoken_words(tokens):
+    new_tokens = []
+
+    for token in tokens:
+        if is_str_fraction(token):
+            if token == '1/2':
+                value = 'one-half'
+                value_splited = get_lowercase_words_from_str(value)
+                new_tokens.extend(value_splited)
+            else:
+                fraction_parts = token.split('/')
+                numerator = int(fraction_parts[0])
+                denominator = int(fraction_parts[1])
+
+                # convert to spoken words
+                numerator_as_words = num2words(numerator)
+                denominator_as_words = num2words(denominator, to = "ordinal")
+
+                # extract only words, without '-' and others
+                numerator_splited = get_lowercase_words_from_str(numerator_as_words)
+                denominator_splited= get_lowercase_words_from_str(denominator_as_words)
+
+                new_tokens.extend(numerator_splited)
+                new_tokens.extend(denominator_splited)
+        else:
+            new_tokens.append(token)
+
+    return new_tokens
+
+# IN: list of str tokens
+# OUT: list of str tokens
+# replace email addresses with '[EMAIL]' tag constant value
+def str_emails_to_email_tag(tokens):
+    tokens = [token if validate_email(token) is False else email_tag for token in tokens ]
+    return tokens
+
+def str_dates_to_date_tag(tokens):
+    tokens = [token if is_str_valid_date(token) is False else calendar_date_tag for token in tokens]
+    return tokens
 
 # IN: list of str tokens
 # OUT: list of spacy tokens
@@ -265,3 +376,8 @@ def spacy_tokens_to_str_tokens(tokens):
     # convert tokens from spacy entity to built-in string
     tokens = [token.text for token in tokens]
     return tokens
+
+# IN: list of str tokens
+# OUT: str
+def str_tokens_to_str(tokens):
+    return ' '.join(tokens)
