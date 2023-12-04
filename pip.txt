@@ -5,3 +5,10 @@ pip install numpy
 pip install pandas
 pip install scikit-learn
 pip install python-dateutil
+pip install sphinx
+pip install sphinx_rtd_theme
+pip install ghp-import
+pip install pytest
+pip install Graphviz
+pip install --upgrade pylint --use-feature=2020-resolver
+pip install sphinxcontrib-bibtex
