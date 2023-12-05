@@ -69,7 +69,7 @@ def dummy_classification():
     return res_metrics
 
 
-#dummy_classification()
+dummy_classification()
 
 # df = read_raw_data('../data')
 # data = process_df(df, nlp_model)
