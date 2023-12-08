@@ -12,9 +12,14 @@ from consts_values import *
 import re
 
 
-# IN: str
-# OUT: True, False: numeric (e.g 45, 4.5) or NOT
 def is_str_numeric(s):
+    '''
+        Verifies if a string is a numeric value
+
+        :param s: string
+        :return: bool value (True or False)
+        :rtype: built-in python bool
+    '''
     try:
         if infinity_const in s.lower():
             return False
@@ -30,9 +35,15 @@ def is_str_numeric(s):
         except ValueError:
             return False
 
-# IN: str
-# OUT: True, False depending if the input string represent a valid date or not
+
 def is_str_valid_date(val):
+    '''
+        Verifies if a string is a valid date
+
+        :param val: string
+        :return: bool value (True or False)
+        :rtype: built-in python bool
+    '''
     if len(val) < 10:
         return False
     try:
@@ -42,11 +53,18 @@ def is_str_valid_date(val):
     except ValueError:
         return False
 
-# IN: str val
-# OUT: True, False is val represent a fraction, e.g 1/2, 11/33, 11/32
+
 def is_str_fraction(val):
+    '''
+        Verifies if a string is a valid fraction
+
+        :param val: string
+        :return: bool value (True or False)
+        :rtype: built-in python bool
+    '''
     pattern = re.compile("(?:^|\s)([0-9]+/[0-9]+)(?:\s|$)")
     return bool(pattern.match(val))
+
 
 # def is_str_fraction(text):
 #     pattern = re.compile(r'\b\d+/\d+\b')
@@ -56,24 +74,32 @@ def is_str_fraction(val):
 #     return False
 
 
-# IN: str
-# OUT: list of str tokens
-# Extract only lowercase words from str (e.g 'one', 'house', without '-' or other characters)
 def get_lowercase_words_from_str(val):
+    '''
+        Extract only lowercase words from str (e.g. 'one', 'house', without '-' or other characters)
+
+        :param val: string
+        :return: list with all lower case words
+        :rtype: built-in python list
+    '''
     words = re.findall('[a-z]+', val)
     return words
 
-# IN: str
-# OUT: str
+
 def to_lowercase(text):
+    '''
+        Tranform text string in lowercase
+
+        :param test: string
+        :return: lower case string
+        :rtype: built-in python string
+    '''
     return text.lower()
 
-# IN: str
-# OUT: str
+
 def remove_excessive_space(text):
     '''
     Remove excessive white spaces like " ", \n, \t from the beginning and ending of text
-
     :param text - input text; it's a native python string
     :return: the given text without spaces;
     :rtype: built-in python string
@@ -82,8 +108,6 @@ def remove_excessive_space(text):
     return text.strip()
 
 
-# IN: list of spacy tokens
-# OUT: list of spacy tokens
 def remove_spacy_punctuations(tokens):
     '''
     Remove all the punctuations from the given text
@@ -97,8 +121,7 @@ def remove_spacy_punctuations(tokens):
 
     return tokens
 
-# IN: list of spacy tokens
-# OUT: list of spacy tokens
+
 def remove_spacy_stopwords(tokens):
     '''
     Remove all the stop words from the given text
@@ -111,6 +134,7 @@ def remove_spacy_stopwords(tokens):
     tokens = [token for token in tokens if token.is_stop is False]
 
     return tokens
+
 
 # IN: list of spacy tokens
 # OUT: list of str tokens
@@ -126,13 +150,16 @@ def lemmatize_spacy_tokens(tokens):
     tokens_lemmas = [token.lemma_ for token in tokens]
     return tokens_lemmas
 
+
 # MAYBE DELETE THIS
 def handle_str_numerical_values(word, method='text'):
     '''
    Decide what to do with numerical values (keep them or remove them)
 
-   :param word:
-   :param method:
+   :param word: string with the wanted word
+   :param method: string that represent the decision of keeping or removing numerical values
+   :return: modified string (depending on the method)
+   :rtype: built-in python string
    '''
     if method == 'text':
         word = re.sub(r'\d+', 'NUM', word)
@@ -140,9 +167,15 @@ def handle_str_numerical_values(word, method='text'):
         word = re.sub(r'\d+', '', word)
     return word
 
-# IN: list of str tokens
-# OUT: dict, d[token] := frequency of token in tokens
+
 def get_str_tokens_freq(tokens):
+    '''
+   Get the frequency of the tokens given as param
+
+   :param tokens: list of str tokens
+   :return: a dictionary that has as key the token and as value the frequency
+   :rtype: built-in python dictionary
+   '''
     freq = dict()
     freq = {token: tokens.count(token) for token in set(tokens)}
     return freq
@@ -150,6 +183,13 @@ def get_str_tokens_freq(tokens):
 # IN: list of lists of tokens: [ [], [], [], ... ]
 # OUT: dict, d[token] := frequency of token counting tokens from all lists
 def get_str_tokens_freq_for_lists(lists_of_tokens):
+    '''
+    Get the frequency of a lists of tokens
+
+   :param lists_of_tokens: lists of str tokens ([[], [], ...])
+   :return: a dictionary that has as key the token and as value the frequency from all lists
+   :rtype: built-in python dictionary
+   '''
     main_dict = dict()
     for tokens in lists_of_tokens:
         local_dict = get_str_tokens_freq(tokens)
@@ -157,16 +197,30 @@ def get_str_tokens_freq_for_lists(lists_of_tokens):
 
     return main_dict
 
-# IN: dict of frequencies, d[token] := frequency of token
-# OUT: dict of frequencies, d[token] := frequency of token but only with tokens with frequency <= than given threshold
+
 def get_rare_tokens(dict_of_freq, threshold):
+    '''
+    Get all values that have a frequency smaller than a threshold
+
+   :param lists_of_tokens: dictionary of frequency
+   :param threshold: a value of comparition
+   :return: a new dictionary that contains just the frequency's smaller then the threshold
+   :rtype: built-in python list
+   '''
     res = {token:dict_of_freq[token] for token in dict_of_freq.keys() if dict_of_freq[token] <= threshold}
     return res
 
-# IN: list of str tokens, dict of tokens frequencies, token value for replacement
-# OUT: tokens, but without items that appear in the dict_of_freq: these will be removed or replaced
-# if replace_with = None, then remove tokens, else replace with the replace_with str value
+
 def handle_rare_str_tokens(tokens = None, dict_of_freq = None, replace_with = rare_token_replacement_tag):
+    '''
+    Filter tokens by eliminating rare tokens
+
+   :param tokens: list of tokens
+   :param dict_of_freq: dictionary of tokens frequency
+   :param replace_with: token value for replacement (if None, remove tokens, else replace with given value)
+   :return: filtered list of tokens without items in dictionary
+   :rtype: built-in python list
+   '''
     rare_tokens_list = list(dict_of_freq.keys())
     if replace_with == None: # remove rare tokens
         tokens = [token for token in tokens if token not in rare_tokens_list]
@@ -176,18 +230,21 @@ def handle_rare_str_tokens(tokens = None, dict_of_freq = None, replace_with = ra
     return tokens
 
 
-# part of speech for every word
-# IN: list of spacy tokens
-# OUT: list of tuples with (token, pos_token)
 def spacy_tokens_pos(tokens):
+    '''
+    Creates a list of tuples with every token and it's frequency
+
+   :param tokens: list of spacy tokens
+   :return: list of tuples that contains the token and it's position
+   :rtype: built-in python list
+   '''
     res = []
     for token in tokens:
         res.append( (token, token.pos_) )
 
     return res
 
-# IN: str (raw text)
-# OUT: list of spacy tokens
+
 def get_spacy_tokens_from_raw_text(text, nlp_model):
     '''
     Convert a raw text to a built-in python list of spacy.tokens.token.Token object (tokens);
@@ -204,9 +261,14 @@ def get_spacy_tokens_from_raw_text(text, nlp_model):
 
     return tokens
 
-# IN: list of str tokens
-# OUT: list of str tokens
 def str_remove_junk_spaces(tokens):
+    '''
+    Removes junk spaces from a list of string tokens
+
+    :param tokens: list of string tokens
+    :return: list of tokens without junk spaces
+    :rtype: built-in python list
+    '''
     # remove extra spaces with strip
     tokens = [remove_excessive_space(token) for token in tokens]
 
@@ -218,10 +280,14 @@ def str_remove_junk_spaces(tokens):
     return tokens
 
 
-# IN: list of str tokens
-# OUT: list of str tokens
 def str_years_to_spoken_words(tokens):
-    # convert years to spoken words, eg. "1990" to 'nineteen ninety'
+    '''
+    Transform the numerical years in their equivalent text
+    :param tokens: list of str tokens
+    :return: modified list of str tokens that has all numerical year instances transformed in their equivalent text
+    :rtype: built-in python list
+    '''
+    # convert years to spoken words, e.g. "1990" to 'nineteen ninety'
     # we consider years as integer values with 4 digits, and the value itself
     # between valid_year_min_value to valid_year_max_value
 
@@ -241,9 +307,14 @@ def str_years_to_spoken_words(tokens):
 
     return new_tokens
 
-# IN: list of str tokens
-# OUT: list of str tokens
+
 def str_numeric_values_to_spoken_words(tokens):
+    '''
+    Transform all numerical values to their equivalent in text
+    :param tokens: list of str tokens
+    :return: modified list of str tokens that contains all numerical values in text
+    :rtype: built-in python list
+    '''
     # convert numerical values (eg. '54', '2.5') to spoken words
     new_tokens = []
 
@@ -258,9 +329,13 @@ def str_numeric_values_to_spoken_words(tokens):
     return new_tokens
 
 
-# IN: str tokens
-# OUT: str tokens
 def str_ordinal_numbers_to_spoken_words(tokens):
+    '''
+    Transform all ordinal values to their equivalent in text
+    :param tokens: list of str tokens
+    :return: modified list of str tokens that contains all ordinal values in text
+    :rtype: built-in python list
+    '''
     new_tokens = []
 
     ordinals = ['st', 'nd', 'rd', 'th']
@@ -290,9 +365,14 @@ def str_ordinal_numbers_to_spoken_words(tokens):
 
     return new_tokens2
 
-# IN: list of str tokens
-# OUT: list of str tokens
+
 def str_currency_to_spoken_words(tokens):
+    '''
+    Transform all currency values to their equivalent in text
+    :param tokens: list of str tokens
+    :return: modified list of str tokens that contains all currency values in text
+    :rtype: built-in python list
+    '''
     new_tokens = []
 
     symbols = {'%':'percentage', '€':'euros', '$':'dollars', 'CHF':'swiss francs', 'USD':'dollars', 'EUR':'euros',
@@ -305,23 +385,38 @@ def str_currency_to_spoken_words(tokens):
 
     return new_tokens
 
-# IN: list of str tokens
-# OUT: list of str tokens
+
 def str_remove_common_chars(tokens):
+    '''
+    Remove all common chars such as '\' and '"' from tokens list
+    :param tokens: list of str tokens
+    :return: modified list of str tokens that excludes common chars
+    :rtype: built-in python list
+    '''
     common_chars = ['\'', '"']
     tokens =[token for token in tokens if token not in common_chars]
     return tokens
 
-# IN: list of str tokens
-# OUT: list of str token
+
 def remove_str_tokens_len_less_than_threshold(tokens, threshold_value):
+    '''
+    Remove all str tokens that have the length smaller than a threshold value
+    :param tokens: list of str tokens
+    :param threshold_value: a minim value for the length of a token
+    :return: modified list of str tokens that excludes tokens of length smaller than threshold
+    :rtype: built-in python list
+    '''
     tokens = [token for token in tokens if len(token)>= threshold_value]
     return tokens
 
-# IN: list of str tokens
-# OUT: list of str tokens
-# OBS: this produce some chained tokens, e.g 'one-half' and not 'one' 'half'
+
 def str_fraction_to_spoken_words(tokens):
+    '''
+    Transform all numerical fraction included in tokens in their equivalent text (this produce some chained tokens, e.g 'one-half' and not 'one' 'half')
+    :param tokens: list of str tokens
+    :return: modified list of str tokens that includes numerical fractions in text
+    :rtype: built-in python list
+    '''
     new_tokens = []
 
     for token in tokens:
@@ -354,30 +449,58 @@ def str_fraction_to_spoken_words(tokens):
 # OUT: list of str tokens
 # replace email addresses with '[EMAIL]' tag constant value
 def str_emails_to_email_tag(tokens):
+    '''
+    Replaces all email addresses with '[email]' tag constant value
+    :param tokens: list of str tokens
+    :return: new list of str tokens with instances of '[email]' instead of email address
+    :rtype: built-in python list
+    '''
     tokens = [token if validate_email(token) is False else email_tag for token in tokens ]
     return tokens
 
 def str_dates_to_date_tag(tokens):
+    '''
+    Reconstruct the list of str token replacing the valid dates with a specific tag
+    :param tokens: list of str tokens
+    :return: new list of str tokens with instances of [date] instead of the date
+    :rtype: built-in python list
+    '''
     tokens = [token if is_str_valid_date(token) is False else calendar_date_tag for token in tokens]
     return tokens
 
-# IN: list of str tokens
-# OUT: list of spacy tokens
+
 def str_tokens_to_spacy_tokens(tokens, nlp_model):
+    '''
+    Transform a list of str tokens in a list of the equivalent spacy entities
+    :param tokens: list of str tokens
+    :param nlp_model: what kind of modifier we want to use
+    :return: new list of str tokens that includes spacy tokens
+    :rtype: built-in python list
+    '''
     # convert string tokens back into spacy entities
     raw_text = ' '.join(tokens)
     tokens = get_spacy_tokens_from_raw_text(raw_text, nlp_model)
 
     return tokens
 
-# IN: list of spacy tokens
-# OUT: list of str tokens
+
 def spacy_tokens_to_str_tokens(tokens):
+    '''
+    Transform a list of spacy tokens in a list of the equivalent str entities
+    :param tokens: list of spacy tokens
+    :return: new list of spacy tokens
+    :rtype: built-in python list
+    '''
     # convert tokens from spacy entity to built-in string
     tokens = [token.text for token in tokens]
     return tokens
 
-# IN: list of str tokens
-# OUT: str
+
 def str_tokens_to_str(tokens):
+    '''
+    Transform a list of str token in a string equivalent
+    :param tokens: list of str tokens
+    :return: string
+    :rtype: built-in python string
+    '''
     return ' '.join(tokens)
