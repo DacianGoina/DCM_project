@@ -5,10 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0cebda5f-c239-41f2-a456-3468870c5bac" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/MLO_DCM.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/MLO_DCM.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/text_preprocessing_utilities.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/text_preprocessing_utilities.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/unit_test_text_preprocessing_utilities.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/unit_test_text_preprocessing_utilities.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

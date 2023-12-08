@@ -336,7 +336,6 @@ class UnitTests(unittest.TestCase):
 
         self.assertEqual([], [])
 
-
 if __name__ == '__main__':
     unittest.main()
 
