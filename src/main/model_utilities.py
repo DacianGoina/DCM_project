@@ -3,10 +3,18 @@ from sklearn.model_selection import train_test_split
 import spacy
 import pandas as pd
 import numpy as np
-from preprocessing_flow import *
+from src.main.preprocessing_flow import *
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.feature_extraction.text import CountVectorizer,TfidfVectorizer
 from sklearn.metrics import accuracy_score
+
+
+
+# Constants value to access specific data from @param model_data from class's instances.
+X_TRAIN = 'X_train'
+X_TEST = 'X_test'
+Y_TRAIN = 'y_train'
+Y_TEST = 'y_test'
 
 # IN: confusion matrix
 # OUT: built-in dict such that keys represent metrics name and data the metrics values
@@ -38,6 +46,7 @@ def encode_str_data_bow(X):
 # effectively training and testing of the data on a giving classifier
 # IN: model data and classifier
 # OUT: model performance metrics
+# TODO remove this - now we use StaticClassifier
 def train_and_test_model(X_train, X_test, y_train, y_test, classifier):
     classifier.fit(X_train, y_train)
 
@@ -51,6 +60,16 @@ def train_and_test_model(X_train, X_test, y_train, y_test, classifier):
     results = get_model_evaluation_metrics(res_confusion_matrix)
 
     return results
+
+
+def build_data_dictionary(X_train, X_test, y_train, y_test):
+    data_full_dict = dict()
+    data_full_dict[X_TRAIN] = X_train
+    data_full_dict[X_TEST] = X_test
+    data_full_dict[Y_TRAIN] = y_train
+    data_full_dict[Y_TEST] = y_test
+
+    return data_full_dict
 
 
 def dummy_classification():
@@ -69,7 +88,7 @@ def dummy_classification():
     return res_metrics
 
 
-dummy_classification()
+#dummy_classification()
 
 # df = read_raw_data('../data')
 # data = process_df(df, nlp_model)

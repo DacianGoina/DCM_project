@@ -1,10 +1,9 @@
 # dummy text classification
-from text_preprocessing_utilities import *
-from io_utilities import *
+from src.main.text_preprocessing_utilities import *
 
 import spacy
 import pandas as pd
-from consts_values import *
+from src.main.consts_values import *
 
 def custom_tokenizer(raw_text = None, nlp_model = None, consider_numbers_as_stopwords = True):
     # convert to lower case
@@ -105,7 +104,7 @@ def process_df(df = None, nlp_model = None):
     return data
 
 
-nlp_model = spacy.load("en_core_web_sm")
+# nlp_model = spacy.load("en_core_web_sm")
 # path = 'C:\\Users\\Dacian\\Desktop\\MLO_DCM\\data\\food\\food_14.txt'
 # data = read_txt_file(path)
 # res = custom_tokenizer(data['content'],nlp_model, consider_numbers_as_stopwords=False)
@@ -117,10 +116,10 @@ nlp_model = spacy.load("en_core_web_sm")
 # data.to_csv('file_name_v3.csv', index=False, encoding='utf-8')
 
 
-txt = 'overcrowding is not tooling banking tooling-up'
-tokens = get_spacy_tokens_from_raw_text(txt, nlp_model)
-tokens = lemmatize_spacy_tokens(tokens)
-print(tokens)
+# txt = 'overcrowding is not tooling banking tooling-up'
+# tokens = get_spacy_tokens_from_raw_text(txt, nlp_model)
+# tokens = lemmatize_spacy_tokens(tokens)
+# print(tokens)
 
 ## TODO
 ## BE CARE; spacy consider common number as 'four', 'five' as common words;
