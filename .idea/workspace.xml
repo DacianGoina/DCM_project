@@ -5,10 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0cebda5f-c239-41f2-a456-3468870c5bac" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model_utilities.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/model_utilities.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/preprocessing_flow.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/preprocessing_flow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/text_preprocessing_utilities.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/text_preprocessing_utilities.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,7 +51,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="SDKs" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.37806875" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
