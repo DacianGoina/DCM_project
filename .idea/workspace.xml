@@ -6,15 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="0cebda5f-c239-41f2-a456-3468870c5bac" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/consts_values.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/consts_values.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/file_name.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/file_name.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/file_name_v2.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/file_name_v2.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/file_name_v3.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/file_name_v3.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/io_utilities.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/io_utilities.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model_utilities.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/model_utilities.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/preprocessing_flow.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/preprocessing_flow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/text_preprocessing_utilities.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/text_preprocessing_utilities.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model_classes/CountVectorizerFE.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/model_classes/CountVectorizerFE.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model_classes/FeaturesExtractor.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/model_classes/FeaturesExtractor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model_classes/ModelManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/model_classes/ModelManager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model_classes/TfidfVectorizerFE.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/model_classes/TfidfVectorizerFE.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,6 +71,9 @@
       <module name="MLO_DCM" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="D:\anaconda3\python.exe" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/model_classes" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -215,11 +213,12 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/MLO_DCM$preprocessing_flow.coverage" NAME="preprocessing_flow Coverage Results" MODIFIED="1701436382886" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/MLO_DCM$main.coverage" NAME="main Coverage Results" MODIFIED="1701276917358" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
-    <SUITE FILE_PATH="coverage/MLO_DCM$ModelManager.coverage" NAME="ModelManager Coverage Results" MODIFIED="1702145286281" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/model_classes" />
+    <SUITE FILE_PATH="coverage/MLO_DCM$ModelManager.coverage" NAME="ModelManager Coverage Results" MODIFIED="1702152259677" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/model_classes" />
     <SUITE FILE_PATH="coverage/MLO_DCM$io_utilities.coverage" NAME="io_utilities Coverage Results" MODIFIED="1701197378791" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/MLO_DCM$model_utilities.coverage" NAME="model_utilities Coverage Results" MODIFIED="1701436094576" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
   </component>

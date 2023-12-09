@@ -1,11 +1,11 @@
 
-from  FeaturesExtractor import  FeaturesExtractor
+from  FeaturesExtractor import  *
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 class TfidfVectorizerFE(FeaturesExtractor):
     def __init__(self, X_data):
         FeaturesExtractor.__init__(self,X_data)
-        self.feature_extractor = TfidfVectorizer(lowercase = False, stop_words = None)
+        self.feature_extractor = TfidfVectorizer(lowercase = False, stop_words = None, token_pattern = TOKEN_PATTERN)
 
     def set_extractor_params(self, new_params):
         self.feature_extractor.set_params(**new_params)

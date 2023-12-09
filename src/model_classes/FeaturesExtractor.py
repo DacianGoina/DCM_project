@@ -7,6 +7,10 @@ the data is transformed to numerical values and returned
 This class act as a abstract class; instead of using it directly use the derived classes
 '''
 
+# regex token pattern for split the sentence (document) into tokens
+# this pattern select every printable character (letters, digits, special characters etc), so without spaces e.g " ", \n, \t and others
+TOKEN_PATTERN = "\S+"
+
 class FeaturesExtractor:
     def __init__(self, X_data_value = None):
         self.X_data = X_data_value

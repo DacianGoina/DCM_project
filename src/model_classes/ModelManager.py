@@ -11,6 +11,7 @@ sys.path.insert(0, '../src/main')
 from StaticClassifier import StaticClassifier
 from CountVectorizerFE import CountVectorizerFE
 from TfidfVectorizerFE import  TfidfVectorizerFE
+from HashingVectorizerFE import HashingVectorizerFE
 from sklearn.feature_extraction.text import TfidfTransformer
 from src.main.model_utilities import  *
 import spacy
@@ -33,8 +34,8 @@ if __name__ == "__main__":
 
     X_train, X_test, y_train, y_test = split_model_data(X = vectorized_count_vectorizer, y = data['label'], test_size_value = 0.25, random_state_val = 0)
     print(X_train.shape)
-    print(id(X_train))
-    print(X_train)
+    # print(id(X_train))
+    # print(X_train)
     #print(X_train.toarray())
     data_dict = build_data_dictionary( X_train, X_test, y_train, y_test)
 
@@ -45,6 +46,18 @@ if __name__ == "__main__":
     print(ext_tf.get_extractor_params())
     vectorized_tf = ext_tf.transform_data(data['content'])
     X_train, X_test, y_train, y_test = split_model_data(X = vectorized_tf, y = data['label'], test_size_value = 0.25, random_state_val = 0)
+    data_dict = build_data_dictionary( X_train, X_test, y_train, y_test)
+    # print(id(X_train))
+    print(X_train.shape)
+    # print(X_train)
+
+    sc1.set_model_data(data_dict)
+    sc1.fit_train_predict()
+
+    ext_hash = HashingVectorizerFE(None)
+    print(ext_hash.get_extractor_params())
+    vectorized_hash = ext_hash.transform_data(data['content'])
+    X_train, X_test, y_train, y_test = split_model_data(X = vectorized_hash, y = data['label'], test_size_value = 0.25, random_state_val = 0)
     data_dict = build_data_dictionary( X_train, X_test, y_train, y_test)
     print(id(X_train))
     print(X_train.shape)
