@@ -18,3 +18,6 @@ class HashingVectorizerFE(FeaturesExtractor):
         super().set_new_data_before_transformation(new_data)
         result = self.feature_extractor.fit_transform(self.X_data)
         return result
+
+    def short_str(self):
+        return "HashingVectorizer"

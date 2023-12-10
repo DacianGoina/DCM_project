@@ -5,64 +5,74 @@ data split and other
 
 import sys
 sys.path.insert(0, '../src/main')
-# sys.path.insert(1, '../preprocessing_flow.py')
-# sys.path.insert(2, '../text_preprocessing_utilities.py')
 
 from StaticClassifier import StaticClassifier
 from CountVectorizerFE import CountVectorizerFE
 from TfidfVectorizerFE import  TfidfVectorizerFE
 from HashingVectorizerFE import HashingVectorizerFE
-from sklearn.feature_extraction.text import TfidfTransformer
 from src.main.model_utilities import  *
+from sklearn import svm
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.tree import DecisionTreeClassifier
 import spacy
 import pandas as pd
+import itertools
+
+
+# the function that aggregate all
+def manager_execute(data, classifiers, features_extractors):
+    data = shuffle_dataframe(data, no_of_times=3)
+
+    results = dict()
+    classifier_to_extractor = itertools.product(classifiers, features_extractors)
+
+    X_data = data['content']
+    y_data = data['label']
+
+    for (classifier, extractor) in classifier_to_extractor:
+        numerical_features = extractor.transform_data(X_data)
+        X_train, X_test, y_train, y_test = split_model_data(X = numerical_features, y = y_data, test_size_value = 0.25, random_state_val = SPLIT_DATA_RANDOM_STATE_VALUE)
+        data_dict = build_data_dictionary(X_train, X_test, y_train, y_test)
+
+        working_set_name = get_classifier_to_extractor_str(classifier, extractor)
+        print(working_set_name)
+        classifier.set_model_data(data_dict)
+        resulted_metrics = classifier.fit_train_evaluate()
+
+        results[working_set_name] = resulted_metrics
+
+    return results
+
+def build_classifiers():
+    rf = StaticClassifier(None, RandomForestClassifier())
+    svc = StaticClassifier(None, svm.SVC(kernel='linear'))
+    dt = StaticClassifier(None, DecisionTreeClassifier())
+    gbc = StaticClassifier(None, GradientBoostingClassifier())
+
+    classifiers = [rf, svc, dt, gbc]
+
+    return classifiers
+
+def build_features_extractors():
+    cv = CountVectorizerFE(None)
+    tfidf = TfidfVectorizerFE(None)
+    hashing_vec = HashingVectorizerFE(None)
+
+    features_extractors = [cv, tfidf, hashing_vec]
+    return features_extractors
+
+def get_classifier_to_extractor_str(classifier, features_extractor):
+    return classifier.short_str() + ";" + features_extractor.short_str()
+
 
 if __name__ == "__main__":
     print("Main")
-    rf_classifier = RandomForestClassifier()
-    print(type(rf_classifier))
-    sc1 = StaticClassifier(None, rf_classifier)
 
-    nlp_model = spacy.load("en_core_web_sm")
     data = pd.read_csv('../main/file_name_v3.csv')
-    data = data.dropna()
+    the_classifiers = build_classifiers()
+    the_extractors = build_features_extractors()
 
-    ext_cv = CountVectorizerFE(None)
+    manager_execute(data, the_classifiers, the_extractors)
 
-    vectorized_count_vectorizer = ext_cv.transform_data(data['content'])
-
-
-    X_train, X_test, y_train, y_test = split_model_data(X = vectorized_count_vectorizer, y = data['label'], test_size_value = 0.25, random_state_val = 0)
-    print(X_train.shape)
-    # print(id(X_train))
-    # print(X_train)
-    #print(X_train.toarray())
-    data_dict = build_data_dictionary( X_train, X_test, y_train, y_test)
-
-    sc1.set_model_data(data_dict)
-    sc1.fit_train_predict()
-
-    ext_tf = TfidfVectorizerFE(None)
-    print(ext_tf.get_extractor_params())
-    vectorized_tf = ext_tf.transform_data(data['content'])
-    X_train, X_test, y_train, y_test = split_model_data(X = vectorized_tf, y = data['label'], test_size_value = 0.25, random_state_val = 0)
-    data_dict = build_data_dictionary( X_train, X_test, y_train, y_test)
-    # print(id(X_train))
-    print(X_train.shape)
-    # print(X_train)
-
-    sc1.set_model_data(data_dict)
-    sc1.fit_train_predict()
-
-    ext_hash = HashingVectorizerFE(None)
-    print(ext_hash.get_extractor_params())
-    vectorized_hash = ext_hash.transform_data(data['content'])
-    X_train, X_test, y_train, y_test = split_model_data(X = vectorized_hash, y = data['label'], test_size_value = 0.25, random_state_val = 0)
-    data_dict = build_data_dictionary( X_train, X_test, y_train, y_test)
-    print(id(X_train))
-    print(X_train.shape)
-    print(X_train)
-
-    sc1.set_model_data(data_dict)
-    sc1.fit_train_predict()
 

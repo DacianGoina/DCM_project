@@ -14,6 +14,7 @@ TOKEN_PATTERN = "\S+"
 class FeaturesExtractor:
     def __init__(self, X_data_value = None):
         self.X_data = X_data_value
+        self.feature_extractor = None
 
     def set_data(self, new_data):
         self.X_data = new_data

@@ -28,12 +28,12 @@ class StaticClassifier:
         return self.model_classifier.get_params().copy()
 
     # train the model, test the result, and return confusion matrix
-    def fit_train_predict(self):
+    def fit_train_evaluate(self):
         self.model_classifier.fit(self.model_data[X_TRAIN], self.model_data[Y_TRAIN])
         y_pred = self.model_classifier.predict(self.model_data[X_TEST])
         res_conf_matrix = confusion_matrix(self.model_data[Y_TEST], y_pred)
 
-        print(accuracy_score(y_pred,self.model_data[Y_TEST] ))
+        print("accuracy: ", accuracy_score(y_pred,self.model_data[Y_TEST] ))
 
         return get_model_evaluation_metrics(res_conf_matrix)
 
@@ -57,3 +57,7 @@ class StaticClassifier:
 
         print_result = print_result.strip()
         return print_result
+
+    # short string representation
+    def short_str(self):
+        return self.model_classifier.__class__.__name__
