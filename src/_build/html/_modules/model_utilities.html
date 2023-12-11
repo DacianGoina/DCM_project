@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>model_utilities &mdash; MLO_DCM 1.0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=7da82d16"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            MLO_DCM
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../docs/docs_main/modules.html">main</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../docs/docs_model_classes/modules.html">model_classes</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">MLO_DCM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">model_utilities</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for model_utilities</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">confusion_matrix</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># Constants value to access specific data from @param model_data from class&#39;s instances.</span>
+<span class="n">X_TRAIN</span> <span class="o">=</span> <span class="s1">&#39;X_train&#39;</span>
+<span class="n">X_TEST</span> <span class="o">=</span> <span class="s1">&#39;X_test&#39;</span>
+<span class="n">Y_TRAIN</span> <span class="o">=</span> <span class="s1">&#39;y_train&#39;</span>
+<span class="n">Y_TEST</span> <span class="o">=</span> <span class="s1">&#39;y_test&#39;</span>
+
+
+<span class="c1"># use the same seed for data split to ensure determinism</span>
+<span class="n">SPLIT_DATA_RANDOM_STATE_VALUE</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="c1"># IN: confusion matrix</span>
+<span class="c1"># OUT: built-in dict such that keys represent metrics name and data the metrics values</span>
+<span class="c1"># compute metrics using only confusion matrix, without model itself</span>
+<span class="c1"># use already implemented functions from sklearn and others modules</span>
+<span class="c1"># metrics e.g: accuracy, precision, recall, specificity, f1 score, AUC-ROC etc</span>
+<span class="c1"># TODO</span>
+<div class="viewcode-block" id="get_model_evaluation_metrics"><a class="viewcode-back" href="../docs/docs_main/main.html#model_utilities.get_model_evaluation_metrics">[docs]</a><span class="k">def</span> <span class="nf">get_model_evaluation_metrics</span><span class="p">(</span><span class="n">confusion_matrix</span><span class="p">):</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">res</span></div>
+
+<span class="c1"># IN: df with content and label col</span>
+<span class="c1"># OUT: X_train, test, Y_train, test</span>
+<span class="c1"># use stratify=y to split data in a stratified fashion, using this as the class labels: because we have many labels</span>
+<span class="c1"># we desire a uniform distribution of data with respect to the labels, is not properly if let&#39;s labels for training are selected</span>
+<span class="c1"># data with only 9 distinct labels, and data with tenth label is used only for testing</span>
+<div class="viewcode-block" id="split_model_data"><a class="viewcode-back" href="../docs/docs_main/main.html#model_utilities.split_model_data">[docs]</a><span class="k">def</span> <span class="nf">split_model_data</span><span class="p">(</span><span class="n">X</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">test_size_value</span> <span class="o">=</span> <span class="mf">0.25</span><span class="p">,</span> <span class="n">random_state_val</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
+    <span class="c1"># X = data[&#39;content&#39;]</span>
+    <span class="c1"># y = data[&#39;label&#39;]</span>
+    <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="n">test_size_value</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">random_state_val</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span></div>
+
+
+<div class="viewcode-block" id="build_data_dictionary"><a class="viewcode-back" href="../docs/docs_main/main.html#model_utilities.build_data_dictionary">[docs]</a><span class="k">def</span> <span class="nf">build_data_dictionary</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span><span class="p">):</span>
+    <span class="n">data_full_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="n">data_full_dict</span><span class="p">[</span><span class="n">X_TRAIN</span><span class="p">]</span> <span class="o">=</span> <span class="n">X_train</span>
+    <span class="n">data_full_dict</span><span class="p">[</span><span class="n">X_TEST</span><span class="p">]</span> <span class="o">=</span> <span class="n">X_test</span>
+    <span class="n">data_full_dict</span><span class="p">[</span><span class="n">Y_TRAIN</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_train</span>
+    <span class="n">data_full_dict</span><span class="p">[</span><span class="n">Y_TEST</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_test</span>
+
+    <span class="k">return</span> <span class="n">data_full_dict</span></div>
+
+<span class="c1"># shuffle rows from a pandas df</span>
+<span class="c1"># in: pandas df</span>
+<span class="c1"># out: pandas df, rows shuffled by @param no_of_times times</span>
+<div class="viewcode-block" id="shuffle_dataframe"><a class="viewcode-back" href="../docs/docs_main/main.html#model_utilities.shuffle_dataframe">[docs]</a><span class="k">def</span> <span class="nf">shuffle_dataframe</span><span class="p">(</span><span class="n">df</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">no_of_times</span> <span class="o">=</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="n">new_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">no_of_times</span><span class="p">):</span>
+        <span class="n">new_df</span> <span class="o">=</span> <span class="n">new_df</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">new_df</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Ana.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
