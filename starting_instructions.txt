@@ -15,3 +15,4 @@ Short-period TO-DO:
 1. create a basic visual schema for the proposed solution application architecture
 
 2. implement python functions to preprocess a text (for the beginning only the raw text, then we'll include methods to parse files - e.g text files etc, but is import to have the preprocessing flow in order because at the end the model will use text, it won't care about the source - as a black box )
+
