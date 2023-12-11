@@ -3,12 +3,11 @@
 # The strategy is to use functions without side effects - so do not modify the passes object itself, construct a new way
 # that will be returned
 
-import spacy
 from num2words import num2words
 from validate_email_address import validate_email
 from dateutil import parser
 from collections import Counter
-from consts_values import *
+from src.main.consts_values import *
 import re
 
 
