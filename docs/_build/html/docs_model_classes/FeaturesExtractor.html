@@ -49,18 +49,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../docs_main/modules.html">main</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">model_classes</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="CountVectorizerFE.html">CountVectorizerFE module</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">FeaturesExtractor module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#FeaturesExtractor.FeaturesExtractor"><code class="docutils literal notranslate"><span class="pre">FeaturesExtractor</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#FeaturesExtractor.FeaturesExtractor.get_data"><code class="docutils literal notranslate"><span class="pre">FeaturesExtractor.get_data()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#FeaturesExtractor.FeaturesExtractor.get_extractor_params"><code class="docutils literal notranslate"><span class="pre">FeaturesExtractor.get_extractor_params()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#FeaturesExtractor.FeaturesExtractor.set_data"><code class="docutils literal notranslate"><span class="pre">FeaturesExtractor.set_data()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#FeaturesExtractor.FeaturesExtractor.set_extractor_params"><code class="docutils literal notranslate"><span class="pre">FeaturesExtractor.set_extractor_params()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#FeaturesExtractor.FeaturesExtractor.set_new_data_before_transformation"><code class="docutils literal notranslate"><span class="pre">FeaturesExtractor.set_new_data_before_transformation()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#FeaturesExtractor.FeaturesExtractor.transform_data"><code class="docutils literal notranslate"><span class="pre">FeaturesExtractor.transform_data()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">FeaturesExtractor module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="HashingVectorizerFE.html">HashingVectorizerFE module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ModelManager.html">ModelManager module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="StaticClassifier.html">StaticClassifier module</a></li>
@@ -94,48 +83,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-FeaturesExtractor">
-<span id="featuresextractor-module"></span><h1>FeaturesExtractor module<a class="headerlink" href="#module-FeaturesExtractor" title="Permalink to this heading"></a></h1>
-<p>This class represent a feature extractor, i.e a entity that is capable to convert text to numerical values that later are used for classification.
-The instance of this class receive the data (X) and the a feature extractor from sklearn module;
-the data is transformed to numerical values and returned</p>
-<p>This class act as a abstract class; instead of using it directly use the derived classes</p>
-<dl class="py class">
-<dt class="sig sig-object py" id="FeaturesExtractor.FeaturesExtractor">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">FeaturesExtractor.</span></span><span class="sig-name descname"><span class="pre">FeaturesExtractor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_data_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/FeaturesExtractor.html#FeaturesExtractor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#FeaturesExtractor.FeaturesExtractor" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="py method">
-<dt class="sig sig-object py" id="FeaturesExtractor.FeaturesExtractor.get_data">
-<span class="sig-name descname"><span class="pre">get_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/FeaturesExtractor.html#FeaturesExtractor.get_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#FeaturesExtractor.FeaturesExtractor.get_data" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="FeaturesExtractor.FeaturesExtractor.get_extractor_params">
-<span class="sig-name descname"><span class="pre">get_extractor_params</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/FeaturesExtractor.html#FeaturesExtractor.get_extractor_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#FeaturesExtractor.FeaturesExtractor.get_extractor_params" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="FeaturesExtractor.FeaturesExtractor.set_data">
-<span class="sig-name descname"><span class="pre">set_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/FeaturesExtractor.html#FeaturesExtractor.set_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#FeaturesExtractor.FeaturesExtractor.set_data" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="FeaturesExtractor.FeaturesExtractor.set_extractor_params">
-<span class="sig-name descname"><span class="pre">set_extractor_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_params</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/FeaturesExtractor.html#FeaturesExtractor.set_extractor_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#FeaturesExtractor.FeaturesExtractor.set_extractor_params" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="FeaturesExtractor.FeaturesExtractor.set_new_data_before_transformation">
-<span class="sig-name descname"><span class="pre">set_new_data_before_transformation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/FeaturesExtractor.html#FeaturesExtractor.set_new_data_before_transformation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#FeaturesExtractor.FeaturesExtractor.set_new_data_before_transformation" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="FeaturesExtractor.FeaturesExtractor.transform_data">
-<span class="sig-name descname"><span class="pre">transform_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/FeaturesExtractor.html#FeaturesExtractor.transform_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#FeaturesExtractor.FeaturesExtractor.transform_data" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
+  <section id="featuresextractor-module">
+<h1>FeaturesExtractor module<a class="headerlink" href="#featuresextractor-module" title="Permalink to this heading"></a></h1>
 </section>
 
 
