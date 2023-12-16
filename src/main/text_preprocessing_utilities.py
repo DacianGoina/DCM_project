@@ -76,7 +76,7 @@ def is_str_fraction(val):
 
 def get_lowercase_words_from_str(val):
     '''
-        Extract only lowercase words from str (e.g. 'one', 'house', without '-' or other characters)
+        Extract only lowercase words from str (e.g. 'one', 'house' from 'one-house', without '-' or other characters)
 
         :param val: string
         :return: list with all lower case words
@@ -467,6 +467,91 @@ def str_dates_to_date_tag(tokens):
     '''
     tokens = [token if is_str_valid_date(token) is False else calendar_date_tag for token in tokens]
     return tokens
+
+# IN: list of str tokens
+# OUT: list of str tokens
+# replace a given symbol with a specific tag
+# e.g replace quotes (") with a specific tag: [QUOTE];
+# important mention: structures such as '"cat' will be converted into '[QUOTE] cat'
+def str_tokens_replace_symbol_with_tag(tokens, symbol, tag):
+    junk_spaces = [' ', '']
+    new_tokens = []
+    for token in tokens:
+        list_of_indexes = [] # indexes o characters where quote appear
+
+        # collect quote indexes
+        current_token_len = len(token)
+        for i in range(current_token_len):
+            if token[i] == symbol:
+                list_of_indexes.append(i)
+
+        if len(list_of_indexes) == 0:
+            new_tokens.append(token)
+
+        left = None
+        right = None
+        for index, index_value in  enumerate(list_of_indexes):
+            if index == 0:
+                left = 0
+            else:
+                left = list_of_indexes[index - 1] + 1
+
+            right = list_of_indexes[index]
+
+            if left is not None and right is not None:
+                single_str = token[left:right]
+                if single_str not in junk_spaces:
+                    new_tokens.append(single_str)
+                new_tokens.append(tag)
+
+        if right is not None and right != len(token) - 1:
+            single_str = token[right + 1: len(token)]
+            if single_str not in junk_spaces:
+                new_tokens.append(single_str)
+
+    return new_tokens
+
+# IN: list of str tokens
+# OUT: list of str tokens
+# convert numbers that contain separators to spoken words, e.g "10,500,205" to "ten million, five hundred thousand, two hundred and five"
+# separator value is ","
+def str_tokens_numbers_with_separators_to_spoken_words(tokens):
+    # left side must be a white space or line start
+    # center must be follow the pattern, digits(,digits)+
+    # right must be a white space or line end
+    # structure such as '(?<=\s)' refer to match but not to include in the result
+    pattern = re.compile("((?<=\s)|(?<=^))(\d+((,\d+)+))((?=\s)|(?=$))")
+    new_tokens = []
+    for token in tokens:
+        matches = re.findall(pattern, token)
+        if len(matches) == 1:
+            spoken_words = str_number_with_separators_to_integer_number(token)
+            new_tokens.extend(spoken_words)
+        else:
+            new_tokens.append(token)
+
+    return new_tokens
+
+# IN: str representing a number with comma separator, e.g "10,500,205"
+# OUT: list with spoken parts of hte number e.g, ["ten", "million", "five", "hundred", "thousand", "two", "hundred", "and", "five"]
+def str_number_with_separators_to_integer_number(val):
+    all_digits = [character for character in val if character.isdigit()]
+    numerical_value = ''.join(all_digits)
+    numerical_value_spoken = num2words(int(numerical_value), to = "cardinal")
+    words = get_lowercase_words_from_str(numerical_value_spoken)
+
+    return words
+
+# IN: list of str
+# OUT: list of str
+# for tokens that are 'compound' words, e.g 'tech,media' (this is a whole token, not 2) split them by the given separator
+# and them gather them together: ['tech', 'media']
+def split_and_gather_str_tokens_by_separator(tokens, separator):
+    new_tokens = []
+    for token in tokens:
+        token_parts = token.split(separator)
+        new_tokens.extend(token_parts)
+    return new_tokens
 
 
 def str_tokens_to_spacy_tokens(tokens, nlp_model):

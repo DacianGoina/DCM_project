@@ -336,6 +336,29 @@ class UnitTests(unittest.TestCase):
 
         self.assertEqual([], [])
 
+#TODO
+    def test_str_tokens_replace_quote_with_tag(self):
+        print(str_tokens_replace_symbol_with_tag([""]))
+        print(str_tokens_replace_symbol_with_tag(["simple"]))
+        print(str_tokens_replace_symbol_with_tag(["\""]))
+        print(str_tokens_replace_symbol_with_tag(["\"this"]))
+        print(str_tokens_replace_symbol_with_tag(["\"this is a statement"]))
+        print(str_tokens_replace_symbol_with_tag(["\"this is a \" statement now\""]))
+
+        print(str_tokens_replace_symbol_with_tag(["\"this", "\"", "alpha\"", "\"beta\"" "pruning\" algorithm \" ", "\"is\"\""]))
+
+#TODO
+def split_and_gather_str_tokens_by_separator(self):
+    print(split_and_gather_str_tokens_by_separator(['nothing_to_split'], separator=","))
+    print(split_and_gather_str_tokens_by_separator(['split,me'], separator=","))
+    print(split_and_gather_str_tokens_by_separator(['this', 'is', 'a', 'world,for', 'everyone,who,lives', 'here'], separator=","))
+
+#TODO
+#str_tokens_numbers_with_separators_to_spoken_words
+
+#TODO
+#str_number_with_separators_to_integer_number
+
 if __name__ == '__main__':
     unittest.main()
 
