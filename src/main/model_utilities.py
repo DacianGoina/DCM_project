@@ -2,7 +2,7 @@ from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import train_test_split
 import pandas as pd
 import numpy as np
-
+from src.main.io_utilities import *
 # Constants value to access specific data from @param model_data from class's instances.
 X_TRAIN = 'X_train'
 X_TEST = 'X_test'
@@ -54,3 +54,9 @@ def shuffle_dataframe(df = None, no_of_times = 1):
         new_df = new_df.sample(frac = 1, ignore_index=True)
 
     return new_df
+
+# IN: dict, key: str value, key: int value
+# OUT: None
+# save the given dictionary at the given path
+def vocabulary_dict_to_json(dictionary, output_file_path):
+    save_dict_to_json_file(dictionary, output_file_path)

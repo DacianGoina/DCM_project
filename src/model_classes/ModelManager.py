@@ -19,7 +19,6 @@ import spacy
 import pandas as pd
 import itertools
 
-
 # the function that aggregate all
 def manager_execute(data, classifiers, features_extractors):
     data = shuffle_dataframe(data, no_of_times=3)

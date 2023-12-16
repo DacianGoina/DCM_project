@@ -30,7 +30,7 @@ class FeaturesExtractor:
             self.X_data = new_data
 
     # this must be a pure virtual method - implement it in concrete classes
-    def transform_data(self, new_data = None):
+    def transform_data(self, new_data = None, save_features_vocabulary = False, vocabulary_path = None):
         return None
 
     # set feature extractor params (with a dictionary); pure virtual method
@@ -40,3 +40,7 @@ class FeaturesExtractor:
     # get feature extractor params; pure virtual method
     def get_extractor_params(self):
         return None
+
+    # abstract method; return the vocabulary: the pairs of (token-positions) provided by the extractor after the transformation
+    def get_vocabulary(self):
+        pass
