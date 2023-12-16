@@ -10,4 +10,3 @@ pip install sphinx_rtd_theme
 pip install ghp-import
 pip install --upgrade pylint --use-feature=2020-resolver
 pip install sphinxcontrib-bibtex
-pip install murmurhash3

@@ -19,10 +19,12 @@ class HashingVectorizerFE(FeaturesExtractor):
         super().set_new_data_before_transformation(new_data)
         result = self.feature_extractor.fit_transform(self.X_data)
 
-        # if save_features_vocabulary == True:
-        #     vocabulary = self.feature_extractor.vocabulary_
-        #     file_name = self.short_str() + "_vocabulary" + ".json"
-        #     vocabulary_dict_to_json(dictionary=vocabulary, output_file_path= vocabulary_path + file_name)
+        # OBS: HashingVectorizer is a stateless features extractor, it retain / store nothing.
+        # Thus, it do not has an vocabulary and I do not have what to save (keep).
+        # For an input, the input is everytime mapped to a fixed size array; the size if provided by n_features param.
+        # As other models, the models that use HashingVectorizerFE are saved and then reused for prediction;
+        # before the prediction, the input document is converted using the HashingVectorizerFE and the output will
+        # have the same size as records from training data.
 
         return result
 
