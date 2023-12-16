@@ -15,10 +15,11 @@ from sklearn import svm
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.tree import DecisionTreeClassifier
+from sklearn.feature_extraction.text import HashingVectorizer
+from FeaturesExtractor import *
 import spacy
 import pandas as pd
 import itertools
-
 
 # the function that aggregate all
 def manager_execute(data, classifiers, features_extractors):
@@ -69,10 +70,64 @@ def get_classifier_to_extractor_str(classifier, features_extractor):
 if __name__ == "__main__":
     print("Main")
 
-    data = pd.read_csv('../file_name_v4.csv')
-    the_classifiers = build_classifiers()
+    # data = pd.read_csv('../file_name_v4.csv')
+    # the_classifiers = build_classifiers()
     the_extractors = build_features_extractors()
 
-    manager_execute(data, the_classifiers, the_extractors)
+    data = [
+        'house brand',
+        'forest gump',
+        'acvarium',
+        'house brand'
+        'mac mac mac'
+    ]
+
+    a1 = HashingVectorizer(lowercase = False, stop_words = None, token_pattern = TOKEN_PATTERN, n_features = 2**4, norm='l2')
+    res1 = a1.fit_transform(data)
+    res1 = res1.toarray()
+    for i in res1:
+        print(list(i))
+
+    print('-' * 20)
+
+    data2 = [
+        'house brand',
+        'mac mac mac'
+    ]
+
+    a2 = HashingVectorizer(lowercase = False, stop_words = None, token_pattern = TOKEN_PATTERN, n_features = 2**4, norm='l2')
+    res2 = a2.fit_transform(data2)
+    res2 = res2.toarray()
+    for i in res2:
+        print(list(i))
+
+
+
+
+
+    # cv = the_extractors[0]
+    # res = cv.transform_data(data['content'])
+    # print(res.shape)
+    # print(cv.get_vocabulary())
+    # print(cv.feature_extractor.get_feature_names().index('airline'))
+    # print(cv.feature_extractor.get_feature_names()[293])
+    # print(type(res.toarray()))
+    # print(res.toarray()[0, 293])
+
+    # tf = the_extractors[1]
+    # res = tf.transform_data(data['content'], save_features_vocabulary=True, vocabulary_path="./")
+    # print(type(tf.get_vocabulary()))
+    # print(tf.feature_extractor.get_feature_names())
+
+    # hv = the_extractors[2]
+    # res = hv.transform_data(data['content'])
+    # print(hv.short_str())
+    # print(res.shape)
+    # print(res)
+    # print(type(hv.get_vocabulary()))
+    # print(hv.feature_extractor.get_feature_names())
+
+
+    # manager_execute(data, the_classifiers, the_extractors)
 
 

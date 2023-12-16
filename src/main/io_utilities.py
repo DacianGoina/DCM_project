@@ -1,6 +1,6 @@
 import os
 import pandas as pd
-
+import json
 # IO functions
 
 # IN: str file path
@@ -51,6 +51,13 @@ def read_raw_data(main_directory_path):
 
     return df
 
-# data_root_path = "data"
-# df = read_raw_data(data_root_path)
-# df
+
+# IN: dict, key: str value, key: int value
+# OUT: None
+# save the given dictionary at the given path
+def save_dict_to_json_file(data, output_file_path):
+    if output_file_path.endswith(".json") is False:
+        output_file_path = output_file_path + ".json"
+
+    with open(output_file_path, 'w') as f:
+        json.dump(data, f, indent = 2)

@@ -6,12 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="0cebda5f-c239-41f2-a456-3468870c5bac" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/consts_values.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/consts_values.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/preprocessing_flow.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/preprocessing_flow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/text_preprocessing_utilities.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/text_preprocessing_utilities.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/unit_test_text_preprocessing_utilities.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/unit_test_text_preprocessing_utilities.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pip.txt" beforeDir="false" afterPath="$PROJECT_DIR$/pip.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/io_utilities.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/io_utilities.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/model_utilities.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/model_utilities.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model_classes/CountVectorizerFE.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/model_classes/CountVectorizerFE.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model_classes/FeaturesExtractor.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/model_classes/FeaturesExtractor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model_classes/HashingVectorizerFE.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/model_classes/HashingVectorizerFE.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model_classes/ModelManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/model_classes/ModelManager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model_classes/TfidfVectorizerFE.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/model_classes/TfidfVectorizerFE.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -230,7 +232,7 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/MLO_DCM$main.coverage" NAME="main Coverage Results" MODIFIED="1702731224506" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
-    <SUITE FILE_PATH="coverage/MLO_DCM$ModelManager.coverage" NAME="ModelManager Coverage Results" MODIFIED="1702731992129" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/model_classes" />
+    <SUITE FILE_PATH="coverage/MLO_DCM$ModelManager.coverage" NAME="ModelManager Coverage Results" MODIFIED="1702751160543" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/model_classes" />
     <SUITE FILE_PATH="coverage/MLO_DCM$Unittests_in_unit_test_text_preprocessing_utilities_py.coverage" NAME="Unittests in unit_test_text_preprocessing_utilities.py Coverage Results" MODIFIED="1702489694044" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/main" />
   </component>
 </project>
