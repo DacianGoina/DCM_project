@@ -80,13 +80,6 @@ class UnitTests(unittest.TestCase):
         self.assertEqual(remove_spacy_punctuations(["Hello", ",", "world", "!", "What", "is", "?", "yes", "."]), ["Hello", "world", "What", "is", "yes"])
         self.assertEqual(remove_spacy_punctuations([]), [])
 
-    def test_remove_spacy_stopwords(self):
-        '''
-        Unit test for list with stopwords and empty list
-        '''
-        self.assertEqual(remove_spacy_stopwords(["This", "is", "a", "sample", "sentence", "with", "some", "stop", "words"]), ["sample", "sentence", "stop", "words"])
-        self.assertEqual(remove_spacy_stopwords([]), [])
-
     def test_lemmatize_spacy_tokens(self):
         '''
         Unit test for list of words that contains lematized words

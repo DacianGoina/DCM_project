@@ -29,10 +29,8 @@ def get_model_evaluation_metrics(confusion_matrix):
 # use stratify=y to split data in a stratified fashion, using this as the class labels: because we have many labels
 # we desire a uniform distribution of data with respect to the labels, is not properly if let's labels for training are selected
 # data with only 9 distinct labels, and data with tenth label is used only for testing
-def split_model_data(X = None, y = None, test_size_value = 0.25, random_state_val = 0):
-    # X = data['content']
-    # y = data['label']
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size_value, random_state=random_state_val, stratify=y)
+def split_model_data(X_data = None, y_data = None, test_size_value = 0.25, random_state_val = 0):
+    X_train, X_test, y_train, y_test = train_test_split(X_data, y_data, test_size=test_size_value, random_state=random_state_val, stratify=y_data)
     return X_train, X_test, y_train, y_test
 
 

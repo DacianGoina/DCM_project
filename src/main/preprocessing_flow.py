@@ -6,7 +6,7 @@ import pandas as pd
 from src.main.consts_values import *
 from io_utilities import *
 
-def custom_tokenizer(raw_text = None, nlp_model = None, consider_numbers_as_stopwords = True):
+def custom_tokenizer(raw_text = None, nlp_model = None):
     # convert to lower case
     raw_text = to_lowercase(raw_text)
 
@@ -28,21 +28,11 @@ def custom_tokenizer(raw_text = None, nlp_model = None, consider_numbers_as_stop
     # handle email addresses
     tokens = str_emails_to_email_tag(tokens)
 
-    # handle calendaristic dates
+    # handle calendar dates
     tokens = str_dates_to_date_tag(tokens)
 
     # convert tokens such as '"cat' into ['[QUOTE]', 'cat']
-    tokens = str_tokens_replace_symbol_with_tag(tokens, symbol = quote_value, tag = QUOTE_TAG)
-
-    # remove stopwords before start preprocessing numbers
-    # in this way, we'll keep tokens like 'three', 'four'
-    # AND also keep some stopwords, e.g in '2004' -> 'two thousand and four' keep the end
-    if consider_numbers_as_stopwords == False:
-        tokens = str_tokens_to_spacy_tokens(tokens, nlp_model)
-        # remove stop words
-        tokens = remove_spacy_stopwords(tokens)
-
-        tokens = spacy_tokens_to_str_tokens(tokens)
+    # tokens = str_tokens_replace_symbol_with_tag(tokens, symbol = quote_value, tag = QUOTE_TAG)
 
     # handle years value - convert years into spoken words
     tokens = str_years_to_spoken_words(tokens)
@@ -61,7 +51,7 @@ def custom_tokenizer(raw_text = None, nlp_model = None, consider_numbers_as_stop
 
     # convert token such as "tech,media" into ['tech', 'media']
     # !!! USE THIS AFTER PREPROCESSING OF NUMBERS WITH COMMA SEPARATOR: "10, 000"
-    tokens = split_and_gather_str_tokens_by_separator(tokens, separator=",")
+    # tokens = split_and_gather_str_tokens_by_separator(tokens, separator=",")
 
     # replace other symbols as 'USD', '%', '€' etc
     tokens = str_currency_to_spoken_words(tokens)
@@ -75,12 +65,22 @@ def custom_tokenizer(raw_text = None, nlp_model = None, consider_numbers_as_stop
     # remove punctuations
     tokens = remove_spacy_punctuations(tokens)
 
-    if consider_numbers_as_stopwords == True:
-        tokens = remove_spacy_stopwords(tokens)
+    # remove stopwords
+    tokens = str_tokens_remove_stopwords(tokens)
 
     # lemmatization
     tokens = lemmatize_spacy_tokens(tokens)
     # after this, the tokens are not longer spacy.tokens.token.Token, but built-in java string
+
+    return tokens
+
+# IN: list of str tokens, nlp model, number of iterations
+# OUT: list of str tokens
+# apply the custom tokenizer function iteratively over an raw text given as input (similar to usage of epochs in deep learning)
+def apply_custom_tokenizer_iteratively(raw_text = None, nlp_model = None, iterations = 2):
+    for i in range(iterations):
+        tokens = custom_tokenizer(raw_text, nlp_model)
+        raw_text = str_tokens_to_str(tokens)
 
     return tokens
 
@@ -134,7 +134,33 @@ def preprocess_file(file_path):
     result = str_tokens_to_str(tokens)
     return tokens
 
+# nlp_model1 = spacy.load("en_core_web_sm")
 
+
+# raw_text_data = ""
+# with open("C:\\Users\\Dacian\\Desktop\\MLO_DCM\\data\\business\\business_1.txt", encoding='utf-8', mode = "r") as f:
+#     raw_text_data = f.read()
+#
+# print(raw_text_data)
+#
+
+# tokens = custom_tokenizer(raw_text=raw_text_data, nlp_model = nlp_model1, consider_numbers_as_stopwords=False)
+# print(str(tokens))
+
+
+
+# from spacy.lang.en.stop_words import STOP_WORDS
+# print(len(STOP_WORDS))
+# #
+# i = 0
+# for token in nlp_model1.vocab:
+#     if token.is_stop == True:
+#         print(token.text)
+#
+# print(i)
+
+# nlp_model1.vocab["six"].is_stop = False
+# print(nlp_model1.vocab["six"].is_stop)
 
 ## TODO
 ## BE CARE; spacy consider common number as 'four', 'five' as common words;

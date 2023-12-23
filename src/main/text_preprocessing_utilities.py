@@ -10,6 +10,7 @@ from dateutil import parser
 from collections import Counter
 from consts_values import *
 import re
+from spacy.lang.en.stop_words import STOP_WORDS
 
 
 def is_str_numeric(s):
@@ -121,21 +122,6 @@ def remove_spacy_punctuations(tokens):
 
     return tokens
 
-
-def remove_spacy_stopwords(tokens):
-    '''
-    Remove all the stop words from the given text
-
-    :param tokens: the input list that contains all the words
-    :return: the given list, without stop words;
-    :rtype: built-in python list
-    '''
-
-    tokens = [token for token in tokens if token.is_stop is False]
-
-    return tokens
-
-
 # IN: list of spacy tokens
 # OUT: list of str tokens
 def lemmatize_spacy_tokens(tokens):
@@ -150,23 +136,13 @@ def lemmatize_spacy_tokens(tokens):
     tokens_lemmas = [token.lemma_ for token in tokens]
     return tokens_lemmas
 
-
-# MAYBE DELETE THIS
-def handle_str_numerical_values(word, method='text'):
-    '''
-   Decide what to do with numerical values (keep them or remove them)
-
-   :param word: string with the wanted word
-   :param method: string that represent the decision of keeping or removing numerical values
-   :return: modified string (depending on the method)
-   :rtype: built-in python string
-   '''
-    if method == 'text':
-        word = re.sub(r'\d+', 'NUM', word)
-    elif method == 'remove':
-        word = re.sub(r'\d+', '', word)
-    return word
-
+# IN: list of str tokens
+# OUT: list of str tokens
+# Remove stopwords; stopwords are fetched from a function defined also in this file
+def str_tokens_remove_stopwords(tokens):
+    stopwords = get_str_stopwords()
+    tokens = [token for token in tokens if token not in stopwords]
+    return tokens
 
 def get_str_tokens_freq(tokens):
     '''
@@ -393,7 +369,7 @@ def str_remove_common_chars(tokens):
     :return: modified list of str tokens that excludes common chars
     :rtype: built-in python list
     '''
-    common_chars = ['\'', '"']
+    common_chars = ['\'','"']
     tokens =[token for token in tokens if token not in common_chars]
     return tokens
 
@@ -423,8 +399,8 @@ def str_fraction_to_spoken_words(tokens):
         if is_str_fraction(token):
             if token == '1/2':
                 value = 'one-half'
-                value_splited = get_lowercase_words_from_str(value)
-                new_tokens.extend(value_splited)
+                value_split = get_lowercase_words_from_str(value)
+                new_tokens.extend(value_split)
             else:
                 fraction_parts = token.split('/')
                 numerator = int(fraction_parts[0])
@@ -435,11 +411,11 @@ def str_fraction_to_spoken_words(tokens):
                 denominator_as_words = num2words(denominator, to = "ordinal")
 
                 # extract only words, without '-' and others
-                numerator_splited = get_lowercase_words_from_str(numerator_as_words)
-                denominator_splited= get_lowercase_words_from_str(denominator_as_words)
+                numerator_split = get_lowercase_words_from_str(numerator_as_words)
+                denominator_split= get_lowercase_words_from_str(denominator_as_words)
 
-                new_tokens.extend(numerator_splited)
-                new_tokens.extend(denominator_splited)
+                new_tokens.extend(numerator_split)
+                new_tokens.extend(denominator_split)
         else:
             new_tokens.append(token)
 
@@ -553,6 +529,13 @@ def split_and_gather_str_tokens_by_separator(tokens, separator):
         new_tokens.extend(token_parts)
     return new_tokens
 
+# OUT: list of str tokens that represent stopwords
+def get_str_stopwords():
+# do not consider this token as stopwords
+    NOT_STOPWORDS = ['one','sixty', 'nine', 'six', 'twelve', 'twenty', 'ten', 'hundred', 'third', 'five', 'two', 'three', 'eleven', 'first', 'four', 'forty', 'fifty', 'fifteen', 'eight']
+    stopwords = STOP_WORDS.copy()
+    res = [stopword for stopword in stopwords if stopword not in NOT_STOPWORDS]
+    return res
 
 def str_tokens_to_spacy_tokens(tokens, nlp_model):
     '''

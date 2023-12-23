@@ -31,7 +31,7 @@ def manager_execute(data, classifiers, features_extractors):
 
     for (classifier, extractor) in classifier_to_extractor:
         numerical_features = extractor.transform_data(X_data)
-        X_train, X_test, y_train, y_test = split_model_data(X = numerical_features, y = y_data, test_size_value = 0.25, random_state_val = SPLIT_DATA_RANDOM_STATE_VALUE)
+        X_train, X_test, y_train, y_test = split_model_data(X_data= numerical_features, y_data= y_data, test_size_value = 0.25, random_state_val = SPLIT_DATA_RANDOM_STATE_VALUE)
         data_dict = build_data_dictionary(X_train, X_test, y_train, y_test)
 
         working_set_name = get_classifier_to_extractor_str(classifier, extractor)
