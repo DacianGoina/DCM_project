@@ -365,7 +365,6 @@ def str_ordinal_numbers_to_spoken_words(tokens):
 
     return new_tokens
 
-# TODO remake tests now it use extend not append
 def str_currency_to_spoken_words(tokens):
     '''
     Transform all currency values to their equivalent in text
@@ -376,11 +375,10 @@ def str_currency_to_spoken_words(tokens):
     new_tokens = []
 
     symbols = {'%':'percentage', '€':'euros', '$':'dollars', 'CHF':'swiss francs', 'USD':'dollars', 'EUR':'euros',
-               '£':'pounds sterling', 'GBP':'pounds sterling', 'JPY':'yens', 'AUD':'dollars', 'CAD':'dollars'}
+               '£':'sterling', 'GBP':'sterling', 'JPY':'yens', 'AUD':'dollars', 'CAD':'dollars'}
     for token in tokens:
         if token in symbols.keys():
-            symbol_tokens_components = get_lowercase_words_from_str(symbols[token])
-            new_tokens.extend(symbol_tokens_components)
+            new_tokens.append(symbols[token])
         else:
             new_tokens.append(token)
 
