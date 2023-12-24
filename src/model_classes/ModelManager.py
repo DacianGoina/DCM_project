@@ -13,8 +13,8 @@ from HashingVectorizerFE import HashingVectorizerFE
 from src.main.model_utilities import  *
 from sklearn import svm
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.tree import DecisionTreeClassifier
+from sklearn.linear_model import LogisticRegression
 import spacy
 import pandas as pd
 import itertools
@@ -31,7 +31,7 @@ def manager_execute(data, classifiers, features_extractors):
 
     for (classifier, extractor) in classifier_to_extractor:
         numerical_features = extractor.transform_data(X_data)
-        X_train, X_test, y_train, y_test = split_model_data(X = numerical_features, y = y_data, test_size_value = 0.25, random_state_val = SPLIT_DATA_RANDOM_STATE_VALUE)
+        X_train, X_test, y_train, y_test = split_model_data(X_data= numerical_features, y_data= y_data, test_size_value = 0.25, random_state_val = SPLIT_DATA_RANDOM_STATE_VALUE)
         data_dict = build_data_dictionary(X_train, X_test, y_train, y_test)
 
         working_set_name = get_classifier_to_extractor_str(classifier, extractor)
@@ -45,11 +45,11 @@ def manager_execute(data, classifiers, features_extractors):
 
 def build_classifiers():
     rf = StaticClassifier(None, RandomForestClassifier())
-    svc = StaticClassifier(None, svm.SVC(kernel='linear'))
+    svc_cl = StaticClassifier(None, svm.SVC(kernel='linear'))
     dt = StaticClassifier(None, DecisionTreeClassifier())
-    gbc = StaticClassifier(None, GradientBoostingClassifier())
+    lr = StaticClassifier(None, LogisticRegression())
 
-    classifiers = [rf, svc, dt, gbc]
+    classifiers = [rf, svc_cl, dt, lr]
 
     return classifiers
 
@@ -68,7 +68,7 @@ def get_classifier_to_extractor_str(classifier, features_extractor):
 if __name__ == "__main__":
     print("Main")
 
-    data = pd.read_csv('../file_name_v4.csv')
+    data = pd.read_csv('../file_name_v5.csv')
     the_classifiers = build_classifiers()
     the_extractors = build_features_extractors()
 

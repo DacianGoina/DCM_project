@@ -10,6 +10,7 @@ from dateutil import parser
 from collections import Counter
 from consts_values import *
 import re
+from spacy.lang.en.stop_words import STOP_WORDS
 
 
 def is_str_numeric(s):
@@ -121,21 +122,6 @@ def remove_spacy_punctuations(tokens):
 
     return tokens
 
-
-def remove_spacy_stopwords(tokens):
-    '''
-    Remove all the stop words from the given text
-
-    :param tokens: the input list that contains all the words
-    :return: the given list, without stop words;
-    :rtype: built-in python list
-    '''
-
-    tokens = [token for token in tokens if token.is_stop is False]
-
-    return tokens
-
-
 # IN: list of spacy tokens
 # OUT: list of str tokens
 def lemmatize_spacy_tokens(tokens):
@@ -150,23 +136,13 @@ def lemmatize_spacy_tokens(tokens):
     tokens_lemmas = [token.lemma_ for token in tokens]
     return tokens_lemmas
 
-
-# MAYBE DELETE THIS
-def handle_str_numerical_values(word, method='text'):
-    '''
-   Decide what to do with numerical values (keep them or remove them)
-
-   :param word: string with the wanted word
-   :param method: string that represent the decision of keeping or removing numerical values
-   :return: modified string (depending on the method)
-   :rtype: built-in python string
-   '''
-    if method == 'text':
-        word = re.sub(r'\d+', 'NUM', word)
-    elif method == 'remove':
-        word = re.sub(r'\d+', '', word)
-    return word
-
+# IN: list of str tokens
+# OUT: list of str tokens
+# Remove stopwords; stopwords are fetched from a function defined also in this file
+def str_tokens_remove_stopwords(tokens):
+    stopwords = get_str_stopwords()
+    tokens = [token for token in tokens if token not in stopwords]
+    return tokens
 
 def get_str_tokens_freq(tokens):
     '''
@@ -211,7 +187,7 @@ def get_rare_tokens(dict_of_freq, threshold):
     return res
 
 
-def handle_rare_str_tokens(tokens = None, dict_of_freq = None, replace_with = rare_token_replacement_tag):
+def handle_rare_str_tokens(tokens, dict_of_freq, replace_with = rare_token_replacement_tag):
     '''
     Filter tokens by eliminating rare tokens
 
@@ -279,7 +255,9 @@ def str_remove_junk_spaces(tokens):
 
     return tokens
 
-
+# TODO remake tests now it use extend not append
+# now, list of tokens are appended to main tokens list
+# before: append "year as spoken", now append ["year", "as", "spoken"]
 def str_years_to_spoken_words(tokens):
     '''
     Transform the numerical years in their equivalent text
@@ -300,14 +278,15 @@ def str_years_to_spoken_words(tokens):
         if token.isnumeric() and len(token) == 4 and int(token) >= valid_year_min_value and int(token) <= valid_year_max_value:
             year = int(token)
             year_as_words = num2words(year, to = 'year')
-            new_tokens.append(year_as_words)
+            year_words_tokens = get_lowercase_words_from_str(year_as_words)
+            new_tokens.extend(year_words_tokens)
         else:
             # just append it like this
             new_tokens.append(token)
 
     return new_tokens
 
-
+# TODO remake tests now it use extend not append
 def str_numeric_values_to_spoken_words(tokens):
     '''
     Transform all numerical values to their equivalent in text
@@ -322,13 +301,14 @@ def str_numeric_values_to_spoken_words(tokens):
         if is_str_numeric(token):
             token_as_numeric = float(token)
             token_as_spoken_words = num2words(token_as_numeric)
-            new_tokens.append(token_as_spoken_words)
+            tokens_spoken_words = get_lowercase_words_from_str(token_as_spoken_words)
+            new_tokens.extend(tokens_spoken_words)
         else:
             new_tokens.append(token)
 
     return new_tokens
 
-
+# TODO remake tests now it use extend not append
 def str_ordinal_numbers_to_spoken_words(tokens):
     '''
     Transform all ordinal values to their equivalent in text
@@ -340,32 +320,52 @@ def str_ordinal_numbers_to_spoken_words(tokens):
 
     ordinals = ['st', 'nd', 'rd', 'th']
 
-    # first phase of conversion process; e.g "1" "st" => "first"
+    # first phase, handle "1st", "23rd" etc
+    for token in tokens:
+        if (token[-2:].lower() in ordinals) and is_str_numeric(token[0:-2]):
+            numerical_part = token[0:-2]
+            numerical_part_spoken_whole_str = num2words(float(token[0:-2]), to = "ordinal")
+            numerical_part_spoken = get_lowercase_words_from_str(numerical_part_spoken_whole_str)
+            new_tokens.extend(numerical_part_spoken)
+        else:
+            new_tokens.append(token)
+
+    tokens = new_tokens.copy()
+    new_tokens = []
+
+    # second phase of conversion process; e.g "1" "st" => "first"
     i = 0
     while i<= len(tokens) - 2:
-        if tokens[i].isnumeric() and tokens[i+1].lower() in ordinals:
-            ordinal_as_spoken_word = num2words(int(tokens[i]), to = 'ordinal')
-            new_tokens.append(ordinal_as_spoken_word)
+        if is_str_numeric(tokens[i]) and tokens[i+1].lower() in ordinals:
+            ordinal_as_spoken_words_whole_str = num2words(float(tokens[i]), to = 'ordinal')
+            ordinal_as_spoken_words = get_lowercase_words_from_str(ordinal_as_spoken_words_whole_str)
+            new_tokens.extend(ordinal_as_spoken_words)
             i = i + 1
         else:
             new_tokens.append(tokens[i])
 
         i = i + 1
 
-    # first phase of conversion process; e.g "1 st" => "first"
-    new_tokens2 = []
-    for token in new_tokens:
+    if len(tokens) >= 2 and tokens[-1].lower() not in ordinals:
+        new_tokens.append(tokens[-1])
+
+    tokens = new_tokens.copy()
+    new_tokens = []
+
+    # third phase of conversion process; e.g "1 st" => "first"
+    for token in tokens:
         token_last2chars = token[len(token) -2:]
         token_first_chars = token[0:-2]
         if token_first_chars.isnumeric() and token_last2chars.lower() in ordinals:
-            ordinal_as_spoken_word = num2words(int(token_first_chars))
-            new_tokens2.append(ordinal_as_spoken_word)
+            ordinal_as_spoken_words_whole_str = num2words(float(token_first_chars), to = 'ordinal')
+            ordinal_as_spoken_words = get_lowercase_words_from_str(ordinal_as_spoken_word_whole_str)
+            new_tokens.extend(ordinal_as_spoken_words)
         else:
-            new_tokens2.append(token)
+            new_tokens.append(token)
 
-    return new_tokens2
+    return new_tokens
 
-
+# TODO remake tests now it use extend not append
 def str_currency_to_spoken_words(tokens):
     '''
     Transform all currency values to their equivalent in text
@@ -379,7 +379,8 @@ def str_currency_to_spoken_words(tokens):
                '£':'pounds sterling', 'GBP':'pounds sterling', 'JPY':'yens', 'AUD':'dollars', 'CAD':'dollars'}
     for token in tokens:
         if token in symbols.keys():
-            new_tokens.append(symbols[token])
+            symbol_tokens_components = get_lowercase_words_from_str(symbols[token])
+            new_tokens.extend(symbol_tokens_components)
         else:
             new_tokens.append(token)
 
@@ -393,7 +394,7 @@ def str_remove_common_chars(tokens):
     :return: modified list of str tokens that excludes common chars
     :rtype: built-in python list
     '''
-    common_chars = ['\'', '"']
+    common_chars = ['\'','"']
     tokens =[token for token in tokens if token not in common_chars]
     return tokens
 
@@ -409,7 +410,7 @@ def remove_str_tokens_len_less_than_threshold(tokens, threshold_value):
     tokens = [token for token in tokens if len(token)>= threshold_value]
     return tokens
 
-
+# TODO remake tests now it use extend not append
 def str_fraction_to_spoken_words(tokens):
     '''
     Transform all numerical fraction included in tokens in their equivalent text (this produce some chained tokens, e.g 'one-half' and not 'one' 'half')
@@ -423,8 +424,8 @@ def str_fraction_to_spoken_words(tokens):
         if is_str_fraction(token):
             if token == '1/2':
                 value = 'one-half'
-                value_splited = get_lowercase_words_from_str(value)
-                new_tokens.extend(value_splited)
+                value_split = get_lowercase_words_from_str(value)
+                new_tokens.extend(value_split)
             else:
                 fraction_parts = token.split('/')
                 numerator = int(fraction_parts[0])
@@ -435,11 +436,11 @@ def str_fraction_to_spoken_words(tokens):
                 denominator_as_words = num2words(denominator, to = "ordinal")
 
                 # extract only words, without '-' and others
-                numerator_splited = get_lowercase_words_from_str(numerator_as_words)
-                denominator_splited= get_lowercase_words_from_str(denominator_as_words)
+                numerator_split = get_lowercase_words_from_str(numerator_as_words)
+                denominator_split= get_lowercase_words_from_str(denominator_as_words)
 
-                new_tokens.extend(numerator_splited)
-                new_tokens.extend(denominator_splited)
+                new_tokens.extend(numerator_split)
+                new_tokens.extend(denominator_split)
         else:
             new_tokens.append(token)
 
@@ -447,7 +448,7 @@ def str_fraction_to_spoken_words(tokens):
 
 # IN: list of str tokens
 # OUT: list of str tokens
-# replace email addresses with '[EMAIL]' tag constant value
+# replace email addresses with 'email' tag constant value
 def str_emails_to_email_tag(tokens):
     '''
     Replaces all email addresses with '[email]' tag constant value
@@ -471,7 +472,7 @@ def str_dates_to_date_tag(tokens):
 # IN: list of str tokens
 # OUT: list of str tokens
 # replace a given symbol with a specific tag
-# e.g replace quotes (") with a specific tag: [QUOTE];
+# e.g replace quotes (") with a specific tag: quote;
 # important mention: structures such as '"cat' will be converted into '[QUOTE] cat'
 def str_tokens_replace_symbol_with_tag(tokens, symbol, tag):
     junk_spaces = [' ', '']
@@ -513,8 +514,9 @@ def str_tokens_replace_symbol_with_tag(tokens, symbol, tag):
 
 # IN: list of str tokens
 # OUT: list of str tokens
-# convert numbers that contain separators to spoken words, e.g "10,500,205" to "ten million, five hundred thousand, two hundred and five"
-# separator value is ","
+# convert numbers that contain separators to spoken words, e.g "10,500,205" to spoken words, append new words to list
+# ["ten", "million", "five", "hundred", "thousand", "two", "hundred", "and", "five"]
+# TODO now it use extend not append
 def str_tokens_numbers_with_separators_to_spoken_words(tokens):
     # left side must be a white space or line start
     # center must be follow the pattern, digits(,digits)+
@@ -525,22 +527,22 @@ def str_tokens_numbers_with_separators_to_spoken_words(tokens):
     for token in tokens:
         matches = re.findall(pattern, token)
         if len(matches) == 1:
-            spoken_words = str_number_with_separators_to_integer_number(token)
-            new_tokens.extend(spoken_words)
+            numerical_value = str_number_with_separators_to_integer_number(token)
+            numerical_value_spoken = num2words(int(numerical_value), to = "cardinal")
+            words = get_lowercase_words_from_str(numerical_value_spoken)
+            new_tokens.extend(words)
         else:
             new_tokens.append(token)
 
     return new_tokens
 
 # IN: str representing a number with comma separator, e.g "10,500,205"
-# OUT: list with spoken parts of hte number e.g, ["ten", "million", "five", "hundred", "thousand", "two", "hundred", "and", "five"]
+# OUT: int value, e.g 10500205
 def str_number_with_separators_to_integer_number(val):
     all_digits = [character for character in val if character.isdigit()]
-    numerical_value = ''.join(all_digits)
-    numerical_value_spoken = num2words(int(numerical_value), to = "cardinal")
-    words = get_lowercase_words_from_str(numerical_value_spoken)
+    numerical_value = int(''.join(all_digits))
 
-    return words
+    return numerical_value
 
 # IN: list of str
 # OUT: list of str
@@ -553,6 +555,13 @@ def split_and_gather_str_tokens_by_separator(tokens, separator):
         new_tokens.extend(token_parts)
     return new_tokens
 
+# OUT: list of str tokens that represent stopwords
+def get_str_stopwords():
+# do not consider this token as stopwords
+    NOT_STOPWORDS = ['one','sixty', 'nine', 'six', 'twelve', 'twenty', 'ten', 'hundred', 'third', 'five', 'two', 'three', 'eleven', 'first', 'four', 'forty', 'fifty', 'fifteen', 'eight']
+    stopwords = STOP_WORDS.copy()
+    res = [stopword for stopword in stopwords if stopword not in NOT_STOPWORDS]
+    return res
 
 def str_tokens_to_spacy_tokens(tokens, nlp_model):
     '''

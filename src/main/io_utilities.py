@@ -14,7 +14,7 @@ def read_txt_file(file_path):
     :rtype: built-in python dictionary
     '''
     result = dict()
-    with open(file_path, 'r', encoding='utf-8') as file_obj:
+    with open(file_path, mode = 'r', encoding='utf-8') as file_obj:
         result['content'] = file_obj.read()
     return result
 
@@ -59,5 +59,5 @@ def save_dict_to_json_file(data, output_file_path):
     if output_file_path.endswith(".json") is False:
         output_file_path = output_file_path + ".json"
 
-    with open(output_file_path, 'w') as f:
+    with open(output_file_path, mode =  'w', encoding='utf-8') as f:
         json.dump(data, f, indent = 2)

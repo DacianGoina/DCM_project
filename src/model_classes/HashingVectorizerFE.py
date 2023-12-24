@@ -6,7 +6,7 @@ from sklearn.feature_extraction.text import HashingVectorizer
 class HashingVectorizerFE(FeaturesExtractor):
     def __init__(self, X_data):
         FeaturesExtractor.__init__(self,X_data)
-        self.feature_extractor = HashingVectorizer(lowercase = False, stop_words = None, token_pattern = TOKEN_PATTERN, n_features = 2**16, norm='l2')
+        self.feature_extractor = HashingVectorizer(lowercase = False, stop_words = None, token_pattern = TOKEN_PATTERN, n_features = 2**15, norm='l2')
 
     def set_extractor_params(self, new_params):
         self.feature_extractor.set_params(**new_params)
