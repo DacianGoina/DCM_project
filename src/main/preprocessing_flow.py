@@ -42,7 +42,6 @@ def custom_tokenizer(raw_text, nlp_model):
     # handle years value - convert years into spoken words
     tokens = str_years_to_spoken_words(tokens)
 
-    # TODO HANDLE 1st and so on
     # convert articulated date into spoken words (e.g '3rd' -> 'third')
     tokens = str_ordinal_numbers_to_spoken_words(tokens)
 
@@ -64,6 +63,15 @@ def custom_tokenizer(raw_text, nlp_model):
 
     # remove stopwords
     tokens = str_tokens_remove_stopwords(tokens)
+
+    # handle 6digits dates
+    tokens = str_6digits_dates_to_date_tag(tokens)
+
+    # handle urls
+    tokens = str_urls_to_url_tag(tokens)
+
+    # handle initial case letters (e.g surname initial case)
+    tokens = str_initial_case_to_tag(tokens)
 
     # remove tokens with length = 1
     tokens = remove_str_tokens_len_less_than_threshold(tokens, 2)

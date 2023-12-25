@@ -68,7 +68,7 @@ def get_classifier_to_extractor_str(classifier, features_extractor):
 if __name__ == "__main__":
     print("Main")
 
-    data = pd.read_csv('../file_name_v5.csv')
+    data = pd.read_csv('../file_name_v6.csv')
     the_classifiers = build_classifiers()
     the_extractors = build_features_extractors()
 

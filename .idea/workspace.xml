@@ -6,7 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="0cebda5f-c239-41f2-a456-3468870c5bac" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/consts_values.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/consts_values.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/preprocessing_flow.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/preprocessing_flow.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/text_preprocessing_utilities.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/text_preprocessing_utilities.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model_classes/ModelManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/model_classes/ModelManager.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,7 +63,7 @@
       <recent name="C:\Users\Dacian\Desktop\MLO_DCM\src\main" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.main">
+  <component name="RunManager" selected="Python.ModelManager">
     <configuration name="ModelManager" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="MLO_DCM" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -252,8 +256,8 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/MLO_DCM$preprocessing_flow.coverage" NAME="preprocessing_flow Coverage Results" MODIFIED="1702888692833" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
-    <SUITE FILE_PATH="coverage/MLO_DCM$main.coverage" NAME="main Coverage Results" MODIFIED="1703434365345" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
-    <SUITE FILE_PATH="coverage/MLO_DCM$ModelManager.coverage" NAME="ModelManager Coverage Results" MODIFIED="1703433600970" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/model_classes" />
+    <SUITE FILE_PATH="coverage/MLO_DCM$main.coverage" NAME="main Coverage Results" MODIFIED="1703506903472" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/MLO_DCM$ModelManager.coverage" NAME="ModelManager Coverage Results" MODIFIED="1703507963511" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/model_classes" />
     <SUITE FILE_PATH="coverage/MLO_DCM$Unittests_in_unit_test_text_preprocessing_utilities_py.coverage" NAME="Unittests in unit_test_text_preprocessing_utilities.py Coverage Results" MODIFIED="1702489694044" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/main" />
   </component>
 </project>
