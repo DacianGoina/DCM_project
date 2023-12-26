@@ -130,6 +130,15 @@ def build_features_extractors(data):
 def get_classifier_to_extractor_str(classifier_name, features_extractor_name):
     return classifier_name + "_" + features_extractor_name
 
+# IN: str
+# OUT: tuple with classifier, features extractor names
+# reverse engineering for get_classifier_to_extractor_str method
+# receive a compound name (classifier, extractor) and return his components
+def reverse_classifier_to_extractor_str(compound_name):
+    components = compound_name.split("_")
+    return (components[0], components[1])
+
+
 # IN: object itself (python object), object name (str), directory path
 # save a model component to binary object
 def save_model_component(object, object_name, directory_path):

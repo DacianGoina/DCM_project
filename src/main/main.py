@@ -15,6 +15,12 @@ if __name__ == "__main__":
                'cat like house house',
                'house for cat'
     ]
+
+
+
+    model1 = get_nlp_model()
+    all_words = set(model1.vocab.strings)
+    print('Blinken' in all_words)
     #cv.fit(in_list)
     # cv.transform(in_list)
     # print(cv.vocabulary_)

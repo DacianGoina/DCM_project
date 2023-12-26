@@ -8,7 +8,7 @@ from num2words import num2words
 from validate_email_address import validate_email
 from dateutil import parser
 from collections import Counter
-from consts_values import *
+from src.main.consts_values import *
 import re
 from spacy.lang.en.stop_words import STOP_WORDS
 from urllib.parse import urlparse
