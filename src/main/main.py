@@ -1,11 +1,41 @@
 from src.main.text_preprocessing_utilities import  *
 from num2words import  num2words
 from src.main.preprocessing_flow import *
-
+from src.main.io_utilities import *
+from sklearn.feature_extraction.text import CountVectorizer
+from pickle import dump
+from pickle import load
 if __name__ == "__main__":
     print("Main")
 
+    TOKEN_PATTERN_v = "\S+"
+    cv = CountVectorizer(lowercase = False, stop_words = None, token_pattern = TOKEN_PATTERN_v, preprocessor = None, tokenizer = None)
 
+    in_list = ['house for my family',
+               'cat like house house',
+               'house for cat'
+    ]
+    #cv.fit(in_list)
+    # cv.transform(in_list)
+    # print(cv.vocabulary_)
+    # print(cv.transform(in_list).toarray())
+    # print("-----------------")
+    # print(cv.transform(['house caca maca']).toarray())
+
+    # res = cv.fit_transform(in_list)
+    # print(cv.vocabulary_)
+    # print(sorted(cv.vocabulary_.copy().items(), key = lambda x: x[1]))
+    # print(res.toarray())
+    # print('-'*20)
+    # res2 = cv.transform(['mickey house cat agagagag'])
+    # print(res2.toarray())
+    #
+    # dump(cv, open('count_vec.pkl', 'wb'))
+
+    # cv2 = import_binary_object("count_vec.pkl")
+    # print(cv2)
+    # print(cv2.vocabulary_)
+    # print(cv2.transform(["house my cat cool"]).toarray())
 
     # model1 = get_nlp_model()
     # text = "\"the https://www.kaggle.com is a good website for datasets!"
@@ -53,4 +83,4 @@ if __name__ == "__main__":
     # print(is_url("http://www.example.com"))
     # print(is_url("example.com"))
 
-    read_preprocess_and_export("../data","file_name_v6.csv", preprocessing_iterations=4)
+    #read_preprocess_and_export("../data","file_name_v6.csv", preprocessing_iterations=4)
