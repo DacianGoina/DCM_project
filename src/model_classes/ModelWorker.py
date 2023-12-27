@@ -28,7 +28,9 @@ def worker_execute(raw_text):
 
     return predictions_result
 
-
+# IN: preprocessed text (as whole string)
+# OUT: dict with the predicted label, top predicted labels for the given text, scores provided by all classifiers
+# load extractor and classifiers, perform prediction and compute the highest occurred predicted label
 def perform_prediction(processed_text):
     classifiers, extractors = import_model_objects()
 
@@ -52,8 +54,6 @@ def perform_prediction(processed_text):
             classifier_extractor_pair_name = get_classifier_to_extractor_str(concrete_classifier.short_str(), extractor_name)
             predictions[classifier_extractor_pair_name] = predicted_label
 
-    # for pair_name, predicted_label in predictions.items():
-    #     print(pair_name, ": ", predicted_label)
     prediction_results = dict()
 
     predicted_label_final, top_predicted_labels = voting_system(predictions)

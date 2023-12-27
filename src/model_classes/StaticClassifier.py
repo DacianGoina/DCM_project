@@ -27,7 +27,7 @@ class StaticClassifier:
         return self.model_classifier.get_params().copy()
 
     # fit model with data, train the model, test the result, and return confusion matrix
-    # assume that the given data is preprocessed and scaled
+    # assume that the given data is preprocessed
     def fit_train_evaluate(self, dict_data):
         self.model_classifier.fit(dict_data[X_TRAIN], dict_data[Y_TRAIN])
         y_pred = self.model_classifier.predict(dict_data[X_TEST])
@@ -37,13 +37,13 @@ class StaticClassifier:
 
         return get_model_evaluation_metrics(res_conf_matrix)
 
-    # predict label for a value passed as a input; assume that the given data is preprocessed and scaled
+    # predict label for a value passed as a input; assume that the given data is preprocessed
     def predict(self, data_point):
         predicted_label = self.model_classifier.predict(data_point)
         return predicted_label
 
     # for a given data_point return the predicted probabilities for every label
-    #  assume that the given data is preprocessed and scaled
+    #  assume that the given data is preprocessed
     def predict_probabilities(self, data_point):
         predicted_probabilities = self.model_classifier.predict_proba(data_point)
         predicted_probabilities = predicted_probabilities.flatten().tolist() # convert to built-in list

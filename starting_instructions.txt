@@ -16,3 +16,11 @@ Short-period TO-DO:
 
 2. implement python functions to preprocess a text (for the beginning only the raw text, then we'll include methods to parse files - e.g text files etc, but is import to have the preprocessing flow in order because at the end the model will use text, it won't care about the source - as a black box )
 
+
+
+
+@Dacian 
+NOTE 27/12/2023
+
+After implementing voting system, looks like the classifiers works better (predict better) when they are trained on non scaled data (so after obtain numerical values from text tokens DO NOT SCALE THE DATA), with scaled data they are worked pretty bad. As a mention, the used classifiers (RandomForest, LogisticRegression, SVM, DecisionTree, AdaBoost) aren't affected by data scale (do not require scaling); Scaling values to [0, 1] was used originally to fulfill MultinomialNB conditions that require only positive values. At this moment MultinomialNB is not longer used in ModelManager, at classifier objects creation step, but the classifiers instances of MultinomialNB are kept and can be used for classification. !!! Be careful, it a MultinomialNB classifier receive negative values it can't handle it; also, try with HashingVectorizer alternate_sign = False to overcome this
+
