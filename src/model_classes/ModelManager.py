@@ -37,10 +37,15 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.ensemble import AdaBoostClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.linear_model import LogisticRegression
-from src.model_classes.GaussianNBClassifier import GaussianNBClassifier
+from sklearn.naive_bayes import MultinomialNB
+
+from sklearn.preprocessing import MinMaxScaler
+from scipy import sparse
+
 import spacy
 import pandas as pd
 import itertools
+import numpy as np
 
 CLASSIFIERS_OUTPUT_KEY = "classifiers"
 EXTRACTORS_OUTPUT_KEY = "extractors"
@@ -81,7 +86,8 @@ def model_fit_train_predict(X_data, y_data, classifiers, features_extractors, ou
 
     # transform X data using every feature extractor, store the results
     for extractor in features_extractors:
-        transformed_data = extractor.transform_data(X_data)
+        transformed_data = extractor.transform_data(X_data.copy())
+        #transformed_data = scale_sparse_matrix_data(transformed_data)
         numerical_data[extractor.short_str()] = transformed_data
         if save_model_objects is True:
             save_model_component(extractor, extractor.short_str(), output_objects_paths[EXTRACTORS_OUTPUT_KEY])
@@ -96,8 +102,7 @@ def model_fit_train_predict(X_data, y_data, classifiers, features_extractors, ou
 
         working_set_name =  get_classifier_to_extractor_str(classifier.short_str(), extractor)
         print(working_set_name)
-        classifier.set_model_data(data_dict)
-        resulted_metrics = classifier.fit_train_evaluate()
+        resulted_metrics = classifier.fit_train_evaluate(data_dict)
         if save_model_objects is True:
             save_model_component(classifier, working_set_name, output_objects_paths[CLASSIFIERS_OUTPUT_KEY])
 
@@ -105,17 +110,29 @@ def model_fit_train_predict(X_data, y_data, classifiers, features_extractors, ou
 
     return results
 
+# IN: sparse matrix (csr matrix)
+# OUT: sparse matrix
+# Take the provided sparse matrix, convert it to numpy matrix, scale the values using
+# MinMaxScaler, convert back to sparse matrix and return the object
+def scale_sparse_matrix_data(sparse_matrix_obj):
+    scaler = MinMaxScaler() # min max scaler, range [0, 1]
+    numpy_matrix = sparse_matrix_obj.toarray()
+    numpy_matrix_scaled_values = scaler.fit_transform(numpy_matrix)
+    sparse_matrix_obj_res = sparse.csr_matrix(numpy_matrix_scaled_values)
+    return sparse_matrix_obj_res
+
 # OUT: list
 # construct list of used classifiers
 def build_classifiers():
-    rf = StaticClassifier(None, RandomForestClassifier(n_estimators = 150))
-    svc_cl = StaticClassifier(None, svm.SVC(kernel='linear', probability = True, random_state = 3))
-    dt = StaticClassifier(None, DecisionTreeClassifier())
-    lr = StaticClassifier(None, LogisticRegression(max_iter = 250))
-    adaboost_cl = StaticClassifier(None, AdaBoostClassifier(n_estimators = 150, estimator = RandomForestClassifier(n_estimators = 150)))
-    naive_bayes = GaussianNBClassifier(None)
+    rf = StaticClassifier(RandomForestClassifier(n_estimators = 150))
+    svc_cl = StaticClassifier(svm.SVC(kernel='linear', probability = True, random_state = 3))
+    dt = StaticClassifier(DecisionTreeClassifier())
+    lr = StaticClassifier(LogisticRegression(max_iter = 250, solver = "liblinear"))
+    adaboost_cl = StaticClassifier(AdaBoostClassifier(n_estimators = 150, estimator = RandomForestClassifier(n_estimators = 150)))
+    #naive_bayes = StaticClassifier(MultinomialNB())
 
-    classifiers = [rf, svc_cl, naive_bayes, dt, lr, adaboost_cl]
+    #classifiers = [rf, svc_cl, naive_bayes, dt, lr, adaboost_cl]
+    classifiers = [rf, svc_cl, dt, lr, adaboost_cl]
 
     return classifiers
 
@@ -158,4 +175,4 @@ if __name__ == "__main__":
     extractors_objs_output_dir = "../../model_objects/features_extractors"
 
     # root function of manager - this start everything
-    manager_execute(preprocessed_data_file_path, {CLASSIFIERS_OUTPUT_KEY:classifiers_objs_output_dir, EXTRACTORS_OUTPUT_KEY:extractors_objs_output_dir}, save_model_objs=True)
+    manager_execute(preprocessed_data_file_path, {CLASSIFIERS_OUTPUT_KEY:classifiers_objs_output_dir, EXTRACTORS_OUTPUT_KEY:extractors_objs_output_dir}, save_model_objs=False)

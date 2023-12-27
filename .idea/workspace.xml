@@ -6,6 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="0cebda5f-c239-41f2-a456-3468870c5bac" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model_objects/classifiers/AdaBoostClassifier_CountVectorizer.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/model_objects/classifiers/AdaBoostClassifier_CountVectorizer.pkl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model_objects/classifiers/AdaBoostClassifier_HashingVectorizer.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/model_objects/classifiers/AdaBoostClassifier_HashingVectorizer.pkl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model_objects/classifiers/AdaBoostClassifier_TfidfVectorizer.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/model_objects/classifiers/AdaBoostClassifier_TfidfVectorizer.pkl" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model_objects/classifiers/DecisionTreeClassifier_CountVectorizer.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/model_objects/classifiers/DecisionTreeClassifier_CountVectorizer.pkl" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model_objects/classifiers/DecisionTreeClassifier_HashingVectorizer.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/model_objects/classifiers/DecisionTreeClassifier_HashingVectorizer.pkl" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model_objects/classifiers/DecisionTreeClassifier_TfidfVectorizer.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/model_objects/classifiers/DecisionTreeClassifier_TfidfVectorizer.pkl" afterDir="false" />
@@ -21,12 +24,11 @@
       <change beforePath="$PROJECT_DIR$/model_objects/features_extractors/CountVectorizer.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/model_objects/features_extractors/CountVectorizer.pkl" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model_objects/features_extractors/HashingVectorizer.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/model_objects/features_extractors/HashingVectorizer.pkl" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model_objects/features_extractors/TfidfVectorizer.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/model_objects/features_extractors/TfidfVectorizer.pkl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model_classes/CountVectorizerFE.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/model_classes/CountVectorizerFE.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model_classes/HashingVectorizerFE.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/model_classes/HashingVectorizerFE.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model_classes/GaussianNBClassifier.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model_classes/ModelManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/model_classes/ModelManager.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model_classes/ModelWorker.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/model_classes/ModelWorker.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model_classes/StaticClassifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/model_classes/StaticClassifier.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model_classes/TfidfVectorizerFE.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/model_classes/TfidfVectorizerFE.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,7 +81,7 @@
       <recent name="C:\Users\Dacian\Desktop\MLO_DCM\src\main" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.ModelManager">
+  <component name="RunManager" selected="Python.ModelWorker">
     <configuration name="ModelManager" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="MLO_DCM" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -261,8 +263,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.ModelManager" />
         <item itemvalue="Python.ModelWorker" />
+        <item itemvalue="Python.ModelManager" />
         <item itemvalue="Python.main (1)" />
         <item itemvalue="Python tests.Unittests in unit_test_text_preprocessing_utilities.py" />
       </list>
@@ -294,22 +296,11 @@
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/src/model_classes/StaticClassifier.py</url>
-          <line>48</line>
-          <option name="timeStamp" value="9" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
-  </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/MLO_DCM$preprocessing_flow.coverage" NAME="preprocessing_flow Coverage Results" MODIFIED="1702888692833" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/MLO_DCM$main.coverage" NAME="main Coverage Results" MODIFIED="1703613079432" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
-    <SUITE FILE_PATH="coverage/MLO_DCM$ModelManager.coverage" NAME="ModelManager Coverage Results" MODIFIED="1703686986172" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/model_classes" />
+    <SUITE FILE_PATH="coverage/MLO_DCM$ModelManager.coverage" NAME="ModelManager Coverage Results" MODIFIED="1703696990170" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/model_classes" />
     <SUITE FILE_PATH="coverage/MLO_DCM$Unittests_in_unit_test_text_preprocessing_utilities_py.coverage" NAME="Unittests in unit_test_text_preprocessing_utilities.py Coverage Results" MODIFIED="1702489694044" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/main" />
-    <SUITE FILE_PATH="coverage/MLO_DCM$ModelWorker.coverage" NAME="ModelWorker Coverage Results" MODIFIED="1703686757357" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/model_classes" />
+    <SUITE FILE_PATH="coverage/MLO_DCM$ModelWorker.coverage" NAME="ModelWorker Coverage Results" MODIFIED="1703697173554" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/model_classes" />
   </component>
 </project>

@@ -14,9 +14,8 @@ from sklearn.metrics import accuracy_score
 
 class StaticClassifier:
 
-    # constructor; assume data from model data is already preprocessed (numerical values not text)
-    def __init__(self, model_data, model_classifier):
-        self.model_data = model_data
+    # constructor; pass only classifier object, it do not need to store the data
+    def __init__(self, model_classifier):
         self.model_classifier = model_classifier
 
     # set model params (e.g if you want to change the params after initialization)
@@ -27,33 +26,29 @@ class StaticClassifier:
     def get_model_params(self):
         return self.model_classifier.get_params().copy()
 
-    # train the model, test the result, and return confusion matrix
-    def fit_train_evaluate(self):
-        self.model_classifier.fit(self.model_data[X_TRAIN], self.model_data[Y_TRAIN])
-        y_pred = self.model_classifier.predict(self.model_data[X_TEST])
-        res_conf_matrix = confusion_matrix(self.model_data[Y_TEST], y_pred)
+    # fit model with data, train the model, test the result, and return confusion matrix
+    # assume that the given data is preprocessed and scaled
+    def fit_train_evaluate(self, dict_data):
+        self.model_classifier.fit(dict_data[X_TRAIN], dict_data[Y_TRAIN])
+        y_pred = self.model_classifier.predict(dict_data[X_TEST])
+        res_conf_matrix = confusion_matrix(dict_data[Y_TEST], y_pred)
 
-        print("accuracy: ", accuracy_score(y_pred,self.model_data[Y_TEST] ))
+        print("accuracy: ", accuracy_score(y_pred,dict_data[Y_TEST] ))
 
         return get_model_evaluation_metrics(res_conf_matrix)
 
-    # predict label for a value passed as a input
+    # predict label for a value passed as a input; assume that the given data is preprocessed and scaled
     def predict(self, data_point):
         predicted_label = self.model_classifier.predict(data_point)
         return predicted_label
 
     # for a given data_point return the predicted probabilities for every label
+    #  assume that the given data is preprocessed and scaled
     def predict_probabilities(self, data_point):
         predicted_probabilities = self.model_classifier.predict_proba(data_point)
-        predicted_probabilities = predicted_probabilities.flatten().tolist() # convert to normal list
+        predicted_probabilities = predicted_probabilities.flatten().tolist() # convert to built-in list
         predicted_labels_with_probabilities = list(zip(self.get_model_classes(), predicted_probabilities))
         return predicted_labels_with_probabilities
-
-    def set_model_data(self, new_data):
-        self.model_data = new_data
-
-    def get_model_data(self):
-        return self.model_data.copy()
 
     def get_model_classes(self):
         return list(self.model_classifier.classes_)
