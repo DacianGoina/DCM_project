@@ -1,5 +1,7 @@
 pip install validate-email-address
+pip install scikit-learn
 pip install spacy
+pip install flask
 pip install num2words
 pip install numpy
 pip install pandas
@@ -10,3 +12,7 @@ pip install sphinx_rtd_theme
 pip install ghp-import
 pip install --upgrade pylint --use-feature=2020-resolver
 pip install sphinxcontrib-bibtex
+
+
+python -m spacy download en_core_web_sm
+python -m spacy download en_core_web_md

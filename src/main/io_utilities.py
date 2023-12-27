@@ -1,6 +1,7 @@
 import os
 import pandas as pd
-
+import json
+import pickle
 # IO functions
 
 # IN: str file path
@@ -14,7 +15,7 @@ def read_txt_file(file_path):
     :rtype: built-in python dictionary
     '''
     result = dict()
-    with open(file_path, 'r', encoding='utf-8') as file_obj:
+    with open(file_path, mode = 'r', encoding='utf-8') as file_obj:
         result['content'] = file_obj.read()
     return result
 
@@ -51,6 +52,35 @@ def read_raw_data(main_directory_path):
 
     return df
 
-# data_root_path = "data"
-# df = read_raw_data(data_root_path)
-# df
+
+# IN: dict, key: str value, key: int value
+# OUT: None
+# save the given dictionary at the given path
+def save_dict_to_json_file(data, output_file_path):
+    if output_file_path.endswith(".json") is False:
+        output_file_path = output_file_path + ".json"
+
+    with open(output_file_path, mode =  'w', encoding='utf-8') as f:
+        json.dump(data, f, indent = 2)
+
+# IN: object to serialize, output file path
+# OUT: nothing
+# serialize the given object (e.g list, scaler, classifier) and save it to a binary file
+def export_as_binary_obj(obj, output_file_path):
+    if output_file_path.endswith(".pkl") is False:
+        output_file_path = output_file_path + ".pkl"
+
+    with open(output_file_path, mode = 'wb') as file:
+        pickle.dump(obj, file)
+
+# IN: input file path (assume it is for an pickle binary file)
+# OUT: unserialized python object, or None in case that problems occur during file reading process
+def import_binary_object(input_file_path):
+    try:
+        with open(input_file_path, mode = 'rb') as file:
+            res_obj = pickle.load(file)
+            return res_obj
+    except BaseException as e:
+        print(e)
+        return None
+
