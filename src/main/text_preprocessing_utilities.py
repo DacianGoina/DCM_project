@@ -8,10 +8,10 @@ from num2words import num2words
 from validate_email_address import validate_email
 from dateutil import parser
 from collections import Counter
-from consts_values import *
+from src.main.consts_values import *
 import re
 from spacy.lang.en.stop_words import STOP_WORDS
-
+from urllib.parse import urlparse
 
 def is_str_numeric(s):
     '''
@@ -560,6 +560,63 @@ def get_str_stopwords():
     stopwords = STOP_WORDS.copy()
     res = [stopword for stopword in stopwords if stopword not in NOT_STOPWORDS]
     return res
+
+# TODO make tests
+# IN: str value
+# OUT: true of false
+# match calendar date with 6 digits format, e.g 14.05.93 (refer to a date from year 93); the separator can be ".", "-", "/"
+def is_6digits_date(value):
+    pattern = re.compile("\d{2}[.|/|-]\d{2}[.|/|-]\d{2}")
+    return bool(pattern.match(value))
+
+# TODO make tests
+# IN : list of str tokens
+# OUT: list of str tokens
+# replace 6 digits dates with "c_date" tag
+def str_6digits_dates_to_date_tag(tokens):
+    tokens = [token if is_6digits_date(token) is False else calendar_date_tag for token in tokens]
+    return tokens
+
+# TODO make tests
+# IN: str
+# OUT: bool
+# check valid URL, URI
+def is_valid_url(value):
+    try:
+        result = urlparse(value)
+        return all([result.scheme, result.netloc])
+    except ValueError:
+        return False
+
+# TODO make tests
+# IN: str
+# OUT: bool
+# check url in small notation (kind of resource), "ames.arc.nasa.gov"
+def is_valid_resource(value):
+    pattern = re.compile("[a-z]+[.][a-z]+([.][a-z]+)+")
+    return bool(pattern.match(value))
+
+# TODO make tests
+# IN: list of str tokens
+# OUT: list of str tokens
+# replace URLs with url tag
+def str_urls_to_url_tag(tokens):
+    tokens = [token if (is_valid_url(token) or is_valid_resource(token)) is False else url_tag for token in tokens]
+    return tokens
+
+# TODO make tests
+# IN: list of str tokens
+# OUT: list of str tokens
+# replace initial case letters (e.g "a.", "F.") to a specific tag
+def str_initial_case_to_tag(tokens):
+    def is_initial_case_letter_format(value):
+        if len(value) == 2 and value[0].isalpha() and value[1] == ".":
+            return True
+
+        return False
+
+    tokens = [token if is_initial_case_letter_format(token) is False else initial_case_letter for token in tokens]
+    return tokens
 
 def str_tokens_to_spacy_tokens(tokens, nlp_model):
     '''

@@ -1,29 +1,27 @@
 
-from FeaturesExtractor import  *
+from src.model_classes.FeaturesExtractor import  *
 from src.main.model_utilities import *
 from sklearn.feature_extraction.text import CountVectorizer
 
 class CountVectorizerFE(FeaturesExtractor):
-    def __init__(self, X_data):
-        FeaturesExtractor.__init__(self,X_data)
-        self.feature_extractor = CountVectorizer(lowercase = False, stop_words = None, token_pattern = TOKEN_PATTERN)
+    def __init__(self, data):
+        FeaturesExtractor.__init__(self, data)
+        self.feature_extractor = CountVectorizer(lowercase = False, stop_words = None, token_pattern = TOKEN_PATTERN, preprocessor = None, tokenizer = None)
+        self.__fit_data(data)
 
     def set_extractor_params(self, new_params):
         self.feature_extractor.set_params(**new_params)
 
-    # get feature extractor params; pure virtual method
     def get_extractor_params(self):
         return self.feature_extractor.get_params().copy()
 
-    def transform_data(self, new_data, save_features_vocabulary = False, vocabulary_path = None):
-        super().set_new_data_before_transformation(new_data)
-        result = self.feature_extractor.fit_transform(self.X_data)
+    # should be used only once
+    def __fit_data(self, data):
+        self.feature_extractor.fit(data)
 
-        if save_features_vocabulary == True:
-            vocabulary = self.feature_extractor.vocabulary_
-            file_name = self.short_str() + "_vocabulary" + ".json"
-            vocabulary_dict_to_json(dictionary=vocabulary, output_file_path= vocabulary_path + file_name)
-
+    def transform_data(self, data):
+        result = self.feature_extractor.transform(data)
+        super().set_data(data)
         return result
 
     def get_vocabulary(self):
