@@ -12,26 +12,25 @@ This class act as a abstract class; instead of using it directly use the derived
 TOKEN_PATTERN = "\S+"
 
 class FeaturesExtractor:
-    def __init__(self, X_data_value = None):
-        self.X_data = X_data_value
+    def __init__(self,data):
+        self.data = data
         self.feature_extractor = None
 
     def set_data(self, new_data):
-        self.X_data = new_data
+        self.data = new_data
 
+    # return last data used for transformation (not the result of transformation)
     def get_data(self):
-        return self.X_data.copy()
+        return self.data.copy()
 
-    # allow user to pass direct data for transformation: by default the transform_data method should use self.X_data
-    # but to make the method more independently, the data to be transformed can be passed directly
-    # if @param new_data is not None, then self.X_data is replaced with this new value
-    def set_new_data_before_transformation(self, new_data):
-        if new_data is not None:
-            self.X_data = new_data
+    # pure virtual method; fit data into feature extractor; use this before any transform
+    def __fit_data(self, data):
+        pass
 
-    # this must be a pure virtual method - implement it in concrete classes
-    def transform_data(self, new_data = None, save_features_vocabulary = False, vocabulary_path = None):
-        return None
+    # pure virtual method
+    # transform passed data; assume that extractor has already fitted with some data
+    def transform_data(self, data):
+        pass
 
     # set feature extractor params (with a dictionary); pure virtual method
     def set_extractor_params(self, new_params):

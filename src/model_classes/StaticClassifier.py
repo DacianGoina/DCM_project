@@ -42,11 +42,21 @@ class StaticClassifier:
         predicted_label = self.model_classifier.predict(data_point)
         return predicted_label
 
+    # for a given data_point return the predicted probabilities for every label
+    def predict_probabilities(self, data_point):
+        predicted_probabilities = self.model_classifier.predict_proba(data_point)
+        predicted_probabilities = predicted_probabilities.flatten().tolist() # convert to normal list
+        predicted_labels_with_probabilities = list(zip(self.get_model_classes(), predicted_probabilities))
+        return predicted_labels_with_probabilities
+
     def set_model_data(self, new_data):
         self.model_data = new_data
 
     def get_model_data(self):
         return self.model_data.copy()
+
+    def get_model_classes(self):
+        return list(self.model_classifier.classes_)
 
     # string representation for class instance
     def __str__(self):
