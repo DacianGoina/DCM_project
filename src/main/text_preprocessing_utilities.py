@@ -89,7 +89,7 @@ def get_lowercase_words_from_str(val):
 
 def to_lowercase(text):
     '''
-        Tranform text string in lowercase
+        Transform text string in lowercase
 
         :param test: string
         :return: lower case string
@@ -122,8 +122,7 @@ def remove_spacy_punctuations(tokens):
 
     return tokens
 
-# IN: list of spacy tokens
-# OUT: list of str tokens
+
 def lemmatize_spacy_tokens(tokens):
     '''
     Apply lemmatization for a list of words.
@@ -136,13 +135,19 @@ def lemmatize_spacy_tokens(tokens):
     tokens_lemmas = [token.lemma_ for token in tokens]
     return tokens_lemmas
 
-# IN: list of str tokens
-# OUT: list of str tokens
-# Remove stopwords; stopwords are fetched from a function defined also in this file
+
 def str_tokens_remove_stopwords(tokens):
+    '''
+    Removes stopwords (defined also in this file) from a list of tokens
+
+    :param tokens: list of words; every element is a spacy.tokens.token.Token object
+    :return: a list constructed from the initial one without the stopwords
+    :rtype: built-in python list, every element is a spacy.tokens.token.Token object
+    '''
     stopwords = get_str_stopwords()
     tokens = [token for token in tokens if token not in stopwords]
     return tokens
+
 
 def get_str_tokens_freq(tokens):
     '''
@@ -156,8 +161,7 @@ def get_str_tokens_freq(tokens):
     freq = {token: tokens.count(token) for token in set(tokens)}
     return freq
 
-# IN: list of lists of tokens: [ [], [], [], ... ]
-# OUT: dict, d[token] := frequency of token counting tokens from all lists
+
 def get_str_tokens_freq_for_lists(lists_of_tokens):
     '''
     Get the frequency of a lists of tokens
@@ -179,8 +183,8 @@ def get_rare_tokens(dict_of_freq, threshold):
     Get all values that have a frequency smaller than a threshold
 
    :param lists_of_tokens: dictionary of frequency
-   :param threshold: a value of comparition
-   :return: a new dictionary that contains just the frequency's smaller then the threshold
+   :param threshold: a value of comparison
+   :return: a new dictionary that contains just the frequency's smaller than the threshold
    :rtype: built-in python list
    '''
     res = {token:dict_of_freq[token] for token in dict_of_freq.keys() if dict_of_freq[token] <= threshold}
@@ -211,7 +215,7 @@ def spacy_tokens_pos(tokens):
     Creates a list of tuples with every token and it's frequency
 
    :param tokens: list of spacy tokens
-   :return: list of tuples that contains the token and it's position
+   :return: list of tuples that contains the token, and it's position
    :rtype: built-in python list
    '''
     res = []
@@ -255,9 +259,7 @@ def str_remove_junk_spaces(tokens):
 
     return tokens
 
-# TODO remake tests now it use extend not append
-# now, list of tokens are appended to main tokens list
-# before: append "year as spoken", now append ["year", "as", "spoken"]
+
 def str_years_to_spoken_words(tokens):
     '''
     Transform the numerical years in their equivalent text
@@ -286,7 +288,7 @@ def str_years_to_spoken_words(tokens):
 
     return new_tokens
 
-# TODO remake tests now it use extend not append
+
 def str_numeric_values_to_spoken_words(tokens):
     '''
     Transform all numerical values to their equivalent in text
@@ -308,7 +310,7 @@ def str_numeric_values_to_spoken_words(tokens):
 
     return new_tokens
 
-# TODO remake tests now it use extend not append
+
 def str_ordinal_numbers_to_spoken_words(tokens):
     '''
     Transform all ordinal values to their equivalent in text
@@ -365,6 +367,7 @@ def str_ordinal_numbers_to_spoken_words(tokens):
 
     return new_tokens
 
+
 def str_currency_to_spoken_words(tokens):
     '''
     Transform all currency values to their equivalent in text
@@ -408,7 +411,7 @@ def remove_str_tokens_len_less_than_threshold(tokens, threshold_value):
     tokens = [token for token in tokens if len(token)>= threshold_value]
     return tokens
 
-# TODO remake tests now it use extend not append
+
 def str_fraction_to_spoken_words(tokens):
     '''
     Transform all numerical fraction included in tokens in their equivalent text (this produce some chained tokens, e.g 'one-half' and not 'one' 'half')
@@ -444,14 +447,12 @@ def str_fraction_to_spoken_words(tokens):
 
     return new_tokens
 
-# IN: list of str tokens
-# OUT: list of str tokens
-# replace email addresses with 'email' tag constant value
+
 def str_emails_to_email_tag(tokens):
     '''
     Replaces all email addresses with '[email]' tag constant value
     :param tokens: list of str tokens
-    :return: new list of str tokens with instances of '[email]' instead of email address
+    :return: new list of str tokens with instances of a tag 'email' (constant) instead of email address
     :rtype: built-in python list
     '''
     tokens = [token if validate_email(token) is False else email_tag for token in tokens ]
@@ -467,12 +468,16 @@ def str_dates_to_date_tag(tokens):
     tokens = [token if is_str_valid_date(token) is False else calendar_date_tag for token in tokens]
     return tokens
 
-# IN: list of str tokens
-# OUT: list of str tokens
-# replace a given symbol with a specific tag
-# e.g replace quotes (") with a specific tag: quote;
-# important mention: structures such as '"cat' will be converted into '[QUOTE] cat'
+
 def str_tokens_replace_symbol_with_tag(tokens, symbol, tag):
+    '''
+    Function that replace a given symbol with a given tag (mention: structures such as '"cat' will be converted into '[QUOTE] cat')
+    :param tokens: list of str tokens
+    :param symbol: the symbol that wants to be modified
+    :param tag: the tag that will replace the symbol value
+    :return: new list of tokens with tag instances instead of symbol
+    :rtype: built-in python list
+    '''
     junk_spaces = [' ', '']
     new_tokens = []
     for token in tokens:
@@ -510,14 +515,17 @@ def str_tokens_replace_symbol_with_tag(tokens, symbol, tag):
 
     return new_tokens
 
-# IN: list of str tokens
-# OUT: list of str tokens
-# convert numbers that contain separators to spoken words, e.g "10,500,205" to spoken words, append new words to list
-# ["ten", "million", "five", "hundred", "thousand", "two", "hundred", "and", "five"]
-# TODO now it use extend not append
+
 def str_tokens_numbers_with_separators_to_spoken_words(tokens):
+    '''
+    Function that converts the numbers that contain separators to spoken words,
+    e.g "10,500,205" to spoken words (appending them to the list) ["ten", "million", "five", "hundred", "thousand", "two", "hundred", "and", "five"]
+    :param tokens: list of str tokens
+    :return: new list that contains the numbers with separators as spoken words
+    :rtype: built-in python list
+    '''
     # left side must be a white space or line start
-    # center must be follow the pattern, digits(,digits)+
+    # center must be following the pattern, digits(,digits)+
     # right must be a white space or line end
     # structure such as '(?<=\s)' refer to match but not to include in the result
     pattern = re.compile("((?<=\s)|(?<=^))(\d+((,\d+)+))((?=\s)|(?=$))")
@@ -534,81 +542,112 @@ def str_tokens_numbers_with_separators_to_spoken_words(tokens):
 
     return new_tokens
 
-# IN: str representing a number with comma separator, e.g "10,500,205"
-# OUT: int value, e.g 10500205
+
 def str_number_with_separators_to_integer_number(val):
+    '''
+    Transform a string that represents a number with a comma to a number without commas/integer (e.g. "10,500,205" -> 10500205)
+    :param val: string value
+    :return: integer
+    :rtype: build-in python integer
+    '''
     all_digits = [character for character in val if character.isdigit()]
     numerical_value = int(''.join(all_digits))
 
     return numerical_value
 
-# IN: list of str
-# OUT: list of str
-# for tokens that are 'compound' words, e.g 'tech,media' (this is a whole token, not 2) split them by the given separator
-# and them gather them together: ['tech', 'media']
+
 def split_and_gather_str_tokens_by_separator(tokens, separator):
+    '''
+    Splits all tokens that contains words split by a given separator (e.g. 'tech,media' which is a single token becomes after splitting by ',' the tokens 'tech', 'media')
+    :param tokens: list of str tokens
+    :param separator: a given separator such as ','
+    :return: new list of str tokens that contains all tokens split by separator
+    :rtype: build-in python list
+    '''
     new_tokens = []
     for token in tokens:
         token_parts = token.split(separator)
         new_tokens.extend(token_parts)
     return new_tokens
 
-# OUT: list of str tokens that represent stopwords
+
 def get_str_stopwords():
-# do not consider this token as stopwords
+    '''
+    Function that excludes a list of tokens from the stopwords (these will not be eliminated/replaced)
+    :return: list of str tokens that represent stopwords
+    :rtype: build-in python list
+    '''
     NOT_STOPWORDS = ['one','sixty', 'nine', 'six', 'twelve', 'twenty', 'ten', 'hundred', 'third', 'five', 'two', 'three', 'eleven', 'first', 'four', 'forty', 'fifty', 'fifteen', 'eight']
     stopwords = STOP_WORDS.copy()
     res = [stopword for stopword in stopwords if stopword not in NOT_STOPWORDS]
     return res
 
-# TODO make tests
-# IN: str value
-# OUT: true of false
-# match calendar date with 6 digits format, e.g 14.05.93 (refer to a date from year 93); the separator can be ".", "-", "/"
+
 def is_6digits_date(value):
+    '''
+    Function to verify if a string represents a calendar date (6 digits format, e.g. 14.05.93 -> refer to a date from year 93); the separator can be ".", "-", "/"
+    :param value: string value
+    :return: bool value, true for calendar date, false otherwise
+    :rtype: build-in python bool
+    '''
     pattern = re.compile("\d{2}[.|/|-]\d{2}[.|/|-]\d{2}")
     return bool(pattern.match(value))
 
-# TODO make tests
-# IN : list of str tokens
-# OUT: list of str tokens
-# replace 6 digits dates with "c_date" tag
+
 def str_6digits_dates_to_date_tag(tokens):
+    '''
+    Function that replace a 6 digit date with a 'c_date' tag
+    :param tokens: list of str token
+    :return: new list of str tokens with all apparitions of 6 digit date replaced with 'c_date' tag
+    :rtype: build-in python list
+    '''
     tokens = [token if is_6digits_date(token) is False else calendar_date_tag for token in tokens]
     return tokens
 
-# TODO make tests
-# IN: str
-# OUT: bool
-# check valid URL, URI
+
 def is_valid_url(value):
+    '''
+    Check if a given string is a valid URL/URI
+    :param value: given string
+    :return: bool value, true for URL, false otherwise
+    :rtype: build-in python bool
+    '''
     try:
         result = urlparse(value)
         return all([result.scheme, result.netloc])
     except ValueError:
         return False
 
-# TODO make tests
-# IN: str
-# OUT: bool
-# check url in small notation (kind of resource), "ames.arc.nasa.gov"
+
 def is_valid_resource(value):
+    '''
+    Function that checks if an url is in small notation (kind of resource), "ames.arc.nasa.gov"
+    :param value: string value
+    :return: bool value, true for url in small notation, false otherwise
+    :rtype: build-in python bool
+    '''
     pattern = re.compile("[a-z]+[.][a-z]+([.][a-z]+)+")
     return bool(pattern.match(value))
 
-# TODO make tests
-# IN: list of str tokens
-# OUT: list of str tokens
-# replace URLs with url tag
+
 def str_urls_to_url_tag(tokens):
+    '''
+    Function that replace URL with specific tag
+    :param tokens: list of str tokens
+    :return: new list of str tokens with URL instances replaced with tag
+    :rtype: build-in python list
+    '''
     tokens = [token if (is_valid_url(token) or is_valid_resource(token)) is False else url_tag for token in tokens]
     return tokens
 
-# TODO make tests
-# IN: list of str tokens
-# OUT: list of str tokens
-# replace initial case letters (e.g "a.", "F.") to a specific tag
+
 def str_initial_case_to_tag(tokens):
+    '''
+    Function that replace initial case letters (e.g. "a.", "F.") to a specific tag
+    :param tokens: list of str tokens
+    :return: new list of str token with the appearances of initial case letter replaced with tag
+    :rtype: build-in python list
+    '''
     def is_initial_case_letter_format(value):
         if len(value) == 2 and value[0].isalpha() and value[1] == ".":
             return True
