@@ -16,7 +16,12 @@ Short-period TO-DO:
 
 2. implement python functions to preprocess a text (for the beginning only the raw text, then we'll include methods to parse files - e.g text files etc, but is import to have the preprocessing flow in order because at the end the model will use text, it won't care about the source - as a black box )
 
-
+@Anamaria
+Errors noted:
+1. for the class unit_test_text_preprocessing utilities:
+   - for test_is_str_fraction function, if we have a fraction x/0 then the test will not pass -> handle zero division
+   - for test_is_6digits_date, if we have a date like '12.09-20' or '12.09.2023' the test will still pass as True instead of false
+   - for test_is_valid_url, if we have an url like "ftpl://ftpl.example.com" the function will consider it as true, instead of false
 
 
 @Dacian 
