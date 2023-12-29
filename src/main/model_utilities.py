@@ -13,16 +13,37 @@ Y_TEST = 'y_test'
 # use the same seed for data split to ensure determinism
 SPLIT_DATA_RANDOM_STATE_VALUE = 1
 
-# IN: confusion matrix
-# OUT: built-in dict such that keys represent metrics name and data the metrics values
-# compute metrics using only confusion matrix, without model itself
-# use already implemented functions from sklearn and others modules
-# metrics e.g: accuracy, precision, recall, specificity, f1 score, AUC-ROC etc
-# TODO
-def get_model_evaluation_metrics(confusion_matrix):
-    res = dict()
 
-    return res
+def get_model_evaluation_metrics(confusion_matrix):
+    '''
+    Function that computes manually different metrics (e.g. accuracy, precision, recall, specificity, f1 score etc.) using only the confusion matrix
+    :param confusion_matrix: calculated confusion matrix from a model
+    :return: dictionary that contains as key the metrics and as value the mean value obtained
+    :rtype: build-in python dictionary
+    '''
+    metric_dict = dict()
+
+    total_instances = np.sum(confusion_matrix)
+    true_positives = np.diag(confusion_matrix)
+
+    false_positives = np.sum(confusion_matrix, axis=0) - true_positives
+    false_negatives = np.sum(confusion_matrix, axis=1) - true_positives
+    true_negatives = total_instances - (true_positives + false_positives + false_negatives)
+
+    accuracy = np.sum(true_positives) / total_instances
+
+    precisions = true_positives / (true_positives + false_positives)
+    recalls = true_positives / (true_positives + false_negatives)
+    specificitys = true_negatives / (true_negatives + false_positives)
+    f1_scores = 2 * (precisions * recalls) / (precisions + recalls)
+
+    metric_dict['accuracy'] = accuracy
+    metric_dict['precision'] = round(np.sum(precisions)/10, 5)
+    metric_dict['recall'] = round(np.sum(recalls)/10, 5)
+    metric_dict['specificity'] = round(np.sum(specificitys)/10, 5)
+    metric_dict['f1_score'] = round(np.sum(f1_scores)/10, 5)
+
+    return metric_dict
 
 # IN: df with content and label col
 # OUT: X_train, test, Y_train, test
@@ -30,11 +51,28 @@ def get_model_evaluation_metrics(confusion_matrix):
 # we desire a uniform distribution of data with respect to the labels, is not properly if let's labels for training are selected
 # data with only 9 distinct labels, and data with tenth label is used only for testing
 def split_model_data(X_data, y_data, test_size_value = 0.25, random_state_val = 0):
+    '''
+    Function for splitting the data into training and testing sets
+    :param X_data: input variable
+    :param y_data: target variable
+    :param test_size_value: proportion of the dataset that will be used for testing
+    :param random_state_val: represents reproducibility, using a certain value results in the data splitting being deterministic
+    :return: the training and testing sets
+    '''
     X_train, X_test, y_train, y_test = train_test_split(X_data, y_data, test_size=test_size_value, random_state=random_state_val, stratify=y_data)
     return X_train, X_test, y_train, y_test
 
 
 def build_data_dictionary(X_train, X_test, y_train, y_test):
+    '''
+    Construct a dictionary with the training and testing data
+    :param X_train: input variables used for training
+    :param X_test: input variables used for testing
+    :param y_train: target variable for X_train
+    :param y_test: target variable for X_test
+    :return: dictionary that has as key the type of data stored and as value the training and testing sets
+    :rtype: build-in python dictionary
+    '''
     data_full_dict = dict()
     data_full_dict[X_TRAIN] = X_train
     data_full_dict[X_TEST] = X_test
@@ -43,18 +81,29 @@ def build_data_dictionary(X_train, X_test, y_train, y_test):
 
     return data_full_dict
 
-# shuffle rows from a pandas df
-# in: pandas df
-# out: pandas df, rows shuffled by @param no_of_times times
+
 def shuffle_dataframe(df, no_of_times = 1):
+    '''
+    Function that shuffles x times (value given by @param no_of_times) the rows of a pandas data frame
+    :param df: pandas data frame
+    :param no_of_times: number of times of shuffling
+    :return: the panda dataframe shuffled
+    :rtype: pandas.core.frame.DataFrame
+    '''
     new_df = df.copy()
     for i in range(no_of_times):
         new_df = new_df.sample(frac = 1, ignore_index=True)
 
     return new_df
 
-# IN: dict, key: str value, key: int value
-# OUT: None
-# save the given dictionary at the given path
+
 def vocabulary_dict_to_json(dictionary, output_file_path):
+    '''
+    Saves a given dictionary at the provided path
+    :param dictionary: dictionary that contains pair of (key, str value/s), (key, int value/s)
+    :param output_file_path: path where the user wants to save the dictionary
+    :return: None
+    '''
     save_dict_to_json_file(dictionary, output_file_path)
+
+
