@@ -573,7 +573,7 @@ def split_and_gather_str_tokens_by_separator(tokens, separator):
 
 def get_str_stopwords():
     '''
-    Function that excludes a list of tokens from the stopwords (these will not be eliminated/replaced)
+    Function that creates the list of stopwords (we exclude certain words that will not be considered stopwords)
     :return: list of str tokens that represent stopwords
     :rtype: build-in python list
     '''

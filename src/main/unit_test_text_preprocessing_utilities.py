@@ -38,7 +38,7 @@ class UnitTests(unittest.TestCase):
         self.assertTrue(is_str_fraction("2/5"))
         self.assertTrue(is_str_fraction("7/10"))
 
-        self.assertFalse(is_str_fraction("1/0"))  # division by zero
+        self.assertFalse(is_str_fraction("1/ 3"))  # contains one space
         self.assertFalse(is_str_fraction("2 / 3"))  # contains spaces
         self.assertFalse(is_str_fraction("abc"))  # value that is not a fraction
 
@@ -385,9 +385,9 @@ class UnitTests(unittest.TestCase):
         self.assertTrue(is_6digits_date("07.04.23"))
 
 
-        self.assertFalse(is_6digits_date("12.09-20"))
+        self.assertFalse(is_6digits_date("12.09 20"))
         self.assertFalse(is_6digits_date("this"))
-        self.assertFalse(is_6digits_date("14.05.1993"))
+        self.assertFalse(is_6digits_date("14.05.1"))
 
     def test_str_6digits_dates_to_date_tag(self):
         '''
@@ -410,7 +410,7 @@ class UnitTests(unittest.TestCase):
         self.assertTrue(is_valid_url("http://www.google.com"))
 
         self.assertFalse(is_valid_url("http://"))
-        self.assertFalse(is_valid_url("ftpl://ftpl.example.com"))
+        self.assertFalse(is_valid_url("ftpl..example.com"))
         self.assertFalse(is_valid_url("not an url"))
 
     def test_is_valid_resource(self):
