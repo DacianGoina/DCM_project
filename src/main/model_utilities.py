@@ -39,7 +39,7 @@ def get_model_evaluation_metrics(confusion_matrix):
     metric_dict['accuracy'] = accuracy
     metric_dict['precision'] = round(np.sum(precisions)/len(precisions), 5)
     metric_dict['recall'] = round(np.sum(recalls)/len(recalls), 5)
-    metric_dict['specificity'] = round(np.sum(specificitys)/len(specificities), 5)
+    metric_dict['specificity'] = round(np.sum(specificities)/len(specificities), 5)
     metric_dict['f1_score'] = round(np.sum(f1_scores)/len(f1_scores), 5)
 
     return metric_dict
