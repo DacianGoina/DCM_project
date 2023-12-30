@@ -6,12 +6,23 @@ import spacy
 import pandas as pd
 
 
-# OUT: a new instances of nlp model, this should be used to provide an nlp model for all cases where it is required
 def get_nlp_model():
+    '''
+    Function where the instance of the nlp model is declared and will be used for all cases where a nlp model is required
+    :return: nlp model
+    :rtype: class of spacy.lang.en.English
+    '''
     nlp_model = spacy.load("en_core_web_sm")
     return nlp_model
 
 def custom_tokenizer(raw_text, nlp_model):
+    '''
+    Functions that process the text with all necessary processing functions and transforming in a list of str tokens
+    :param raw_text: string value that includes all unprocessed text
+    :param nlp_model: probably of type spacy.lang.en.English, the model that will be used for preprocessing
+    :return: list of str tokens
+    :rtype: build-in python list
+    '''
     # convert to lower case
     raw_text = to_lowercase(raw_text)
 
@@ -88,19 +99,32 @@ def custom_tokenizer(raw_text, nlp_model):
 
     return tokens
 
-# IN: list of str tokens, nlp model, number of iterations
-# OUT: list of str tokens
-# apply the custom tokenizer function iteratively over an raw text given as input (similar to usage of epochs in deep learning)
+
 def apply_custom_tokenizer_iteratively(raw_text, nlp_model, iterations = 2):
+    '''
+     Function to apply a tokenizer function iteratively over a raw text given as input (similar to usage of epochs in deep learning)
+    :param raw_text: a given raw text, string value
+    :param nlp_model: the model used to process the text
+    :param iterations: the number of processing made on the text
+    :return: list of str tokens
+    :rtype: build-in python list
+    '''
     for i in range(iterations):
         tokens = custom_tokenizer(raw_text, nlp_model)
         raw_text = str_tokens_to_str(tokens)
 
     return tokens
 
-# IN: df with content, label, maybe other cols; content with raw data
-# OUT: df with content, label; content is a single str with preprocessed tokens
+
 def process_df(df, nlp_model, preprocessing_iterations = 2):
+    '''
+    Function for processing a given data frame with a specified model and transform it in a list of str tokens
+    :param df: data frame with content, label, maybe other cols
+    :param nlp_model:
+    :param preprocessing_iterations:
+    :return: data frame with content, label; the content is a single str with preprocessed tokens
+    :rtype: pandas.core.frame.DataFrame
+    '''
     data = pd.DataFrame(columns=['content','label', 'path'])
     data_rows = []
     tokens_lists = []
@@ -131,17 +155,27 @@ def process_df(df, nlp_model, preprocessing_iterations = 2):
     return data
 
 
-# read raw data from the given directory (with subdirectories as labels)
-# created the initial df, process it with @func process_df and save it (the processed resulted df) into a new csv file
 def read_preprocess_and_export(directory_path, output_file_name, preprocessing_iterations):
+    '''
+    Function for reading raw data from the given directory (with subdirectories as labels) and create a precessed data frame (with @func process_df) that will be saved into a csv at a given path
+    :param directory_path: the path where the file will be saved
+    :param output_file_name: the name of the file where the data frame will be stored
+    :param preprocessing_iterations:
+    :return: None
+    '''
     nlp_model = get_nlp_model()
     df = read_raw_data(directory_path)
     data = process_df(df, nlp_model, preprocessing_iterations)
     data.to_csv(output_file_name, index=False, encoding='utf-8')
 
-# IN: file path (.txt file)
-# OUT: str (tokens joined with ' ') the resulted preprocessed content of the file
+
 def preprocess_file(file_path):
+    '''
+    Function that will read a file and preprocess its data to a str of tokens
+    :param file_path: the path of the file
+    :return: string composed of the tokens present in the file separated by ' '
+    :rtype: build-in python string
+    '''
     file_content = read_txt_file(file_path)
     nlp_model = get_nlp_model()
     tokens = custom_tokenizer(file_content['content'], nlp_model)

@@ -45,14 +45,13 @@ def get_model_evaluation_metrics(confusion_matrix):
 
     return metric_dict
 
-# IN: df with content and label col
-# OUT: X_train, test, Y_train, test
-# use stratify=y to split data in a stratified fashion, using this as the class labels: because we have many labels
-# we desire a uniform distribution of data with respect to the labels, is not properly if let's labels for training are selected
-# data with only 9 distinct labels, and data with tenth label is used only for testing
+
 def split_model_data(X_data, y_data, test_size_value = 0.25, random_state_val = 0):
     '''
     Function for splitting the data into training and testing sets
+    Using stratify=y to split data in a stratified fashion, using this as the class labels: because we have many labels
+    The scope being a uniform distribution of data with respect to the labels, is not properly if the labels for training are selected
+    Obs: data with only 9 distinct labels, and data with tenth label is used only for testing
     :param X_data: input variable
     :param y_data: target variable
     :param test_size_value: proportion of the dataset that will be used for testing
