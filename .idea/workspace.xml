@@ -6,35 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="0cebda5f-c239-41f2-a456-3468870c5bac" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model_objects/classifiers/AdaBoostClassifier_CountVectorizer.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/model_objects/classifiers/AdaBoostClassifier_CountVectorizer.pkl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model_objects/classifiers/AdaBoostClassifier_HashingVectorizer.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/model_objects/classifiers/AdaBoostClassifier_HashingVectorizer.pkl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model_objects/classifiers/AdaBoostClassifier_TfidfVectorizer.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/model_objects/classifiers/AdaBoostClassifier_TfidfVectorizer.pkl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model_objects/classifiers/DecisionTreeClassifier_CountVectorizer.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/model_objects/classifiers/DecisionTreeClassifier_CountVectorizer.pkl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model_objects/classifiers/DecisionTreeClassifier_HashingVectorizer.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/model_objects/classifiers/DecisionTreeClassifier_HashingVectorizer.pkl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model_objects/classifiers/DecisionTreeClassifier_TfidfVectorizer.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/model_objects/classifiers/DecisionTreeClassifier_TfidfVectorizer.pkl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model_objects/classifiers/LogisticRegression_CountVectorizer.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/model_objects/classifiers/LogisticRegression_CountVectorizer.pkl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model_objects/classifiers/LogisticRegression_HashingVectorizer.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/model_objects/classifiers/LogisticRegression_HashingVectorizer.pkl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model_objects/classifiers/LogisticRegression_TfidfVectorizer.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/model_objects/classifiers/LogisticRegression_TfidfVectorizer.pkl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model_objects/classifiers/MultinomialNB_CountVectorizer.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/model_objects/classifiers/MultinomialNB_CountVectorizer.pkl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model_objects/classifiers/MultinomialNB_HashingVectorizer.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/model_objects/classifiers/MultinomialNB_HashingVectorizer.pkl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model_objects/classifiers/MultinomialNB_TfidfVectorizer.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/model_objects/classifiers/MultinomialNB_TfidfVectorizer.pkl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model_objects/classifiers/RandomForestClassifier_CountVectorizer.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/model_objects/classifiers/RandomForestClassifier_CountVectorizer.pkl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model_objects/classifiers/RandomForestClassifier_HashingVectorizer.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/model_objects/classifiers/RandomForestClassifier_HashingVectorizer.pkl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model_objects/classifiers/RandomForestClassifier_TfidfVectorizer.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/model_objects/classifiers/RandomForestClassifier_TfidfVectorizer.pkl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model_objects/classifiers/SVC_CountVectorizer.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/model_objects/classifiers/SVC_CountVectorizer.pkl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model_objects/classifiers/SVC_HashingVectorizer.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/model_objects/classifiers/SVC_HashingVectorizer.pkl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model_objects/classifiers/SVC_TfidfVectorizer.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/model_objects/classifiers/SVC_TfidfVectorizer.pkl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model_objects/features_extractors/CountVectorizer.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/model_objects/features_extractors/CountVectorizer.pkl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model_objects/features_extractors/HashingVectorizer.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/model_objects/features_extractors/HashingVectorizer.pkl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model_objects/features_extractors/TfidfVectorizer.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/model_objects/features_extractors/TfidfVectorizer.pkl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/io_utilities.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/io_utilities.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/model_utilities.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/model_utilities.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/preprocessing_flow.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/preprocessing_flow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model_classes/HashingVectorizerFE.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/model_classes/HashingVectorizerFE.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model_classes/ModelManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/model_classes/ModelManager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model_classes/ModelWorker.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/model_classes/ModelWorker.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model_classes/StaticClassifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/model_classes/StaticClassifier.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
