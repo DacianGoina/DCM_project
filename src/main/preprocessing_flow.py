@@ -157,7 +157,7 @@ def process_df(df, nlp_model, preprocessing_iterations = 2):
 
 def read_preprocess_and_export(directory_path, output_file_name, preprocessing_iterations):
     '''
-    Function for reading raw data from the given directory (with subdirectories as labels) and create a precessed data frame (with @func process_df) that will be saved into a csv at a given path
+    Function for reading raw data from the given directory (with subdirectories as labels) and create a processed data frame (with @func process_df) that will be saved into a csv at a given path
     :param directory_path: the path where the file will be saved
     :param output_file_name: the name of the file where the data frame will be stored
     :param preprocessing_iterations:
@@ -178,7 +178,7 @@ def preprocess_file(file_path):
     '''
     file_content = read_txt_file(file_path)
     nlp_model = get_nlp_model()
-    tokens = custom_tokenizer(file_content['content'], nlp_model)
+    tokens = custom_tokenizer(file_content, nlp_model)
     result = str_tokens_to_str(tokens)
     return tokens
 

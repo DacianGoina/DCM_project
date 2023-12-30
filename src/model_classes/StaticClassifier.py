@@ -18,6 +18,9 @@ class StaticClassifier:
     # constructor; pass only classifier object, it do not need to store the data
     def __init__(self, model_classifier):
         self.model_classifier = model_classifier
+        self.__confusion_matrix = None
+        # confusion matrix is a private member (variable); set it after fit_train_evaluate()
+        # get it via get_confusion_matrix()
 
     # set model params (e.g if you want to change the params after initialization)
     # new params is a map, key - model parameter name, value - parameter value, e.g 'n_estimators': 200'
@@ -34,22 +37,25 @@ class StaticClassifier:
         y_pred = self.model_classifier.predict(dict_data[X_TEST])
         res_conf_matrix = confusion_matrix(dict_data[Y_TEST], y_pred)
 
+        # save confusion matrix into the classifier
+        self.__confusion_matrix = res_conf_matrix
+
         metrics_dict = get_model_evaluation_metrics(res_conf_matrix)
-        print("accuracy calculated manually: ", metrics_dict['accuracy'])
-        print("accuracy: ", accuracy_score(y_pred,dict_data[Y_TEST] ))
+        print("accuracy manually: ", metrics_dict['accuracy'])
+        print("accuracy automate: ", accuracy_score(y_pred,dict_data[Y_TEST] ))
+        #
+        # print("precision calculated manually: ", metrics_dict['precision'])
+        # print("precision", precision_score(y_pred, dict_data[Y_TEST], average='weighted'))
+        #
+        # print("recall calculated manually: ", metrics_dict['recall'])
+        # print("recall: ", recall_score(y_pred, dict_data[Y_TEST], average='weighted'))
+        #
+        # print("specificity calculated manually: ", metrics_dict['specificity'])
+        #
+        # print("f1-score calculated manually: ", metrics_dict['f1_score'])
+        # print("f1-score: ", f1_score(y_pred, dict_data[Y_TEST], average='weighted'))
 
-        print("precision calculated manually: ", metrics_dict['precision'])
-        print("precision", precision_score(y_pred, dict_data[Y_TEST], average='weighted'))
-
-        print("recall calculated manually: ", metrics_dict['recall'])
-        print("recall: ", recall_score(y_pred, dict_data[Y_TEST], average='weighted'))
-
-        print("specificity calculated manually: ", metrics_dict['specificity'])
-
-        print("f1-score calculated manually: ", metrics_dict['f1_score'])
-        print("f1-score: ", f1_score(y_pred, dict_data[Y_TEST], average='weighted'))
-
-        return get_model_evaluation_metrics(res_conf_matrix)
+        return metrics_dict
 
     # predict label for a value passed as a input; assume that the given data is preprocessed
     def predict(self, data_point):
@@ -66,6 +72,10 @@ class StaticClassifier:
 
     def get_model_classes(self):
         return list(self.model_classifier.classes_)
+
+    # get confusion matrix
+    def get_confusion_matrix(self):
+        return self.__confusion_matrix
 
     # string representation for class instance
     def __str__(self):

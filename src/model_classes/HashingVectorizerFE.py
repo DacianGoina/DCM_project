@@ -10,7 +10,7 @@ class HashingVectorizerFE(FeaturesExtractor):
         :param data: input variable
         '''
         FeaturesExtractor.__init__(self,data)
-        self.feature_extractor = HashingVectorizer(lowercase = False, stop_words = None, token_pattern = TOKEN_PATTERN, n_features = 2**15, norm='l2', preprocessor = None, tokenizer = None)
+        self.feature_extractor = HashingVectorizer(lowercase = False, stop_words = None, token_pattern = TOKEN_PATTERN, n_features = 2**15, norm='l2', preprocessor = None, tokenizer = None, alternate_sign = False)
         self.__fit_data(data)
 
     def set_extractor_params(self, new_params):
