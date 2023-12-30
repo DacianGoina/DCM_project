@@ -31,17 +31,16 @@ def get_model_evaluation_metrics(confusion_matrix):
     true_negatives = total_instances - (true_positives + false_positives + false_negatives)
 
     accuracy = np.sum(true_positives) / total_instances
-
     precisions = true_positives / (true_positives + false_positives)
     recalls = true_positives / (true_positives + false_negatives)
-    specificitys = true_negatives / (true_negatives + false_positives)
+    specificities = true_negatives / (true_negatives + false_positives)
     f1_scores = 2 * (precisions * recalls) / (precisions + recalls)
 
     metric_dict['accuracy'] = accuracy
-    metric_dict['precision'] = round(np.sum(precisions)/10, 5)
-    metric_dict['recall'] = round(np.sum(recalls)/10, 5)
-    metric_dict['specificity'] = round(np.sum(specificitys)/10, 5)
-    metric_dict['f1_score'] = round(np.sum(f1_scores)/10, 5)
+    metric_dict['precision'] = round(np.sum(precisions)/len(precisions), 5)
+    metric_dict['recall'] = round(np.sum(recalls)/len(recalls), 5)
+    metric_dict['specificity'] = round(np.sum(specificities)/len(specificities), 5)
+    metric_dict['f1_score'] = round(np.sum(f1_scores)/len(f1_scores), 5)
 
     return metric_dict
 

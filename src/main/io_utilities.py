@@ -5,18 +5,18 @@ import pickle
 # IO functions
 
 # IN: str file path
-# OUT: dict with file content
+# OUT: string with file content
 def read_txt_file(file_path):
     '''
     Return the content from the file from the given path.
 
     :param file_path: path to the target file
-    :return: a dictionary with 2 entries: title and content of the file
-    :rtype: built-in python dictionary
+    :return: file content
+    :rtype: built-in python string
     '''
-    result = dict()
+    result = None
     with open(file_path, mode = 'r', encoding='utf-8') as file_obj:
-        result['content'] = file_obj.read()
+        result = file_obj.read()
     return result
 
 
@@ -50,7 +50,7 @@ def read_raw_data(main_directory_path):
             file_path = directory_path + "\\" + file
             file_content = read_txt_file(file_path)
 
-            whole_file_content_as_dict = pd.DataFrame({'file_path':file_path, 'content':file_content['content'], 'type':directory}, index = [0])
+            whole_file_content_as_dict = pd.DataFrame({'file_path':file_path, 'content':file_content, 'type':directory}, index = [0])
             new_files_contents.append(whole_file_content_as_dict)
 
     df = pd.concat([df] + new_files_contents, ignore_index=True)

@@ -87,7 +87,6 @@ def model_fit_train_predict(X_data, y_data, classifiers, features_extractors, ou
     # transform X data using every feature extractor, store the results
     for extractor in features_extractors:
         transformed_data = extractor.transform_data(X_data.copy())
-        #transformed_data = scale_sparse_matrix_data(transformed_data)
         numerical_data[extractor.short_str()] = transformed_data
         if save_model_objects is True:
             save_model_component(extractor, extractor.short_str(), output_objects_paths[EXTRACTORS_OUTPUT_KEY])
@@ -110,17 +109,6 @@ def model_fit_train_predict(X_data, y_data, classifiers, features_extractors, ou
 
     return results
 
-# IN: sparse matrix (csr matrix)
-# OUT: sparse matrix
-# Take the provided sparse matrix, convert it to numpy matrix, scale the values using
-# MinMaxScaler, convert back to sparse matrix and return the object
-def scale_sparse_matrix_data(sparse_matrix_obj):
-    scaler = MinMaxScaler() # min max scaler, range [0, 1]
-    numpy_matrix = sparse_matrix_obj.toarray()
-    numpy_matrix_scaled_values = scaler.fit_transform(numpy_matrix)
-    sparse_matrix_obj_res = sparse.csr_matrix(numpy_matrix_scaled_values)
-    return sparse_matrix_obj_res
-
 # OUT: list
 # construct list of used classifiers
 def build_classifiers():
@@ -129,10 +117,10 @@ def build_classifiers():
     dt = StaticClassifier(DecisionTreeClassifier())
     lr = StaticClassifier(LogisticRegression(max_iter = 250, solver = "liblinear"))
     adaboost_cl = StaticClassifier(AdaBoostClassifier(n_estimators = 150, estimator = RandomForestClassifier(n_estimators = 150)))
-    #naive_bayes = StaticClassifier(MultinomialNB())
+    naive_bayes = StaticClassifier(MultinomialNB())
 
-    #classifiers = [rf, svc_cl, naive_bayes, dt, lr, adaboost_cl]
-    classifiers = [rf, svc_cl, dt, lr, adaboost_cl]
+    classifiers = [rf, svc_cl, naive_bayes, dt, lr, adaboost_cl]
+    #classifiers = [rf, svc_cl, dt, lr, adaboost_cl]
 
     return classifiers
 
