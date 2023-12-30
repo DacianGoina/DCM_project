@@ -56,7 +56,7 @@ def perform_prediction(processed_text):
 
     prediction_results = dict()
 
-    predicted_label_final, top_predicted_labels = voting_system(predictions)
+    predicted_label_final, top_predicted_labels = voting_system(predictions, n_highest_probs=2)
     prediction_results['predicted_label'] = predicted_label_final
     prediction_results['top_predicted_labels'] = top_predicted_labels
     prediction_results['all_predictions'] = predictions
@@ -83,6 +83,8 @@ def voting_system(dict_with_predictions, n_highest_probs = 2):
             else:
                 highest_occurred_labels[label_name] = 1
 
+    highest_occurred_labels = sorted(highest_occurred_labels.items(), reverse=True, key = lambda pair: pair[1])
+    highest_occurred_labels = dict(highest_occurred_labels) # from list of tuples, back to dict
     # get label with maximum number of occurrences
     label_with_highest_occurrences = max(highest_occurred_labels.items(), key = lambda pair: pair[1])
     return label_with_highest_occurrences[0], highest_occurred_labels
@@ -144,5 +146,5 @@ if __name__ == "__main__":
     print("Model Worker")
     text2 = "When Kyle Connolly looks back at 2023, she sees it as a year defined by changes and challenges. The newly single parent reentered the workforce, only to be laid off from her job at a custom home-building company in November. At the same time, Connolly has seen prices climb for everything from her Aldi’s grocery basket to her condo’s utility costs. In turn, she’s cut back on everyday luxuries like eating out or going to the movies. Christmas will look pared down for her three kids compared to years prior. “I’ve trimmed everything that I possibly can,” said the 41-year-old. “It sucks having to tell my kids no. It sucks when they ask for a little something extra when we’re checking out at the grocery store and having to tell them, ‘No, I’m sorry, we can’t.’” Economic woes have seemed more apparent within her community in Florida’s panhandle. Connolly has noticed fewer 2022 Chevy Suburbans on the road, replaced by older Toyota Camry models. The waters typically filled with boats have been eerily quiet as owners either sold them or tried to cut back on gas costs. Fellow parents have taken to Facebook groups to discuss ways to better conserve money or rake in extra income. The struggles among Connolly and her neighbors highlight a key conundrum puzzling economists: Why does the average American feel so bad about an economy that’s otherwise considered strong?"
     text = "The War of the First Coalition broke out in autumn 1792, when several European powers formed an alliance against Republican France. The first major operation was the annexation of the County of Nice and the Duchy of Savoy (both states of the Kingdom of Piedmont-Sardinia) by 30,000 French troops. This was reversed in mid-1793, when the Republican forces were withdrawn to deal with a revolt in Lyon, triggering a counter-invasion of Savoy by the Kingdom of Piedmont-Sardinia (a member of the First Coalition)"
-    result1 = worker_execute(text)
+    result1 = worker_execute(text2)
     print(result1)
