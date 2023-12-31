@@ -3,7 +3,6 @@ from num2words import  num2words
 from src.main.preprocessing_flow import *
 from src.main.io_utilities import *
 from sklearn.feature_extraction.text import CountVectorizer
-
 if __name__ == "__main__":
     print("Main")
     #read_preprocess_and_export("../data","file_name_v7.csv", preprocessing_iterations=4)

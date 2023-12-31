@@ -2,6 +2,7 @@
 from src.model_classes.FeaturesExtractor import FeaturesExtractor
 from gensim.models.doc2vec import Doc2Vec, TaggedDocument
 import pandas as pd
+import numpy as np
 from sklearn.preprocessing import MinMaxScaler
 
 class Doc2VecFE(FeaturesExtractor):
@@ -39,9 +40,23 @@ class Doc2VecFE(FeaturesExtractor):
             resulted_vector = self.feature_extractor.infer_vector(data_record)
             resulted_vectors.append(resulted_vector)
 
+        # if list contains only one element, we need to reshape it in order to use scaler in a proper way
+        # otherwise all the data is scaled to zeros - because the way scaler works on one dimensional arrays
+        # this fact is related to the differences between shapes like (150, 1) and (1, 150)
+        # so convert to column vector type
+        one_elem = False
+        if len(resulted_vectors) == 1:
+            resulted_vectors = np.array(resulted_vectors)
+            resulted_vectors = resulted_vectors.reshape(-1, 1)
+            one_elem = True
+
         # scale data to ensure positive values
-        scaler = MinMaxScaler(feature_range=(0, 1))
+        scaler = MinMaxScaler()
         resulted_vectors = scaler.fit_transform(resulted_vectors)
+
+        # convert back to row array
+        if one_elem is True:
+            resulted_vectors = np.transpose(resulted_vectors)
 
         return resulted_vectors
 

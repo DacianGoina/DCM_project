@@ -55,7 +55,7 @@ def perform_prediction(processed_text):
 
     prediction_results = dict()
 
-    predicted_label_final, top_predicted_labels = voting_system(predictions, n_highest_probs=1)
+    predicted_label_final, top_predicted_labels = voting_system(predictions, n_highest_probs=2)
     prediction_results['predicted_label'] = predicted_label_final
     prediction_results['top_predicted_labels'] = top_predicted_labels
     prediction_results['all_predictions'] = predictions
@@ -174,11 +174,11 @@ if __name__ == "__main__":
     business_doc_path = "../../testing_files//business_doc.txt"
     history_text_path = "../../testing_files//history_doc.txt"
     file_path_basketball = "../../testing_files//basketball.txt"
-    # print(predict_input_from_file(file_path_basketball))
+    print(predict_input_from_file(business_doc_path))
 
-    result1 = worker_execute(sport)
-    print(result1)
+    # result1 = worker_execute(sport)
+    # print(result1)
 
-    print('\n\n')
-
-    print(evaluate_classifiers())
+    # print('\n\n')
+    #
+    # print(evaluate_classifiers())
