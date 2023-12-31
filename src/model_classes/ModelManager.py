@@ -121,7 +121,6 @@ def build_classifiers():
     naive_bayes = StaticClassifier(MultinomialNB())
 
     classifiers = [rf, svc_cl, naive_bayes, dt, lr, adaboost_cl]
-    #classifiers = [rf, svc_cl, dt, lr, adaboost_cl]
 
     return classifiers
 
@@ -134,8 +133,8 @@ def build_features_extractors(data):
     hashing_vec = HashingVectorizerFE(data.copy())
     doc2vec = Doc2VecFE(data.copy())
 
-    #features_extractors = [cv, tfidf, hashing_vec, doc2vec]
-    features_extractors = [cv, doc2vec]
+    features_extractors = [cv, tfidf, hashing_vec, doc2vec]
+
     return features_extractors
 
 # IN: classifier_name, features_extractor_name, both strings

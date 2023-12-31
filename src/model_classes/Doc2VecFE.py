@@ -3,7 +3,6 @@ from src.model_classes.FeaturesExtractor import FeaturesExtractor
 from gensim.models.doc2vec import Doc2Vec, TaggedDocument
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
-from sklearn.preprocessing import MaxAbsScaler
 
 class Doc2VecFE(FeaturesExtractor):
 
@@ -24,7 +23,7 @@ class Doc2VecFE(FeaturesExtractor):
             data = data.tolist()
         new_data = []
         for data_record in data:
-            new_data_record = data_record.split()
+            new_data_record = data_record.split(' ')
             new_data.append(new_data_record)
 
         return new_data
@@ -41,7 +40,7 @@ class Doc2VecFE(FeaturesExtractor):
             resulted_vectors.append(resulted_vector)
 
         # scale data to ensure positive values
-        scaler = MinMaxScaler(feature_range=(0, 1000))
+        scaler = MinMaxScaler(feature_range=(0, 1))
         resulted_vectors = scaler.fit_transform(resulted_vectors)
 
         return resulted_vectors
@@ -51,8 +50,8 @@ class Doc2VecFE(FeaturesExtractor):
     # OUT: trained feature extractor model that is used to convert list of str tokens to list of numerical values
     def __initialize_extractor(self, data):
 
-        NO_OF_EPOCHS = 25
-        OUTPUT_VECTOR_SIZE = 200
+        NO_OF_EPOCHS = 35
+        OUTPUT_VECTOR_SIZE = 150
 
         tagged_data =[]
         # create list of TaggedDocument object using provided data
