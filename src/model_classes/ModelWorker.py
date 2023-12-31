@@ -168,14 +168,17 @@ def predict_input_from_file(file_path):
 
 if __name__ == "__main__":
     print("Model Worker")
-    business_text = "When Kyle Connolly looks back at 2023, she sees it as a year defined by changes and challenges. The newly single parent reentered the workforce, only to be laid off from her job at a custom home-building company in November. At the same time, Connolly has seen prices climb for everything from her Aldi’s grocery basket to her condo’s utility costs. In turn, she’s cut back on everyday luxuries like eating out or going to the movies. Christmas will look pared down for her three kids compared to years prior. “I’ve trimmed everything that I possibly can,” said the 41-year-old. “It sucks having to tell my kids no. It sucks when they ask for a little something extra when we’re checking out at the grocery store and having to tell them, ‘No, I’m sorry, we can’t.’” Economic woes have seemed more apparent within her community in Florida’s panhandle. Connolly has noticed fewer 2022 Chevy Suburbans on the road, replaced by older Toyota Camry models. The waters typically filled with boats have been eerily quiet as owners either sold them or tried to cut back on gas costs. Fellow parents have taken to Facebook groups to discuss ways to better conserve money or rake in extra income. The struggles among Connolly and her neighbors highlight a key conundrum puzzling economists: Why does the average American feel so bad about an economy that’s otherwise considered strong?"
-    history_text = "The War of the First Coalition broke out in autumn 1792, when several European powers formed an alliance against Republican France. The first major operation was the annexation of the County of Nice and the Duchy of Savoy (both states of the Kingdom of Piedmont-Sardinia) by 30,000 French troops. This was reversed in mid-1793, when the Republican forces were withdrawn to deal with a revolt in Lyon, triggering a counter-invasion of Savoy by the Kingdom of Piedmont-Sardinia (a member of the First Coalition)"
+
     sport = "No excuses. It is a deeply ingrained part of Ange Postecoglou’s management style. Just keep fighting. And remember to be grateful. Anyone who plays football professionally is living the dream. And yet there have to be times when the Tottenham manager wants to reach for something, a little context. Now, as he navigates his first Christmas and new year programme in the Premier League, with his team feeling the burn, is one of those times. Tottenham goalkeeper Hugo Lloris Spurs looked shattered for most of the first 80 minutes at Brighton on Thursday, second best in all areas, 4-0 down, staring at humiliation. Which is what made the late rally to 4-2 so remarkable, why Postecoglou was keen to praise his players to the hilt. Spurs went close to a third goal; they hinted at the wildest of comebacks."
-    # basketball = None
-    # file_path = "C:\\Users\\Dacian\\Desktop\\basketball.txt"
-    # print(predict_input_from_file(file_path))
 
-    result1 = worker_execute(sport)
-    print(result1)
+    business_doc_path = "../../testing_files//business_doc.txt"
+    history_text_path = "../../testing_files//history_doc.txt"
+    file_path_basketball = "../../testing_files//basketball.txt"
+    print(predict_input_from_file(business_doc_path))
 
-    print(evaluate_classifiers())
+    # result1 = worker_execute(sport)
+    # print(result1)
+
+    # print('\n\n')
+    #
+    # print(evaluate_classifiers())

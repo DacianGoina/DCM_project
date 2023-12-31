@@ -30,6 +30,7 @@ from src.model_classes.StaticClassifier import StaticClassifier
 from src.model_classes.CountVectorizerFE import CountVectorizerFE
 from src.model_classes.TfidfVectorizerFE import  TfidfVectorizerFE
 from src.model_classes.HashingVectorizerFE import HashingVectorizerFE
+from src.model_classes.Doc2VecFE import Doc2VecFE
 from src.main.model_utilities import  *
 from src.main.io_utilities import *
 from sklearn import svm
@@ -120,7 +121,6 @@ def build_classifiers():
     naive_bayes = StaticClassifier(MultinomialNB())
 
     classifiers = [rf, svc_cl, naive_bayes, dt, lr, adaboost_cl]
-    #classifiers = [rf, svc_cl, dt, lr, adaboost_cl]
 
     return classifiers
 
@@ -128,11 +128,13 @@ def build_classifiers():
 # OUT: list
 # construct list of used features extractors
 def build_features_extractors(data):
-    cv = CountVectorizerFE(data)
-    tfidf = TfidfVectorizerFE(data)
-    hashing_vec = HashingVectorizerFE(data)
+    cv = CountVectorizerFE(data.copy())
+    tfidf = TfidfVectorizerFE(data.copy())
+    hashing_vec = HashingVectorizerFE(data.copy())
+    doc2vec = Doc2VecFE(data.copy())
 
-    features_extractors = [cv, tfidf, hashing_vec]
+    features_extractors = [cv, tfidf, hashing_vec, doc2vec]
+
     return features_extractors
 
 # IN: classifier_name, features_extractor_name, both strings

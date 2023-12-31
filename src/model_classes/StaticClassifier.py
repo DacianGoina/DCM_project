@@ -42,7 +42,7 @@ class StaticClassifier:
 
         metrics_dict = get_model_evaluation_metrics(res_conf_matrix)
         print("accuracy manually: ", metrics_dict['accuracy'])
-        print("accuracy automate: ", accuracy_score(y_pred,dict_data[Y_TEST] ))
+        #print("accuracy automate: ", accuracy_score(y_pred,dict_data[Y_TEST] ))
         #
         # print("precision calculated manually: ", metrics_dict['precision'])
         # print("precision", precision_score(y_pred, dict_data[Y_TEST], average='weighted'))
