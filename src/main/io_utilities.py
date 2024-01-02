@@ -22,18 +22,18 @@ def read_txt_file(file_path):
 
 def read_raw_data(main_directory_path):
     '''
-    Creates a dataframe with the structure of a directory
+    Creates a dataframe with the data stored in the files at the path given
     The given directory has a structure like:
     main_directory
-        subdirectory_category1
-            file
-            file
-            ...
-        subdirectory_category2
-        subdirectory_category3
-        ...
+    --subdirectory_category1
+    ----file
+    ----file
+    ----...
+    --subdirectory_category2
+    --subdirectory_category3
+    --...
     :param main_directory_path: the path given of the main directory
-    :return: a dataframe with 3 columns: title, content, type
+    :return: a dataframe with 3 columns: the path to the file, content, type
     :rtype: pandas.core.frame.DataFrame
     '''
     " read all files from all directories from the given path;"
@@ -58,9 +58,6 @@ def read_raw_data(main_directory_path):
     return df
 
 
-# IN: dict, key: str value, key: int value
-# OUT: None
-# save the given dictionary at the given path
 def save_dict_to_json_file(data, output_file_path):
     '''
     Function to save a dictionary in a json file at a given path

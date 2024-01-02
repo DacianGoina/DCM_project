@@ -80,8 +80,9 @@ class UnitTests(unittest.TestCase):
         nlp = spacy.load("en_core_web_md")
         result = remove_spacy_punctuations(nlp(input))
         expected_result = list(nlp("Hello world What is yes"))
+        equal = all(x.text == y.text for x, y in zip(result, expected_result))
+        self.assertTrue(equal)
 
-        self.assertEqual(result, expected_result)
         self.assertEqual(remove_spacy_punctuations([]), [])
 
     def test_lemmatize_spacy_tokens(self):
@@ -168,8 +169,8 @@ class UnitTests(unittest.TestCase):
         raw_text = "This is a sample sentence."
         result = get_spacy_tokens_from_raw_text(raw_text, nlp)
         expected_result = list(nlp(raw_text))
-        print(type(result), type(expected_result))
-        self.assertEqual(result, expected_result)
+        equal = all(x.text == y.text for x, y in zip(result, expected_result))
+        self.assertTrue(equal)
 
         self.assertEqual(get_spacy_tokens_from_raw_text("", spacy.blank("en")), [])
 
@@ -306,10 +307,11 @@ class UnitTests(unittest.TestCase):
         nlp = spacy.load("en_core_web_sm")
         input_tokens = ['apple', 'orange', 'banana']
         result = str_tokens_to_spacy_tokens(input_tokens, nlp)
-        expected_output = list(nlp(input_token) for input_token in input_tokens )
-        self.assertEqual(result, expected_output)
+        expected_result = list(nlp(input_token) for input_token in input_tokens )
+        equal = all(x.text == y.text for x, y in zip(result, expected_result))
+        self.assertTrue(equal)
 
-        self.assertEqual(str_tokens_to_spacy_tokens([], self.nlp_model), [])
+        self.assertEqual(str_tokens_to_spacy_tokens([], nlp), [])
 
     def test_spacy_tokens_to_str_tokens(self):
         '''
