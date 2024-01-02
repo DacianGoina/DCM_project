@@ -16,10 +16,13 @@ class Doc2VecFE(FeaturesExtractor):
         data = self.__convert_data_to_str_tokens(data)
         self.feature_extractor = self.__initialize_extractor(data)
 
-    # IN: data - pandas df series, every row contains str tokens joined with ' ' separator,
-    # OR list of str values (list with str elements, every str contains str tokens joined with ' ' separator)
-    # OUT: list of lists, every sublist contains str tokens - the single str is split using ' ' separator
     def __convert_data_to_str_tokens(self, data):
+        '''
+        Method that converts given data (pandas data frame or list of strings of st tokens joined with ' ' separator) to a list of lists
+        :param data: pandas data frame (every row contains str tokens joined with ' ' separator) or list of str values (list with str elements, every str contains str tokens joined with ' ' separator)
+        :return: list of lists, where every sublist contains str tokens - the single str is split using ' ' separator
+        :rtype: build-in python list
+        '''
         if isinstance(data,pd.Series ):
             data = data.tolist()
         new_data = []
@@ -29,9 +32,14 @@ class Doc2VecFE(FeaturesExtractor):
 
         return new_data
 
-    # IN: pandas series (row:single str) or built-in list with str elements
-    # OUT: list with vectors (lists) of numerical values (feature); values are scaled to be positive values
+
     def transform_data(self, data):
+        '''
+        Method to transform df/list with str elements in a list of lists with the features
+        :param data: pandas data frame series (the row is single str) or built-in list with str elements
+        :return: list of lists with numerical values/feature (the values are scaled to be positive values)
+        :rtype: build-in python list
+        '''
         super().set_data(data.copy())
         data = self.__convert_data_to_str_tokens(data)
         resulted_vectors = []
@@ -40,10 +48,12 @@ class Doc2VecFE(FeaturesExtractor):
             resulted_vector = self.feature_extractor.infer_vector(data_record)
             resulted_vectors.append(resulted_vector)
 
-        # if list contains only one element, we need to reshape it in order to use scaler in a proper way
-        # otherwise all the data is scaled to zeros - because the way scaler works on one dimensional arrays
-        # this fact is related to the differences between shapes like (150, 1) and (1, 150)
-        # so convert to column vector type
+        '''
+        if list contains only one element, we need to reshape it in order to use scaler in a proper way
+        otherwise all the data is scaled to zeros - because the way scaler works on one dimensional arrays
+        this fact is related to the differences between shapes like (150, 1) and (1, 150)
+        so convert to column vector type
+        '''
         one_elem = False
         if len(resulted_vectors) == 1:
             resulted_vectors = np.array(resulted_vectors)
@@ -60,10 +70,13 @@ class Doc2VecFE(FeaturesExtractor):
 
         return resulted_vectors
 
-    # IN: data to be used for training of the extractor at initialization
-    # data to be a list of lists; evey sublist to contain str tokens (so not whole str)
-    # OUT: trained feature extractor model that is used to convert list of str tokens to list of numerical values
     def __initialize_extractor(self, data):
+        '''
+        Method to convert list of str tokens to list of numerical values using a trained feature extractor model
+        :param data: list of lists of str tokens; every sublist contains str tokens (so not whole str); this will be used for training the extractor at initialization
+        :return: list of features
+        :rtype: build-in python list
+        '''
 
         NO_OF_EPOCHS = 35
         OUTPUT_VECTOR_SIZE = 150

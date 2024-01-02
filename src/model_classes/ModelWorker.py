@@ -16,10 +16,14 @@ import os
 EXTRACTORS_OBJECTS_DIRECTORY_PATH = "../../model_objects/features_extractors"
 CLASSIFIERS_OBJECTS_DIRECTORY_PATH = "../../model_objects/classifiers"
 
-# root function for Model Worker
-# IN: raw_text for classification
-# OUT: predicted label, inside a dict with additional information
+
 def worker_execute(raw_text):
+    '''
+    Root function, calls the main functions
+    :param raw_text: raw text used for classification
+    :return: predicted label, inside a dictionary with additional information
+    :rtype: build-in python dictionary
+    '''
     # preprocessing: convert raw text to text tokens
     tokens_as_single_str = preprocess_input(raw_text)
 
@@ -28,10 +32,14 @@ def worker_execute(raw_text):
 
     return predictions_result
 
-# IN: preprocessed text (as whole string)
-# OUT: dict with the predicted label, top predicted labels for the given text, scores provided by all classifiers
-# load extractor and classifiers, perform prediction and compute the highest occurred predicted label
+
 def perform_prediction(processed_text):
+    '''
+    Function used to predicted label, inside a dict with additional information
+    :param processed_text: string that represents the preprocessed text
+    :return: dictionary that includes the predicted label, top predicted labels for the given text and scores provided by all classifiers
+    :rtype: build-in python dictionary
+    '''
     classifiers, extractors = import_model_objects()
 
     numerical_data = dict()
@@ -66,6 +74,12 @@ def perform_prediction(processed_text):
 # OUT: the predicted label
 # predict the label based on a voting system considering labels with predicted probabilities from top n_highest_probs
 def voting_system(dict_with_predictions, n_highest_probs = 2):
+    '''
+    Function used to predict the label based on a voting system considering labels with predicted probabilities from top n_highest_probs
+    :param dict_with_predictions: dictionary with prediction results; d[classifier_extractor_name] = accuracy score scores for all classes
+    :param n_highest_probs: integer representing the highest number of probability  \considered
+    :return: the pair with the highest occurrence and a dictionary with the highest occurred labels
+    '''
     # for every classification results, sort labels by prediction probabilities
     for classifier_name in dict_with_predictions.keys():
         resulted_probabilities = dict_with_predictions[classifier_name]
@@ -94,6 +108,13 @@ def voting_system(dict_with_predictions, n_highest_probs = 2):
 
 # import model objects: classifiers and feature extractors
 def import_model_objects():
+    '''
+    Function to import model objects: classifiers and feature extractors as dictionaries:
+    dictionary with features extractor: d[extractor_name] = extractor object,
+    dictionary with classifiers: d[extractor_name] = [classifiers trained on data provided by given extractor]
+    :return: tuple with classifiers and features extractors
+    :rtype: build-in python tuple
+    '''
     # import features extractors
     features_extractors = import_features_extractors()
 
@@ -104,6 +125,11 @@ def import_model_objects():
 
 # OUT: dict with features extractor: d[extractor_name] = extractor object,
 def import_features_extractors():
+    '''
+    Function to import the features extractors
+    :return: dictionary with features extractor: d[extractor_name] = extractor object
+    :rtype: build-in python dictionary
+    '''
     extractors_objects_paths = os.listdir(EXTRACTORS_OBJECTS_DIRECTORY_PATH)
     features_extractors = dict(); # key: extractor name, key data: extractor object itself
 
@@ -114,8 +140,13 @@ def import_features_extractors():
 
     return features_extractors
 
-# OUT: dict with classifiers: d[extractor_name] = [classifiers trained on data provided by given extractor]
+
 def import_classifiers():
+    '''
+    Function to import the classifiers
+    :return: dictionary with classifiers: d[extractor_name] = [classifiers trained on data provided by given extractor]
+    :rtype: build-in python dictionary
+    '''
     classifiers_objects_paths = os.listdir(CLASSIFIERS_OBJECTS_DIRECTORY_PATH)
     classifiers = dict() # key: extractor name "attached" to the classifier; key data: list of classifiers that use given extractor
     for classifier_obj_file_name in classifiers_objects_paths:
@@ -131,19 +162,27 @@ def import_classifiers():
     return classifiers
 
 
-# IN: str
-# OUT: str (list of str tokens joined with ' ')
-# preprocess the raw text received as input
+
 def preprocess_input(raw_text):
+    '''
+    Function to preprocess the raw text received as input
+    :param raw_text: string with the raw text
+    :return: string with str tokens joined using ' '
+    :rtype: build-in python string
+    '''
     nlp_model = get_nlp_model()
     tokens = apply_custom_tokenizer_iteratively(raw_text, nlp_model, iterations=4)
     tokens_as_single_str = str_tokens_to_str(tokens)
 
     return tokens_as_single_str
 
-#OUT: dict, d[classifier_name] = dict with metrics and associated values
-# read classifiers, compute model performance metrics using confusions matrices
+
 def evaluate_classifiers():
+    '''
+    Function to evaluate the classifiers (reads them and compute model performance metrics using confusions matrices)
+    :return: dictionary with d[classifier_name] = dict with metrics and associated values
+    :rtype: build-in python dictionary
+    '''
     classifiers_dict = import_classifiers()
     classifiers = []
     for method_name, method_classifiers in classifiers_dict.items():
@@ -158,10 +197,13 @@ def evaluate_classifiers():
     return results
 
 
-# IN: file path to a txt file (raw text)
-# OUT: predicted label, inside a dict with additional information
-# read text from the file given by the path, perform prediction on it and return the resulted dictionary
 def predict_input_from_file(file_path):
+    '''
+    Function that reads text from a file located at a given path and perform prediction on it and return the resulted dictionary
+    :param file_path: the path of a file
+    :return: dictionary with the predicted labels and the results
+    :rtype: build-in python dictionary
+    '''
     text_input = read_txt_file(file_path)
     prediction_result = worker_execute(text_input)
     return prediction_result

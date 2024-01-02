@@ -52,12 +52,15 @@ CLASSIFIERS_OUTPUT_KEY = "classifiers"
 EXTRACTORS_OUTPUT_KEY = "extractors"
 
 
-# IN: input data file (assume that data is already preprocessed, also file must to be a CSV one);
-#  param output_objects_paths is a dict that contains paths for the directories where the resulted objects will be saved
 
-# the function that aggregate all - manage / handle all operations of the manager
-# this is the root function of manager
 def manager_execute(input_data_path, output_objects_paths, save_model_objs = False):
+    '''
+    Function to read and process the data set, aggregates all operations of the manager (splitting the data and training the model, can be considered root function)
+    :param input_data_path: the path pf the file; file should be a CSV and we can assume that the data included is preprocessed
+    :param output_objects_paths: dictionary that contains paths for the directories where the resulted objects will be saved
+    :param save_model_objs: option if we save or not the objects as binary format
+    :return: None
+    '''
     # read data
     data = pd.read_csv(input_data_path)
 
@@ -75,13 +78,18 @@ def manager_execute(input_data_path, output_objects_paths, save_model_objs = Fal
     model_fit_train_predict(X_data, y_data, the_classifiers, the_extractors, output_objects_paths, save_model_objs)
 
 
-# IN: X_data, y_data (assume pandas Series),
-# classifiers, features_extractors (assume list with StaticClassifier and FeaturesExtractor instances)
-# output_objects_paths is a dict that contains paths for the directories where the resulted objects will be saved
-
-# this function prepare (run and save) the extractors and classifiers
-# so it initialize the model components
 def model_fit_train_predict(X_data, y_data, classifiers, features_extractors, output_objects_paths, save_model_objects = False):
+    '''
+    Function to initialise the model components, it runs and save the extractors and classifiers
+    :param X_data: pandas data frame series , represents independent features
+    :param y_data: pandas data frame series, represents target variable
+    :param classifiers: list with the classifiers, StaticClassifier instances
+    :param features_extractors: list with the features extractors, FeaturesExtractor instances
+    :param output_objects_paths: dictionary that contains paths for the directories where the resulted objects will be saved
+    :param save_model_objects:  option if we save or not the objects as binary format
+    :return: dictionary with classifiers amd features extractors used and the metrics obtained
+    :rtype: build-in python dictionary
+    '''
     results = dict()
     numerical_data = dict()# key: name of extractor, key data: resulted data upon transformation
 
@@ -110,9 +118,13 @@ def model_fit_train_predict(X_data, y_data, classifiers, features_extractors, ou
 
     return results
 
-# OUT: list
-# construct list of used classifiers
+
 def build_classifiers():
+    '''
+    Function that initialise all the classifiers
+    :return: list with all used classifiers
+    :rtype: build-in python list
+    '''
     rf = StaticClassifier(RandomForestClassifier(n_estimators = 150))
     svc_cl = StaticClassifier(svm.SVC(kernel='linear', probability = True, random_state = 3))
     dt = StaticClassifier(DecisionTreeClassifier())
@@ -124,10 +136,14 @@ def build_classifiers():
 
     return classifiers
 
-# IN: data (X_data - pandas Series); at this step, the data is just fitted, not transformed - see constructors
-# OUT: list
-# construct list of used features extractors
+
 def build_features_extractors(data):
+    '''
+    Function that initialise the features extractors
+    :param data: pandas data frame  series (the data is just fitted, not transformed)
+    :return: list with all used features extractors
+    :rtype: build-in python list
+    '''
     cv = CountVectorizerFE(data.copy())
     tfidf = TfidfVectorizerFE(data.copy())
     hashing_vec = HashingVectorizerFE(data.copy())
@@ -137,17 +153,24 @@ def build_features_extractors(data):
 
     return features_extractors
 
-# IN: classifier_name, features_extractor_name, both strings
-# OUT: string
-# create a string representation for (classifier, features extractor) pair
+
 def get_classifier_to_extractor_str(classifier_name, features_extractor_name):
+    '''
+    Function that returns the pairs of classifiers and features extractors
+    :param classifier_name: string with the name of the classifier
+    :param features_extractor_name: string with the name of the features extractor
+    :return: string with (classifier, features extractor) pair
+    :rtype: build-in python string
+    '''
     return classifier_name + "_" + features_extractor_name
 
-# IN: str
-# OUT: tuple with classifier, features extractor names
-# reverse engineering for get_classifier_to_extractor_str method
-# receive a compound name (classifier, extractor) and return his components
+
 def reverse_classifier_to_extractor_str(compound_name):
+    '''
+    Function that return the components of a compound name (classifier, extractor); reverse engineering for get_classifier_to_extractor_str method
+    :param compound_name: string with the pairs (classifier, features extractor)
+    :return: tuple with classifier, features extractor names
+    '''
     components = compound_name.split("_")
     return (components[0], components[1])
 
@@ -155,6 +178,13 @@ def reverse_classifier_to_extractor_str(compound_name):
 # IN: object itself (python object), object name (str), directory path
 # save a model component to binary object
 def save_model_component(object, object_name, directory_path):
+    '''
+    Function that saves a model component to a binary object
+    :param object: the object we want to transform
+    :param object_name: string with the object name
+    :param directory_path: the directory where is located
+    :return: None
+    '''
     file_path = directory_path + '\\' + object_name
     export_as_binary_obj(object, file_path)
 
