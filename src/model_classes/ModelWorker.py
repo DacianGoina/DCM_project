@@ -21,7 +21,7 @@ def worker_execute(raw_text):
     '''
     Root function, calls the main functions
     :param raw_text: raw text used for classification
-    :return: predicted label, inside a dictionary with additional information
+    :return: dictionary that contains 3 items: predicted label, labels with the highest occurrences (according to the probabilities) and the results (probabilities) provided by every classifier
     :rtype: build-in python dictionary
     '''
     # preprocessing: convert raw text to text tokens
