@@ -42,11 +42,14 @@ from sklearn.naive_bayes import MultinomialNB
 
 from sklearn.preprocessing import MinMaxScaler
 from scipy import sparse
+from scipy.stats import wilcoxon
+from itertools import combinations
 
 import spacy
 import pandas as pd
 import itertools
 import numpy as np
+
 
 CLASSIFIERS_OUTPUT_KEY = "classifiers"
 EXTRACTORS_OUTPUT_KEY = "extractors"
@@ -103,21 +106,61 @@ def model_fit_train_predict(X_data, y_data, classifiers, features_extractors, ou
     # cross product for classifier and data transformed with features extractors
     classifier_to_extractor = itertools.product(classifiers, list(numerical_data.keys()))
 
+    no_of_iterations = 30
+    accuracies = dict()
+
     for (classifier, extractor) in classifier_to_extractor:
-        numerical_features = numerical_data[extractor]
-        X_train, X_test, y_train, y_test = split_model_data(X_data= numerical_features, y_data= y_data, test_size_value = 0.25, random_state_val = SPLIT_DATA_RANDOM_STATE_VALUE)
-        data_dict = build_data_dictionary(X_train, X_test, y_train, y_test)
+        for i in range(no_of_iterations+1):
+            SPLIT_DATA_RANDOM_STATE_VALUE = np.random.randint(0, 101)
+            numerical_features = numerical_data[extractor]
+            X_train, X_test, y_train, y_test = split_model_data(X_data= numerical_features, y_data= y_data, test_size_value = 0.25, random_state_val = SPLIT_DATA_RANDOM_STATE_VALUE)
+            data_dict = build_data_dictionary(X_train, X_test, y_train, y_test)
 
-        working_set_name =  get_classifier_to_extractor_str(classifier.short_str(), extractor)
-        print(working_set_name)
-        resulted_metrics = classifier.fit_train_evaluate(data_dict)
-        if save_model_objects is True:
-            save_model_component(classifier, working_set_name, output_objects_paths[CLASSIFIERS_OUTPUT_KEY])
+            working_set_name =  get_classifier_to_extractor_str(classifier.short_str(), extractor)
+            print(working_set_name)
+            resulted_metrics = classifier.fit_train_evaluate(data_dict)
+            if save_model_objects is True:
+                save_model_component(classifier, working_set_name, output_objects_paths[CLASSIFIERS_OUTPUT_KEY])
 
-        results[working_set_name] = resulted_metrics
+            results[working_set_name] = resulted_metrics
 
+            list_acc = []
+            if working_set_name in accuracies.keys():
+                if isinstance(accuracies[working_set_name], list):
+                    accuracies[working_set_name].append(resulted_metrics['accuracy'])
+                else:
+                    accuracies[working_set_name] = [accuracies[working_set_name], resulted_metrics['accuracy']]
+            else:
+                accuracies[working_set_name] = [resulted_metrics['accuracy']]
+
+    print(accuracies)
+    wilcoxon_results = statistical_test(accuracies)
+    print(wilcoxon_results)
     return results
 
+
+def statistical_test(accuracies):
+    '''
+    Function that applies wilcoxon test to compare the accuracies between different classifiers
+    :param accuracies:
+    :return:
+    '''
+    results_dict = {}
+
+    classifiers = list(accuracies.keys())
+    num_classifiers = len(classifiers)
+
+    for pair in combinations(classifiers, 2):
+        classifier1, classifier2 = pair
+
+        accuracy1 = accuracies[classifier1]
+        accuracy2 = accuracies[classifier2]
+
+        _, p_value = wilcoxon(accuracy1, accuracy2)
+
+        results_dict[pair] = p_value
+
+    return results_dict
 
 def build_classifiers():
     '''
