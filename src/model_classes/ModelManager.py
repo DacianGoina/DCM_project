@@ -110,7 +110,7 @@ def model_fit_train_predict(X_data, y_data, classifiers, features_extractors, ou
     accuracies = dict()
 
     for (classifier, extractor) in classifier_to_extractor:
-        for i in range(no_of_iterations+1):
+        for i in range(no_of_iterations):
             SPLIT_DATA_RANDOM_STATE_VALUE = np.random.randint(0, 101)
             numerical_features = numerical_data[extractor]
             X_train, X_test, y_train, y_test = split_model_data(X_data= numerical_features, y_data= y_data, test_size_value = 0.25, random_state_val = SPLIT_DATA_RANDOM_STATE_VALUE)
@@ -124,18 +124,18 @@ def model_fit_train_predict(X_data, y_data, classifiers, features_extractors, ou
 
             results[working_set_name] = resulted_metrics
 
-            list_acc = []
             if working_set_name in accuracies.keys():
-                if isinstance(accuracies[working_set_name], list):
-                    accuracies[working_set_name].append(resulted_metrics['accuracy'])
-                else:
-                    accuracies[working_set_name] = [accuracies[working_set_name], resulted_metrics['accuracy']]
+                accuracies[working_set_name].append(resulted_metrics['accuracy'])
             else:
                 accuracies[working_set_name] = [resulted_metrics['accuracy']]
 
-    print(accuracies)
-    wilcoxon_results = statistical_test(accuracies)
-    print(wilcoxon_results)
+    # print(accuracies)
+    wilcoxon_result, significance_level = statistical_test(accuracies)
+    for pair, p_value in wilcoxon_result.items():
+        if p_value <= significance_level:
+            print(f"Reject H0: There ARE significant differences between values obtained with {pair}")
+        else:
+            print(f"Accept H0: There are NO significant differences between values obtained with {pair}")
     return results
 
 
@@ -146,6 +146,8 @@ def statistical_test(accuracies):
     :return:
     '''
     results_dict = {}
+
+    significance_level = 0.5
 
     classifiers = list(accuracies.keys())
     num_classifiers = len(classifiers)
@@ -158,9 +160,11 @@ def statistical_test(accuracies):
 
         _, p_value = wilcoxon(accuracy1, accuracy2)
 
-        results_dict[pair] = p_value
+        pair_identifier = f"{str(classifier1)}_vs_{str(classifier2)}"
 
-    return results_dict
+        results_dict[pair_identifier] = p_value
+
+    return results_dict, significance_level
 
 def build_classifiers():
     '''
