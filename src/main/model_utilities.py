@@ -24,6 +24,8 @@ def get_model_evaluation_metrics(confusion_matrix):
     metric_dict = dict()
 
     total_instances = np.sum(confusion_matrix)
+    if(total_instances == 0):
+        return metric_dict
     true_positives = np.diag(confusion_matrix)
 
     false_positives = np.sum(confusion_matrix, axis=0) - true_positives
