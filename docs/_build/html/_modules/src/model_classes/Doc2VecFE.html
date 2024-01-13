@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>src.model_classes.Doc2VecFE &mdash; MLO-DCM 1.0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js?v=7da82d16"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            MLO-DCM
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../docs_main/modules.html">main</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../docs_model_classes/modules.html">model_classes</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">MLO-DCM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">src.model_classes.Doc2VecFE</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for src.model_classes.Doc2VecFE</h1><div class="highlight"><pre>
+<span></span>
+<span class="kn">from</span> <span class="nn">src.model_classes.FeaturesExtractor</span> <span class="kn">import</span> <span class="n">FeaturesExtractor</span>
+<span class="kn">from</span> <span class="nn">gensim.models.doc2vec</span> <span class="kn">import</span> <span class="n">Doc2Vec</span><span class="p">,</span> <span class="n">TaggedDocument</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">MinMaxScaler</span>
+
+<div class="viewcode-block" id="Doc2VecFE"><a class="viewcode-back" href="../../../docs_model_classes/Doc2VecFE.html#src.model_classes.Doc2VecFE.Doc2VecFE">[docs]</a><span class="k">class</span> <span class="nc">Doc2VecFE</span><span class="p">(</span><span class="n">FeaturesExtractor</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Initialising the class parameter</span>
+<span class="sd">        :param data: input variable</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">FeaturesExtractor</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__convert_data_to_str_tokens</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feature_extractor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__initialize_extractor</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__convert_data_to_str_tokens</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Method that converts given data (pandas data frame or list of strings of st tokens joined with &#39; &#39; separator) to a list of lists</span>
+<span class="sd">        :param data: pandas data frame (every row contains str tokens joined with &#39; &#39; separator) or list of str values (list with str elements, every str contains str tokens joined with &#39; &#39; separator)</span>
+<span class="sd">        :return: list of lists, where every sublist contains str tokens - the single str is split using &#39; &#39; separator</span>
+<span class="sd">        :rtype: build-in python list</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span> <span class="p">):</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="n">new_data</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">data_record</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+            <span class="n">new_data_record</span> <span class="o">=</span> <span class="n">data_record</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+            <span class="n">new_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_data_record</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">new_data</span>
+
+
+<div class="viewcode-block" id="Doc2VecFE.transform_data"><a class="viewcode-back" href="../../../docs_model_classes/Doc2VecFE.html#src.model_classes.Doc2VecFE.Doc2VecFE.transform_data">[docs]</a>    <span class="k">def</span> <span class="nf">transform_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Method to transform df/list with str elements in a list of lists with the features</span>
+<span class="sd">        :param data: pandas data frame series (the row is single str) or built-in list with str elements</span>
+<span class="sd">        :return: list of lists with numerical values/feature (the values are scaled to be positive values)</span>
+<span class="sd">        :rtype: build-in python list</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__convert_data_to_str_tokens</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">resulted_vectors</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">data_record</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+            <span class="n">resulted_vector</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_extractor</span><span class="o">.</span><span class="n">infer_vector</span><span class="p">(</span><span class="n">data_record</span><span class="p">)</span>
+            <span class="n">resulted_vectors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">resulted_vector</span><span class="p">)</span>
+
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        if list contains only one element, we need to reshape it in order to use scaler in a proper way</span>
+<span class="sd">        otherwise all the data is scaled to zeros - because the way scaler works on one dimensional arrays</span>
+<span class="sd">        this fact is related to the differences between shapes like (150, 1) and (1, 150)</span>
+<span class="sd">        so convert to column vector type</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">one_elem</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">resulted_vectors</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">resulted_vectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">resulted_vectors</span><span class="p">)</span>
+            <span class="n">resulted_vectors</span> <span class="o">=</span> <span class="n">resulted_vectors</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">one_elem</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="c1"># scale data to ensure positive values</span>
+        <span class="n">scaler</span> <span class="o">=</span> <span class="n">MinMaxScaler</span><span class="p">()</span>
+        <span class="n">resulted_vectors</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">resulted_vectors</span><span class="p">)</span>
+
+        <span class="c1"># convert back to row array</span>
+        <span class="k">if</span> <span class="n">one_elem</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">resulted_vectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">resulted_vectors</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">resulted_vectors</span></div>
+
+    <span class="k">def</span> <span class="nf">__initialize_extractor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Method to convert list of str tokens to list of numerical values using a trained feature extractor model</span>
+<span class="sd">        :param data: list of lists of str tokens; every sublist contains str tokens (so not whole str); this will be used for training the extractor at initialization</span>
+<span class="sd">        :return: list of features</span>
+<span class="sd">        :rtype: build-in python list</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="n">NO_OF_EPOCHS</span> <span class="o">=</span> <span class="mi">35</span>
+        <span class="n">OUTPUT_VECTOR_SIZE</span> <span class="o">=</span> <span class="mi">150</span>
+
+        <span class="n">tagged_data</span> <span class="o">=</span><span class="p">[]</span>
+        <span class="c1"># create list of TaggedDocument object using provided data</span>
+        <span class="c1"># each TaggedDocument is created using a sublist (a list with str tokens) from the data list and a reference index</span>
+        <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">data_record</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+            <span class="n">tagged_record</span> <span class="o">=</span> <span class="n">TaggedDocument</span><span class="p">(</span><span class="n">words</span><span class="o">=</span><span class="n">data_record</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">index</span><span class="p">)])</span>
+            <span class="n">tagged_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tagged_record</span><span class="p">)</span>
+
+
+        <span class="c1"># from Doc2Vec documentation:</span>
+        <span class="c1"># vector_size : int, optional - Dimensionality of the feature vectors</span>
+        <span class="c1"># window : int, optional - The maximum distance between the current and predicted word within a sentence.</span>
+        <span class="c1"># min_count : int, optional - Ignores all words with total frequency lower than this.</span>
+        <span class="n">doc2vec_model</span> <span class="o">=</span> <span class="n">Doc2Vec</span><span class="p">(</span><span class="n">vector_size</span><span class="o">=</span><span class="n">OUTPUT_VECTOR_SIZE</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">min_count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">workers</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="n">NO_OF_EPOCHS</span><span class="p">)</span>
+        <span class="n">doc2vec_model</span><span class="o">.</span><span class="n">build_vocab</span><span class="p">(</span><span class="n">tagged_data</span><span class="p">)</span>
+        <span class="n">doc2vec_model</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">tagged_data</span><span class="p">,</span> <span class="n">total_examples</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">epochs</span><span class="o">=</span><span class="n">NO_OF_EPOCHS</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">doc2vec_model</span>
+
+
+<div class="viewcode-block" id="Doc2VecFE.set_extractor_params"><a class="viewcode-back" href="../../../docs_model_classes/Doc2VecFE.html#src.model_classes.Doc2VecFE.Doc2VecFE.set_extractor_params">[docs]</a>    <span class="k">def</span> <span class="nf">set_extractor_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_params</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        For Doc2Vec extractor we cannot set the params in this way. The params are set at initialization.</span>
+<span class="sd">        If you want to change the params, it is mandatory to retrain the model again - so there would be a new model</span>
+<span class="sd">        :param new_params: the new input variable</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="Doc2VecFE.get_extractor_params"><a class="viewcode-back" href="../../../docs_model_classes/Doc2VecFE.html#src.model_classes.Doc2VecFE.Doc2VecFE.get_extractor_params">[docs]</a>    <span class="k">def</span> <span class="nf">get_extractor_params</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Getter for the param data</span>
+<span class="sd">        :return: a copy of the content of the data param</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_extractor</span><span class="o">.</span><span class="n">get_params</span><span class="p">()</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Doc2VecFE.short_str"><a class="viewcode-back" href="../../../docs_model_classes/Doc2VecFE.html#src.model_classes.Doc2VecFE.Doc2VecFE.short_str">[docs]</a>    <span class="k">def</span> <span class="nf">short_str</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">            Name of the class</span>
+<span class="sd">            :return: string with the name of the class</span>
+<span class="sd">            :rtype: build-in python string</span>
+<span class="sd">            &#39;&#39;&#39;</span>
+            <span class="k">return</span> <span class="s2">&quot;Doc2Vec&quot;</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Ana.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

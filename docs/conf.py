@@ -7,9 +7,7 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../src'))
-sys.path.append('main')
-sys.path.append('model_classes')
+sys.path.insert(0, os.path.abspath('..'))
 
 project = 'MLO-DCM'
 copyright = '2023, Ana'

@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>main package &mdash; MLO-DCM 1.0.0.0 documentation</title>
+  <title>main module &mdash; MLO-DCM 1.0.0.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
 
@@ -21,8 +21,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="model_classes" href="../docs_model_classes/modules.html" />
-    <link rel="prev" title="main" href="modules.html" /> 
+    <link rel="next" title="model_utilities module" href="model_utilities.html" />
+    <link rel="prev" title="io_utilities module" href="io_utilities.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -47,27 +47,15 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">main</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">main package</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-main.consts_values">main.consts_values module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-main.io_utilities">main.io_utilities module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#main.io_utilities.read_raw_data"><code class="docutils literal notranslate"><span class="pre">read_raw_data()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#main.io_utilities.read_txt_file"><code class="docutils literal notranslate"><span class="pre">read_txt_file()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#module-main.main">main.main module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-main.model_utilities">main.model_utilities module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#main.model_utilities.build_data_dictionary"><code class="docutils literal notranslate"><span class="pre">build_data_dictionary()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#main.model_utilities.get_model_evaluation_metrics"><code class="docutils literal notranslate"><span class="pre">get_model_evaluation_metrics()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#main.model_utilities.shuffle_dataframe"><code class="docutils literal notranslate"><span class="pre">shuffle_dataframe()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#main.model_utilities.split_model_data"><code class="docutils literal notranslate"><span class="pre">split_model_data()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#main-preprocessing-flow-module">main.preprocessing_flow module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#main-text-preprocessing-utilities-module">main.text_preprocessing_utilities module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-main">Module contents</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="consts_values.html">consts_values module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="io_utilities.html">io_utilities module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">main module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model_utilities.html">model_utilities module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessing_flow.html">preprocessing_flow module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="save_model_bento_ml.html">save_model_bento_ml module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="text_preprocessing_utilities.html">text_preprocessing_utilities module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="unit_test_model_utilities.html">unit_test_model_utilities module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="unit_test_text_preprocessing_utilities.html">unit_test_text_preprocessing_utilities module</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../docs_model_classes/modules.html">model_classes</a></li>
@@ -88,7 +76,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="modules.html">main</a></li>
-      <li class="breadcrumb-item active">main package</li>
+      <li class="breadcrumb-item active">main module</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/docs_main/main.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -98,83 +86,16 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="main-package">
-<h1>main package<a class="headerlink" href="#main-package" title="Permalink to this heading"></a></h1>
-<section id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
-</section>
-<section id="module-main.consts_values">
-<span id="main-consts-values-module"></span><h2>main.consts_values module<a class="headerlink" href="#module-main.consts_values" title="Permalink to this heading"></a></h2>
-</section>
-<section id="module-main.io_utilities">
-<span id="main-io-utilities-module"></span><h2>main.io_utilities module<a class="headerlink" href="#module-main.io_utilities" title="Permalink to this heading"></a></h2>
-<dl class="py function">
-<dt class="sig sig-object py" id="main.io_utilities.read_raw_data">
-<span class="sig-prename descclassname"><span class="pre">main.io_utilities.</span></span><span class="sig-name descname"><span class="pre">read_raw_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">main_directory_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/main/io_utilities.html#read_raw_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#main.io_utilities.read_raw_data" title="Permalink to this definition"></a></dt>
-<dd><p>read all files from all directories from the given path;</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="main.io_utilities.read_txt_file">
-<span class="sig-prename descclassname"><span class="pre">main.io_utilities.</span></span><span class="sig-name descname"><span class="pre">read_txt_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/main/io_utilities.html#read_txt_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#main.io_utilities.read_txt_file" title="Permalink to this definition"></a></dt>
-<dd><p>Return the content from the file from the given path.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>file_path</strong> – path to the target file</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>a dictionary with 2 entries: title and content of the file</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>built-in python dictionary</p>
-</dd>
-</dl>
-</dd></dl>
-
-</section>
-<section id="module-main.main">
-<span id="main-main-module"></span><h2>main.main module<a class="headerlink" href="#module-main.main" title="Permalink to this heading"></a></h2>
-</section>
-<section id="module-main.model_utilities">
-<span id="main-model-utilities-module"></span><h2>main.model_utilities module<a class="headerlink" href="#module-main.model_utilities" title="Permalink to this heading"></a></h2>
-<dl class="py function">
-<dt class="sig sig-object py" id="main.model_utilities.build_data_dictionary">
-<span class="sig-prename descclassname"><span class="pre">main.model_utilities.</span></span><span class="sig-name descname"><span class="pre">build_data_dictionary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_test</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/main/model_utilities.html#build_data_dictionary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#main.model_utilities.build_data_dictionary" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="main.model_utilities.get_model_evaluation_metrics">
-<span class="sig-prename descclassname"><span class="pre">main.model_utilities.</span></span><span class="sig-name descname"><span class="pre">get_model_evaluation_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">confusion_matrix</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/main/model_utilities.html#get_model_evaluation_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#main.model_utilities.get_model_evaluation_metrics" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="main.model_utilities.shuffle_dataframe">
-<span class="sig-prename descclassname"><span class="pre">main.model_utilities.</span></span><span class="sig-name descname"><span class="pre">shuffle_dataframe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">no_of_times</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/main/model_utilities.html#shuffle_dataframe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#main.model_utilities.shuffle_dataframe" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="main.model_utilities.split_model_data">
-<span class="sig-prename descclassname"><span class="pre">main.model_utilities.</span></span><span class="sig-name descname"><span class="pre">split_model_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_size_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.25</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state_val</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/main/model_utilities.html#split_model_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#main.model_utilities.split_model_data" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-</section>
-<section id="main-preprocessing-flow-module">
-<h2>main.preprocessing_flow module<a class="headerlink" href="#main-preprocessing-flow-module" title="Permalink to this heading"></a></h2>
-</section>
-<section id="main-text-preprocessing-utilities-module">
-<h2>main.text_preprocessing_utilities module<a class="headerlink" href="#main-text-preprocessing-utilities-module" title="Permalink to this heading"></a></h2>
-</section>
-<section id="module-main">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-main" title="Permalink to this heading"></a></h2>
-</section>
+  <section id="module-src.main.main">
+<span id="main-module"></span><h1>main module<a class="headerlink" href="#module-src.main.main" title="Permalink to this heading"></a></h1>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="modules.html" class="btn btn-neutral float-left" title="main" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../docs_model_classes/modules.html" class="btn btn-neutral float-right" title="model_classes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="io_utilities.html" class="btn btn-neutral float-left" title="io_utilities module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="model_utilities.html" class="btn btn-neutral float-right" title="model_utilities module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

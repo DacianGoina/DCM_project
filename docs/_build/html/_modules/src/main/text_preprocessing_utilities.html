@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>src.main.text_preprocessing_utilities &mdash; MLO-DCM 1.0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js?v=7da82d16"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            MLO-DCM
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../docs_main/modules.html">main</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../docs_model_classes/modules.html">model_classes</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">MLO-DCM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">src.main.text_preprocessing_utilities</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for src.main.text_preprocessing_utilities</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Text preprocessing functions</span>
+
+<span class="c1"># The strategy is to use functions without side effects - so do not modify the passes object itself, construct a new way</span>
+<span class="c1"># that will be returned</span>
+
+<span class="kn">import</span> <span class="nn">spacy</span>
+<span class="kn">from</span> <span class="nn">num2words</span> <span class="kn">import</span> <span class="n">num2words</span>
+<span class="kn">from</span> <span class="nn">validate_email_address</span> <span class="kn">import</span> <span class="n">validate_email</span>
+<span class="kn">from</span> <span class="nn">dateutil</span> <span class="kn">import</span> <span class="n">parser</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+<span class="kn">from</span> <span class="nn">src.main.consts_values</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">spacy.lang.en.stop_words</span> <span class="kn">import</span> <span class="n">STOP_WORDS</span>
+<span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="kn">import</span> <span class="n">urlparse</span>
+
+<div class="viewcode-block" id="is_str_numeric"><a class="viewcode-back" href="../../../docs_main/text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.is_str_numeric">[docs]</a><span class="k">def</span> <span class="nf">is_str_numeric</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Verifies if a string is a numeric value</span>
+
+<span class="sd">        :param s: string</span>
+<span class="sd">        :return: bool value (True or False)</span>
+<span class="sd">        :rtype: built-in python bool</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">infinity_const</span> <span class="ow">in</span> <span class="n">s</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># try converting to float</span>
+        <span class="n">float_value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># try converting to int</span>
+            <span class="n">int_value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="is_str_valid_date"><a class="viewcode-back" href="../../../docs_main/text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.is_str_valid_date">[docs]</a><span class="k">def</span> <span class="nf">is_str_valid_date</span><span class="p">(</span><span class="n">val</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Verifies if a string is a valid date</span>
+
+<span class="sd">        :param val: string</span>
+<span class="sd">        :return: bool value (True or False)</span>
+<span class="sd">        :rtype: built-in python bool</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># try to parse</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="is_str_fraction"><a class="viewcode-back" href="../../../docs_main/text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.is_str_fraction">[docs]</a><span class="k">def</span> <span class="nf">is_str_fraction</span><span class="p">(</span><span class="n">val</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Verifies if a string is a valid fraction</span>
+
+<span class="sd">        :param val: string</span>
+<span class="sd">        :return: bool value (True or False)</span>
+<span class="sd">        :rtype: built-in python bool</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;(?:^|\s)([0-9]+/[0-9]+)(?:\s|$)&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">pattern</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">val</span><span class="p">))</span></div>
+
+
+<span class="c1"># def is_str_fraction(text):</span>
+<span class="c1">#     pattern = re.compile(r&#39;\b\d+/\d+\b&#39;)</span>
+<span class="c1">#     fractions = re.findall(pattern, text)</span>
+<span class="c1">#     if len(fractions) == 1:</span>
+<span class="c1">#         return True</span>
+<span class="c1">#     return False</span>
+
+
+<div class="viewcode-block" id="get_lowercase_words_from_str"><a class="viewcode-back" href="../../../docs_main/text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.get_lowercase_words_from_str">[docs]</a><span class="k">def</span> <span class="nf">get_lowercase_words_from_str</span><span class="p">(</span><span class="n">val</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Extract only lowercase words from str (e.g. &#39;one&#39;, &#39;house&#39; from &#39;one-house&#39;, without &#39;-&#39; or other characters)</span>
+
+<span class="sd">        :param val: string</span>
+<span class="sd">        :return: list with all lower case words</span>
+<span class="sd">        :rtype: built-in python list</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">words</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;[a-z]+&#39;</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">words</span></div>
+
+
+<div class="viewcode-block" id="to_lowercase"><a class="viewcode-back" href="../../../docs_main/text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.to_lowercase">[docs]</a><span class="k">def</span> <span class="nf">to_lowercase</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Transform text string in lowercase</span>
+
+<span class="sd">        :param test: string</span>
+<span class="sd">        :return: lower case string</span>
+<span class="sd">        :rtype: built-in python string</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="n">text</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="remove_excessive_space"><a class="viewcode-back" href="../../../docs_main/text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.remove_excessive_space">[docs]</a><span class="k">def</span> <span class="nf">remove_excessive_space</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Remove excessive white spaces like &quot; &quot;, \n, \t from the beginning and ending of text</span>
+<span class="sd">    :param text - input text; it&#39;s a native python string</span>
+<span class="sd">    :return: the given text without spaces;</span>
+<span class="sd">    :rtype: built-in python string</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="remove_spacy_punctuations"><a class="viewcode-back" href="../../../docs_main/text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.remove_spacy_punctuations">[docs]</a><span class="k">def</span> <span class="nf">remove_spacy_punctuations</span><span class="p">(</span><span class="n">tokens</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Remove all the punctuations from the given text</span>
+
+<span class="sd">    :param tokens: the input list that contains all the words and punctuations</span>
+<span class="sd">    :return: a list with all words, without punctuations;</span>
+<span class="sd">    :rtype: built-in python list</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">tokens</span> <span class="o">=</span> <span class="p">[</span><span class="n">token</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span> <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">is_punct</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">tokens</span></div>
+
+
+<div class="viewcode-block" id="lemmatize_spacy_tokens"><a class="viewcode-back" href="../../../docs_main/text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.lemmatize_spacy_tokens">[docs]</a><span class="k">def</span> <span class="nf">lemmatize_spacy_tokens</span><span class="p">(</span><span class="n">tokens</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Apply lemmatization for a list of words.</span>
+
+<span class="sd">    :param tokens: the input list with words; every element is a spacy.tokens.token.Token object</span>
+<span class="sd">    :return: a list constructed from the initial one but every with is lemmatized (converted to base form)</span>
+<span class="sd">    :rtype: built-in python list, every element is a spacy.tokens.token.Token object</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">tokens_lemmas</span> <span class="o">=</span> <span class="p">[</span><span class="n">token</span><span class="o">.</span><span class="n">lemma_</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">tokens_lemmas</span></div>
+
+
+<div class="viewcode-block" id="str_tokens_remove_stopwords"><a class="viewcode-back" href="../../../docs_main/text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.str_tokens_remove_stopwords">[docs]</a><span class="k">def</span> <span class="nf">str_tokens_remove_stopwords</span><span class="p">(</span><span class="n">tokens</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Removes stopwords (defined also in this file) from a list of tokens</span>
+
+<span class="sd">    :param tokens: list of words; every element is a spacy.tokens.token.Token object</span>
+<span class="sd">    :return: a list constructed from the initial one without the stopwords</span>
+<span class="sd">    :rtype: built-in python list, every element is a spacy.tokens.token.Token object</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">stopwords</span> <span class="o">=</span> <span class="n">get_str_stopwords</span><span class="p">()</span>
+    <span class="n">tokens</span> <span class="o">=</span> <span class="p">[</span><span class="n">token</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span> <span class="k">if</span> <span class="n">token</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">stopwords</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">tokens</span></div>
+
+
+<div class="viewcode-block" id="get_str_tokens_freq"><a class="viewcode-back" href="../../../docs_main/text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.get_str_tokens_freq">[docs]</a><span class="k">def</span> <span class="nf">get_str_tokens_freq</span><span class="p">(</span><span class="n">tokens</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">   Get the frequency of the tokens given as param</span>
+
+<span class="sd">   :param tokens: list of str tokens</span>
+<span class="sd">   :return: a dictionary that has as key the token and as value the frequency</span>
+<span class="sd">   :rtype: built-in python dictionary</span>
+<span class="sd">   &#39;&#39;&#39;</span>
+    <span class="n">freq</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="n">freq</span> <span class="o">=</span> <span class="p">{</span><span class="n">token</span><span class="p">:</span> <span class="n">tokens</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">token</span><span class="p">)</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">tokens</span><span class="p">)}</span>
+    <span class="k">return</span> <span class="n">freq</span></div>
+
+
+<div class="viewcode-block" id="get_str_tokens_freq_for_lists"><a class="viewcode-back" href="../../../docs_main/text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.get_str_tokens_freq_for_lists">[docs]</a><span class="k">def</span> <span class="nf">get_str_tokens_freq_for_lists</span><span class="p">(</span><span class="n">lists_of_tokens</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Get the frequency of a lists of tokens</span>
+
+<span class="sd">   :param lists_of_tokens: lists of str tokens ([[], [], ...])</span>
+<span class="sd">   :return: a dictionary that has as key the token and as value the frequency from all lists</span>
+<span class="sd">   :rtype: built-in python dictionary</span>
+<span class="sd">   &#39;&#39;&#39;</span>
+    <span class="n">main_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">tokens</span> <span class="ow">in</span> <span class="n">lists_of_tokens</span><span class="p">:</span>
+        <span class="n">local_dict</span> <span class="o">=</span> <span class="n">get_str_tokens_freq</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
+        <span class="n">main_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">Counter</span><span class="p">(</span><span class="n">main_dict</span><span class="p">)</span> <span class="o">+</span> <span class="n">Counter</span><span class="p">(</span><span class="n">local_dict</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">main_dict</span></div>
+
+
+<div class="viewcode-block" id="get_rare_tokens"><a class="viewcode-back" href="../../../docs_main/text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.get_rare_tokens">[docs]</a><span class="k">def</span> <span class="nf">get_rare_tokens</span><span class="p">(</span><span class="n">dict_of_freq</span><span class="p">,</span> <span class="n">threshold</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Get all values that have a frequency smaller than a threshold</span>
+
+<span class="sd">   :param lists_of_tokens: dictionary of frequency</span>
+<span class="sd">   :param threshold: a value of comparison</span>
+<span class="sd">   :return: a new dictionary that contains just the frequency&#39;s smaller than the threshold</span>
+<span class="sd">   :rtype: built-in python list</span>
+<span class="sd">   &#39;&#39;&#39;</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="p">{</span><span class="n">token</span><span class="p">:</span><span class="n">dict_of_freq</span><span class="p">[</span><span class="n">token</span><span class="p">]</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">dict_of_freq</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">if</span> <span class="n">dict_of_freq</span><span class="p">[</span><span class="n">token</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">threshold</span><span class="p">}</span>
+    <span class="k">return</span> <span class="n">res</span></div>
+
+
+<div class="viewcode-block" id="handle_rare_str_tokens"><a class="viewcode-back" href="../../../docs_main/text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.handle_rare_str_tokens">[docs]</a><span class="k">def</span> <span class="nf">handle_rare_str_tokens</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="n">dict_of_freq</span><span class="p">,</span> <span class="n">replace_with</span> <span class="o">=</span> <span class="n">rare_token_replacement_tag</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Filter tokens by eliminating rare tokens</span>
+
+<span class="sd">   :param tokens: list of tokens</span>
+<span class="sd">   :param dict_of_freq: dictionary of tokens frequency</span>
+<span class="sd">   :param replace_with: token value for replacement (if None, remove tokens, else replace with given value)</span>
+<span class="sd">   :return: filtered list of tokens without items in dictionary</span>
+<span class="sd">   :rtype: built-in python list</span>
+<span class="sd">   &#39;&#39;&#39;</span>
+    <span class="n">rare_tokens_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">dict_of_freq</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+    <span class="k">if</span> <span class="n">replace_with</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span> <span class="c1"># remove rare tokens</span>
+        <span class="n">tokens</span> <span class="o">=</span> <span class="p">[</span><span class="n">token</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span> <span class="k">if</span> <span class="n">token</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">rare_tokens_list</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span> <span class="c1"># replace rare tokens with a constant value</span>
+        <span class="n">tokens</span> <span class="o">=</span> <span class="p">[</span><span class="n">token</span> <span class="k">if</span> <span class="n">token</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">rare_tokens_list</span> <span class="k">else</span> <span class="n">rare_token_replacement_tag</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">tokens</span></div>
+
+
+<div class="viewcode-block" id="spacy_tokens_pos"><a class="viewcode-back" href="../../../docs_main/text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.spacy_tokens_pos">[docs]</a><span class="k">def</span> <span class="nf">spacy_tokens_pos</span><span class="p">(</span><span class="n">tokens</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Creates a list of tuples with every token and it&#39;s frequency</span>
+
+<span class="sd">   :param tokens: list of spacy tokens</span>
+<span class="sd">   :return: list of tuples that contains the token, and it&#39;s position</span>
+<span class="sd">   :rtype: built-in python list</span>
+<span class="sd">   &#39;&#39;&#39;</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
+        <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">token</span><span class="o">.</span><span class="n">pos_</span><span class="p">)</span> <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">res</span></div>
+
+
+<div class="viewcode-block" id="get_spacy_tokens_from_raw_text"><a class="viewcode-back" href="../../../docs_main/text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.get_spacy_tokens_from_raw_text">[docs]</a><span class="k">def</span> <span class="nf">get_spacy_tokens_from_raw_text</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">nlp_model</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Convert a raw text to a built-in python list of spacy.tokens.token.Token object (tokens);</span>
+
+<span class="sd">    :param text: the input text; it&#39;s a native python string</span>
+<span class="sd">    :param nlp_model: NLP model that is used to preprocess the text; it&#39;s a spacy.lang object</span>
+<span class="sd">    :return: list of words extracted from the input text</span>
+<span class="sd">    :rtype: built-in python list</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">doc</span> <span class="o">=</span> <span class="n">nlp_model</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+    <span class="n">tokens</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">doc</span><span class="p">:</span>
+        <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">tokens</span></div>
+
+<div class="viewcode-block" id="str_remove_junk_spaces"><a class="viewcode-back" href="../../../docs_main/text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.str_remove_junk_spaces">[docs]</a><span class="k">def</span> <span class="nf">str_remove_junk_spaces</span><span class="p">(</span><span class="n">tokens</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Removes junk spaces from a list of string tokens</span>
+
+<span class="sd">    :param tokens: list of string tokens</span>
+<span class="sd">    :return: list of tokens without junk spaces</span>
+<span class="sd">    :rtype: built-in python list</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="c1"># remove extra spaces with strip</span>
+    <span class="n">tokens</span> <span class="o">=</span> <span class="p">[</span><span class="n">remove_excessive_space</span><span class="p">(</span><span class="n">token</span><span class="p">)</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">]</span>
+
+    <span class="n">junk_spaces</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\r</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\v</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\f</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;&amp;nbsp;&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\xA0</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">]</span>
+
+    <span class="c1"># remove other junk spaces</span>
+    <span class="n">tokens</span> <span class="o">=</span> <span class="p">[</span><span class="n">token</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span> <span class="k">if</span> <span class="n">token</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">junk_spaces</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">tokens</span></div>
+
+
+<div class="viewcode-block" id="str_years_to_spoken_words"><a class="viewcode-back" href="../../../docs_main/text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.str_years_to_spoken_words">[docs]</a><span class="k">def</span> <span class="nf">str_years_to_spoken_words</span><span class="p">(</span><span class="n">tokens</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Transform the numerical years in their equivalent text</span>
+<span class="sd">    :param tokens: list of str tokens</span>
+<span class="sd">    :return: modified list of str tokens that has all numerical year instances transformed in their equivalent text</span>
+<span class="sd">    :rtype: built-in python list</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="c1"># convert years to spoken words, e.g. &quot;1990&quot; to &#39;nineteen ninety&#39;</span>
+    <span class="c1"># we consider years as integer values with 4 digits, and the value itself</span>
+    <span class="c1"># between valid_year_min_value to valid_year_max_value</span>
+
+    <span class="n">valid_year_min_value</span> <span class="o">=</span> <span class="mi">1000</span>
+    <span class="n">valid_year_max_value</span> <span class="o">=</span> <span class="mi">2100</span>
+
+    <span class="n">new_tokens</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">isnumeric</span><span class="p">()</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">token</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span> <span class="ow">and</span> <span class="nb">int</span><span class="p">(</span><span class="n">token</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">valid_year_min_value</span> <span class="ow">and</span> <span class="nb">int</span><span class="p">(</span><span class="n">token</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">valid_year_max_value</span><span class="p">:</span>
+            <span class="n">year</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+            <span class="n">year_as_words</span> <span class="o">=</span> <span class="n">num2words</span><span class="p">(</span><span class="n">year</span><span class="p">,</span> <span class="n">to</span> <span class="o">=</span> <span class="s1">&#39;year&#39;</span><span class="p">)</span>
+            <span class="n">year_words_tokens</span> <span class="o">=</span> <span class="n">get_lowercase_words_from_str</span><span class="p">(</span><span class="n">year_as_words</span><span class="p">)</span>
+            <span class="n">new_tokens</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">year_words_tokens</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># just append it like this</span>
+            <span class="n">new_tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">new_tokens</span></div>
+
+
+<div class="viewcode-block" id="str_numeric_values_to_spoken_words"><a class="viewcode-back" href="../../../docs_main/text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.str_numeric_values_to_spoken_words">[docs]</a><span class="k">def</span> <span class="nf">str_numeric_values_to_spoken_words</span><span class="p">(</span><span class="n">tokens</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Transform all numerical values to their equivalent in text</span>
+<span class="sd">    :param tokens: list of str tokens</span>
+<span class="sd">    :return: modified list of str tokens that contains all numerical values in text</span>
+<span class="sd">    :rtype: built-in python list</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="c1"># convert numerical values (eg. &#39;54&#39;, &#39;2.5&#39;) to spoken words</span>
+    <span class="n">new_tokens</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">is_str_numeric</span><span class="p">(</span><span class="n">token</span><span class="p">):</span>
+            <span class="n">token_as_numeric</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+            <span class="n">token_as_spoken_words</span> <span class="o">=</span> <span class="n">num2words</span><span class="p">(</span><span class="n">token_as_numeric</span><span class="p">)</span>
+            <span class="n">tokens_spoken_words</span> <span class="o">=</span> <span class="n">get_lowercase_words_from_str</span><span class="p">(</span><span class="n">token_as_spoken_words</span><span class="p">)</span>
+            <span class="n">new_tokens</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">tokens_spoken_words</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">new_tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">new_tokens</span></div>
+
+
+<div class="viewcode-block" id="str_ordinal_numbers_to_spoken_words"><a class="viewcode-back" href="../../../docs_main/text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.str_ordinal_numbers_to_spoken_words">[docs]</a><span class="k">def</span> <span class="nf">str_ordinal_numbers_to_spoken_words</span><span class="p">(</span><span class="n">tokens</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Transform all ordinal values to their equivalent in text</span>
+<span class="sd">    :param tokens: list of str tokens</span>
+<span class="sd">    :return: modified list of str tokens that contains all ordinal values in text</span>
+<span class="sd">    :rtype: built-in python list</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">new_tokens</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="n">ordinals</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;st&#39;</span><span class="p">,</span> <span class="s1">&#39;nd&#39;</span><span class="p">,</span> <span class="s1">&#39;rd&#39;</span><span class="p">,</span> <span class="s1">&#39;th&#39;</span><span class="p">]</span>
+
+    <span class="c1"># first phase, handle &quot;1st&quot;, &quot;23rd&quot; etc</span>
+    <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">token</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="n">ordinals</span><span class="p">)</span> <span class="ow">and</span> <span class="n">is_str_numeric</span><span class="p">(</span><span class="n">token</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">2</span><span class="p">]):</span>
+            <span class="n">numerical_part</span> <span class="o">=</span> <span class="n">token</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+            <span class="n">numerical_part_spoken_whole_str</span> <span class="o">=</span> <span class="n">num2words</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">token</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">2</span><span class="p">]),</span> <span class="n">to</span> <span class="o">=</span> <span class="s2">&quot;ordinal&quot;</span><span class="p">)</span>
+            <span class="n">numerical_part_spoken</span> <span class="o">=</span> <span class="n">get_lowercase_words_from_str</span><span class="p">(</span><span class="n">numerical_part_spoken_whole_str</span><span class="p">)</span>
+            <span class="n">new_tokens</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">numerical_part_spoken</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">new_tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+
+    <span class="n">tokens</span> <span class="o">=</span> <span class="n">new_tokens</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">new_tokens</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># second phase of conversion process; e.g &quot;1&quot; &quot;st&quot; =&gt; &quot;first&quot;</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">i</span><span class="o">&lt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">is_str_numeric</span><span class="p">(</span><span class="n">tokens</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="ow">and</span> <span class="n">tokens</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="n">ordinals</span><span class="p">:</span>
+            <span class="n">ordinal_as_spoken_words_whole_str</span> <span class="o">=</span> <span class="n">num2words</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">tokens</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span> <span class="n">to</span> <span class="o">=</span> <span class="s1">&#39;ordinal&#39;</span><span class="p">)</span>
+            <span class="n">ordinal_as_spoken_words</span> <span class="o">=</span> <span class="n">get_lowercase_words_from_str</span><span class="p">(</span><span class="n">ordinal_as_spoken_words_whole_str</span><span class="p">)</span>
+            <span class="n">new_tokens</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">ordinal_as_spoken_words</span><span class="p">)</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">new_tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tokens</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+
+        <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">tokens</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ordinals</span><span class="p">:</span>
+        <span class="n">new_tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tokens</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="n">tokens</span> <span class="o">=</span> <span class="n">new_tokens</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">new_tokens</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># third phase of conversion process; e.g &quot;1 st&quot; =&gt; &quot;first&quot;</span>
+    <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
+        <span class="n">token_last2chars</span> <span class="o">=</span> <span class="n">token</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">token</span><span class="p">)</span> <span class="o">-</span><span class="mi">2</span><span class="p">:]</span>
+        <span class="n">token_first_chars</span> <span class="o">=</span> <span class="n">token</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">token_first_chars</span><span class="o">.</span><span class="n">isnumeric</span><span class="p">()</span> <span class="ow">and</span> <span class="n">token_last2chars</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="n">ordinals</span><span class="p">:</span>
+            <span class="n">ordinal_as_spoken_words_whole_str</span> <span class="o">=</span> <span class="n">num2words</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">token_first_chars</span><span class="p">),</span> <span class="n">to</span> <span class="o">=</span> <span class="s1">&#39;ordinal&#39;</span><span class="p">)</span>
+            <span class="n">ordinal_as_spoken_words</span> <span class="o">=</span> <span class="n">get_lowercase_words_from_str</span><span class="p">(</span><span class="n">ordinal_as_spoken_word_whole_str</span><span class="p">)</span>
+            <span class="n">new_tokens</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">ordinal_as_spoken_words</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">new_tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">new_tokens</span></div>
+
+
+<div class="viewcode-block" id="str_currency_to_spoken_words"><a class="viewcode-back" href="../../../docs_main/text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.str_currency_to_spoken_words">[docs]</a><span class="k">def</span> <span class="nf">str_currency_to_spoken_words</span><span class="p">(</span><span class="n">tokens</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Transform all currency values to their equivalent in text</span>
+<span class="sd">    :param tokens: list of str tokens</span>
+<span class="sd">    :return: modified list of str tokens that contains all currency values in text</span>
+<span class="sd">    :rtype: built-in python list</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">new_tokens</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="n">symbols</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;%&#39;</span><span class="p">:</span><span class="s1">&#39;percentage&#39;</span><span class="p">,</span> <span class="s1">&#39;€&#39;</span><span class="p">:</span><span class="s1">&#39;euros&#39;</span><span class="p">,</span> <span class="s1">&#39;$&#39;</span><span class="p">:</span><span class="s1">&#39;dollars&#39;</span><span class="p">,</span> <span class="s1">&#39;CHF&#39;</span><span class="p">:</span><span class="s1">&#39;swiss francs&#39;</span><span class="p">,</span> <span class="s1">&#39;USD&#39;</span><span class="p">:</span><span class="s1">&#39;dollars&#39;</span><span class="p">,</span> <span class="s1">&#39;EUR&#39;</span><span class="p">:</span><span class="s1">&#39;euros&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;£&#39;</span><span class="p">:</span><span class="s1">&#39;sterling&#39;</span><span class="p">,</span> <span class="s1">&#39;GBP&#39;</span><span class="p">:</span><span class="s1">&#39;sterling&#39;</span><span class="p">,</span> <span class="s1">&#39;JPY&#39;</span><span class="p">:</span><span class="s1">&#39;yens&#39;</span><span class="p">,</span> <span class="s1">&#39;AUD&#39;</span><span class="p">:</span><span class="s1">&#39;dollars&#39;</span><span class="p">,</span> <span class="s1">&#39;CAD&#39;</span><span class="p">:</span><span class="s1">&#39;dollars&#39;</span><span class="p">}</span>
+    <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">symbols</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">new_tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">symbols</span><span class="p">[</span><span class="n">token</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">new_tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">new_tokens</span></div>
+
+
+<div class="viewcode-block" id="str_remove_common_chars"><a class="viewcode-back" href="../../../docs_main/text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.str_remove_common_chars">[docs]</a><span class="k">def</span> <span class="nf">str_remove_common_chars</span><span class="p">(</span><span class="n">tokens</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Remove all common chars such as &#39;\&#39; and &#39;&quot;&#39; from tokens list</span>
+<span class="sd">    :param tokens: list of str tokens</span>
+<span class="sd">    :return: modified list of str tokens that excludes common chars</span>
+<span class="sd">    :rtype: built-in python list</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">common_chars</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;</span><span class="se">\&#39;</span><span class="s1">&#39;</span><span class="p">,</span><span class="s1">&#39;&quot;&#39;</span><span class="p">]</span>
+    <span class="n">tokens</span> <span class="o">=</span><span class="p">[</span><span class="n">token</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span> <span class="k">if</span> <span class="n">token</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">common_chars</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">tokens</span></div>
+
+
+<div class="viewcode-block" id="remove_str_tokens_len_less_than_threshold"><a class="viewcode-back" href="../../../docs_main/text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.remove_str_tokens_len_less_than_threshold">[docs]</a><span class="k">def</span> <span class="nf">remove_str_tokens_len_less_than_threshold</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="n">threshold_value</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Remove all str tokens that have the length smaller than a threshold value</span>
+<span class="sd">    :param tokens: list of str tokens</span>
+<span class="sd">    :param threshold_value: a minim value for the length of a token</span>
+<span class="sd">    :return: modified list of str tokens that excludes tokens of length smaller than threshold</span>
+<span class="sd">    :rtype: built-in python list</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">tokens</span> <span class="o">=</span> <span class="p">[</span><span class="n">token</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">token</span><span class="p">)</span><span class="o">&gt;=</span> <span class="n">threshold_value</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">tokens</span></div>
+
+
+<div class="viewcode-block" id="str_fraction_to_spoken_words"><a class="viewcode-back" href="../../../docs_main/text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.str_fraction_to_spoken_words">[docs]</a><span class="k">def</span> <span class="nf">str_fraction_to_spoken_words</span><span class="p">(</span><span class="n">tokens</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Transform all numerical fraction included in tokens in their equivalent text (this produce some chained tokens, e.g &#39;one-half&#39; and not &#39;one&#39; &#39;half&#39;)</span>
+<span class="sd">    :param tokens: list of str tokens</span>
+<span class="sd">    :return: modified list of str tokens that includes numerical fractions in text</span>
+<span class="sd">    :rtype: built-in python list</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">new_tokens</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">is_str_fraction</span><span class="p">(</span><span class="n">token</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">token</span> <span class="o">==</span> <span class="s1">&#39;1/2&#39;</span><span class="p">:</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="s1">&#39;one-half&#39;</span>
+                <span class="n">value_split</span> <span class="o">=</span> <span class="n">get_lowercase_words_from_str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+                <span class="n">new_tokens</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">value_split</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">fraction_parts</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+                <span class="n">numerator</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">fraction_parts</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="n">denominator</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">fraction_parts</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+                <span class="c1"># convert to spoken words</span>
+                <span class="n">numerator_as_words</span> <span class="o">=</span> <span class="n">num2words</span><span class="p">(</span><span class="n">numerator</span><span class="p">)</span>
+                <span class="n">denominator_as_words</span> <span class="o">=</span> <span class="n">num2words</span><span class="p">(</span><span class="n">denominator</span><span class="p">,</span> <span class="n">to</span> <span class="o">=</span> <span class="s2">&quot;ordinal&quot;</span><span class="p">)</span>
+
+                <span class="c1"># extract only words, without &#39;-&#39; and others</span>
+                <span class="n">numerator_split</span> <span class="o">=</span> <span class="n">get_lowercase_words_from_str</span><span class="p">(</span><span class="n">numerator_as_words</span><span class="p">)</span>
+                <span class="n">denominator_split</span><span class="o">=</span> <span class="n">get_lowercase_words_from_str</span><span class="p">(</span><span class="n">denominator_as_words</span><span class="p">)</span>
+
+                <span class="n">new_tokens</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">numerator_split</span><span class="p">)</span>
+                <span class="n">new_tokens</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">denominator_split</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">new_tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">new_tokens</span></div>
+
+
+<div class="viewcode-block" id="str_emails_to_email_tag"><a class="viewcode-back" href="../../../docs_main/text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.str_emails_to_email_tag">[docs]</a><span class="k">def</span> <span class="nf">str_emails_to_email_tag</span><span class="p">(</span><span class="n">tokens</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Replaces all email addresses with &#39;[email]&#39; tag constant value</span>
+<span class="sd">    :param tokens: list of str tokens</span>
+<span class="sd">    :return: new list of str tokens with instances of a tag &#39;email&#39; (constant) instead of email address</span>
+<span class="sd">    :rtype: built-in python list</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">tokens</span> <span class="o">=</span> <span class="p">[</span><span class="n">token</span> <span class="k">if</span> <span class="n">validate_email</span><span class="p">(</span><span class="n">token</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span> <span class="k">else</span> <span class="n">email_tag</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span> <span class="p">]</span>
+    <span class="k">return</span> <span class="n">tokens</span></div>
+
+<div class="viewcode-block" id="str_dates_to_date_tag"><a class="viewcode-back" href="../../../docs_main/text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.str_dates_to_date_tag">[docs]</a><span class="k">def</span> <span class="nf">str_dates_to_date_tag</span><span class="p">(</span><span class="n">tokens</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Reconstruct the list of str token replacing the valid dates with a specific tag</span>
+<span class="sd">    :param tokens: list of str tokens</span>
+<span class="sd">    :return: new list of str tokens with instances of [date] instead of the date</span>
+<span class="sd">    :rtype: built-in python list</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">tokens</span> <span class="o">=</span> <span class="p">[</span><span class="n">token</span> <span class="k">if</span> <span class="n">is_str_valid_date</span><span class="p">(</span><span class="n">token</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span> <span class="k">else</span> <span class="n">calendar_date_tag</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">tokens</span></div>
+
+
+<div class="viewcode-block" id="str_tokens_replace_symbol_with_tag"><a class="viewcode-back" href="../../../docs_main/text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.str_tokens_replace_symbol_with_tag">[docs]</a><span class="k">def</span> <span class="nf">str_tokens_replace_symbol_with_tag</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="n">symbol</span><span class="p">,</span> <span class="n">tag</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Function that replace a given symbol with a given tag (mention: structures such as &#39;&quot;cat&#39; will be converted into &#39;[QUOTE] cat&#39;)</span>
+<span class="sd">    :param tokens: list of str tokens</span>
+<span class="sd">    :param symbol: the symbol that wants to be modified</span>
+<span class="sd">    :param tag: the tag that will replace the symbol value</span>
+<span class="sd">    :return: new list of tokens with tag instances instead of symbol</span>
+<span class="sd">    :rtype: built-in python list</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">junk_spaces</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">]</span>
+    <span class="n">new_tokens</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
+        <span class="n">list_of_indexes</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># indexes o characters where quote appear</span>
+
+        <span class="c1"># collect quote indexes</span>
+        <span class="n">current_token_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">current_token_len</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">token</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">symbol</span><span class="p">:</span>
+                <span class="n">list_of_indexes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">list_of_indexes</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">new_tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+
+        <span class="n">left</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">right</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">index_value</span> <span class="ow">in</span>  <span class="nb">enumerate</span><span class="p">(</span><span class="n">list_of_indexes</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">left</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">left</span> <span class="o">=</span> <span class="n">list_of_indexes</span><span class="p">[</span><span class="n">index</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+
+            <span class="n">right</span> <span class="o">=</span> <span class="n">list_of_indexes</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="n">left</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">right</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">single_str</span> <span class="o">=</span> <span class="n">token</span><span class="p">[</span><span class="n">left</span><span class="p">:</span><span class="n">right</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">single_str</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">junk_spaces</span><span class="p">:</span>
+                    <span class="n">new_tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">single_str</span><span class="p">)</span>
+                <span class="n">new_tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">right</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">right</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">token</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">single_str</span> <span class="o">=</span> <span class="n">token</span><span class="p">[</span><span class="n">right</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">token</span><span class="p">)]</span>
+            <span class="k">if</span> <span class="n">single_str</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">junk_spaces</span><span class="p">:</span>
+                <span class="n">new_tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">single_str</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">new_tokens</span></div>
+
+
+<div class="viewcode-block" id="str_tokens_numbers_with_separators_to_spoken_words"><a class="viewcode-back" href="../../../docs_main/text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.str_tokens_numbers_with_separators_to_spoken_words">[docs]</a><span class="k">def</span> <span class="nf">str_tokens_numbers_with_separators_to_spoken_words</span><span class="p">(</span><span class="n">tokens</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Function that converts the numbers that contain separators to spoken words,</span>
+<span class="sd">    e.g &quot;10,500,205&quot; to spoken words (appending them to the list) [&quot;ten&quot;, &quot;million&quot;, &quot;five&quot;, &quot;hundred&quot;, &quot;thousand&quot;, &quot;two&quot;, &quot;hundred&quot;, &quot;and&quot;, &quot;five&quot;]</span>
+<span class="sd">    :param tokens: list of str tokens</span>
+<span class="sd">    :return: new list that contains the numbers with separators as spoken words</span>
+<span class="sd">    :rtype: built-in python list</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="c1"># left side must be a white space or line start</span>
+    <span class="c1"># center must be following the pattern, digits(,digits)+</span>
+    <span class="c1"># right must be a white space or line end</span>
+    <span class="c1"># structure such as &#39;(?&lt;=\s)&#39; refer to match but not to include in the result</span>
+    <span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;((?&lt;=\s)|(?&lt;=^))(\d+((,\d+)+))((?=\s)|(?=$))&quot;</span><span class="p">)</span>
+    <span class="n">new_tokens</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
+        <span class="n">matches</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">token</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">matches</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">numerical_value</span> <span class="o">=</span> <span class="n">str_number_with_separators_to_integer_number</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+            <span class="n">numerical_value_spoken</span> <span class="o">=</span> <span class="n">num2words</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">numerical_value</span><span class="p">),</span> <span class="n">to</span> <span class="o">=</span> <span class="s2">&quot;cardinal&quot;</span><span class="p">)</span>
+            <span class="n">words</span> <span class="o">=</span> <span class="n">get_lowercase_words_from_str</span><span class="p">(</span><span class="n">numerical_value_spoken</span><span class="p">)</span>
+            <span class="n">new_tokens</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">new_tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">new_tokens</span></div>
+
+
+<div class="viewcode-block" id="str_number_with_separators_to_integer_number"><a class="viewcode-back" href="../../../docs_main/text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.str_number_with_separators_to_integer_number">[docs]</a><span class="k">def</span> <span class="nf">str_number_with_separators_to_integer_number</span><span class="p">(</span><span class="n">val</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Transform a string that represents a number with a comma to a number without commas/integer (e.g. &quot;10,500,205&quot; -&gt; 10500205)</span>
+<span class="sd">    :param val: string value</span>
+<span class="sd">    :return: integer</span>
+<span class="sd">    :rtype: build-in python integer</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">all_digits</span> <span class="o">=</span> <span class="p">[</span><span class="n">character</span> <span class="k">for</span> <span class="n">character</span> <span class="ow">in</span> <span class="n">val</span> <span class="k">if</span> <span class="n">character</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()]</span>
+    <span class="n">numerical_value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">all_digits</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">numerical_value</span></div>
+
+
+<div class="viewcode-block" id="split_and_gather_str_tokens_by_separator"><a class="viewcode-back" href="../../../docs_main/text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.split_and_gather_str_tokens_by_separator">[docs]</a><span class="k">def</span> <span class="nf">split_and_gather_str_tokens_by_separator</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="n">separator</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Splits all tokens that contains words split by a given separator (e.g. &#39;tech,media&#39; which is a single token becomes after splitting by &#39;,&#39; the tokens &#39;tech&#39;, &#39;media&#39;)</span>
+<span class="sd">    :param tokens: list of str tokens</span>
+<span class="sd">    :param separator: a given separator such as &#39;,&#39;</span>
+<span class="sd">    :return: new list of str tokens that contains all tokens split by separator</span>
+<span class="sd">    :rtype: build-in python list</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">new_tokens</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
+        <span class="n">token_parts</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">separator</span><span class="p">)</span>
+        <span class="n">new_tokens</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">token_parts</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">new_tokens</span></div>
+
+
+<div class="viewcode-block" id="get_str_stopwords"><a class="viewcode-back" href="../../../docs_main/text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.get_str_stopwords">[docs]</a><span class="k">def</span> <span class="nf">get_str_stopwords</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Function that creates the list of stopwords (we exclude certain words that will not be considered stopwords)</span>
+<span class="sd">    :return: list of str tokens that represent stopwords</span>
+<span class="sd">    :rtype: build-in python list</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">NOT_STOPWORDS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;one&#39;</span><span class="p">,</span><span class="s1">&#39;sixty&#39;</span><span class="p">,</span> <span class="s1">&#39;nine&#39;</span><span class="p">,</span> <span class="s1">&#39;six&#39;</span><span class="p">,</span> <span class="s1">&#39;twelve&#39;</span><span class="p">,</span> <span class="s1">&#39;twenty&#39;</span><span class="p">,</span> <span class="s1">&#39;ten&#39;</span><span class="p">,</span> <span class="s1">&#39;hundred&#39;</span><span class="p">,</span> <span class="s1">&#39;third&#39;</span><span class="p">,</span> <span class="s1">&#39;five&#39;</span><span class="p">,</span> <span class="s1">&#39;two&#39;</span><span class="p">,</span> <span class="s1">&#39;three&#39;</span><span class="p">,</span> <span class="s1">&#39;eleven&#39;</span><span class="p">,</span> <span class="s1">&#39;first&#39;</span><span class="p">,</span> <span class="s1">&#39;four&#39;</span><span class="p">,</span> <span class="s1">&#39;forty&#39;</span><span class="p">,</span> <span class="s1">&#39;fifty&#39;</span><span class="p">,</span> <span class="s1">&#39;fifteen&#39;</span><span class="p">,</span> <span class="s1">&#39;eight&#39;</span><span class="p">]</span>
+    <span class="n">stopwords</span> <span class="o">=</span> <span class="n">STOP_WORDS</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="p">[</span><span class="n">stopword</span> <span class="k">for</span> <span class="n">stopword</span> <span class="ow">in</span> <span class="n">stopwords</span> <span class="k">if</span> <span class="n">stopword</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">NOT_STOPWORDS</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">res</span></div>
+
+
+<div class="viewcode-block" id="is_6digits_date"><a class="viewcode-back" href="../../../docs_main/text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.is_6digits_date">[docs]</a><span class="k">def</span> <span class="nf">is_6digits_date</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Function to verify if a string represents a calendar date (6 digits format, e.g. 14.05.93 -&gt; refer to a date from year 93); the separator can be &quot;.&quot;, &quot;-&quot;, &quot;/&quot;</span>
+<span class="sd">    :param value: string value</span>
+<span class="sd">    :return: bool value, true for calendar date, false otherwise</span>
+<span class="sd">    :rtype: build-in python bool</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;\d</span><span class="si">{2}</span><span class="s2">[.|/|-]\d</span><span class="si">{2}</span><span class="s2">[.|/|-]\d</span><span class="si">{2}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">pattern</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">value</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="str_6digits_dates_to_date_tag"><a class="viewcode-back" href="../../../docs_main/text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.str_6digits_dates_to_date_tag">[docs]</a><span class="k">def</span> <span class="nf">str_6digits_dates_to_date_tag</span><span class="p">(</span><span class="n">tokens</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Function that replace a 6 digit date with a &#39;c_date&#39; tag</span>
+<span class="sd">    :param tokens: list of str token</span>
+<span class="sd">    :return: new list of str tokens with all apparitions of 6 digit date replaced with &#39;c_date&#39; tag</span>
+<span class="sd">    :rtype: build-in python list</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">tokens</span> <span class="o">=</span> <span class="p">[</span><span class="n">token</span> <span class="k">if</span> <span class="n">is_6digits_date</span><span class="p">(</span><span class="n">token</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span> <span class="k">else</span> <span class="n">calendar_date_tag</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">tokens</span></div>
+
+
+<div class="viewcode-block" id="is_valid_url"><a class="viewcode-back" href="../../../docs_main/text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.is_valid_url">[docs]</a><span class="k">def</span> <span class="nf">is_valid_url</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Check if a given string is a valid URL/URI</span>
+<span class="sd">    :param value: given string</span>
+<span class="sd">    :return: bool value, true for URL, false otherwise</span>
+<span class="sd">    :rtype: build-in python bool</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">urlparse</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">all</span><span class="p">([</span><span class="n">result</span><span class="o">.</span><span class="n">scheme</span><span class="p">,</span> <span class="n">result</span><span class="o">.</span><span class="n">netloc</span><span class="p">])</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="is_valid_resource"><a class="viewcode-back" href="../../../docs_main/text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.is_valid_resource">[docs]</a><span class="k">def</span> <span class="nf">is_valid_resource</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Function that checks if an url is in small notation (kind of resource), &quot;ames.arc.nasa.gov&quot;</span>
+<span class="sd">    :param value: string value</span>
+<span class="sd">    :return: bool value, true for url in small notation, false otherwise</span>
+<span class="sd">    :rtype: build-in python bool</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;[a-z]+[.][a-z]+([.][a-z]+)+&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">pattern</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">value</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="str_urls_to_url_tag"><a class="viewcode-back" href="../../../docs_main/text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.str_urls_to_url_tag">[docs]</a><span class="k">def</span> <span class="nf">str_urls_to_url_tag</span><span class="p">(</span><span class="n">tokens</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Function that replace URL with specific tag</span>
+<span class="sd">    :param tokens: list of str tokens</span>
+<span class="sd">    :return: new list of str tokens with URL instances replaced with tag</span>
+<span class="sd">    :rtype: build-in python list</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">tokens</span> <span class="o">=</span> <span class="p">[</span><span class="n">token</span> <span class="k">if</span> <span class="p">(</span><span class="n">is_valid_url</span><span class="p">(</span><span class="n">token</span><span class="p">)</span> <span class="ow">or</span> <span class="n">is_valid_resource</span><span class="p">(</span><span class="n">token</span><span class="p">))</span> <span class="ow">is</span> <span class="kc">False</span> <span class="k">else</span> <span class="n">url_tag</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">tokens</span></div>
+
+
+<div class="viewcode-block" id="str_initial_case_to_tag"><a class="viewcode-back" href="../../../docs_main/text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.str_initial_case_to_tag">[docs]</a><span class="k">def</span> <span class="nf">str_initial_case_to_tag</span><span class="p">(</span><span class="n">tokens</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Function that replace initial case letters (e.g. &quot;a.&quot;, &quot;F.&quot;) to a specific tag</span>
+<span class="sd">    :param tokens: list of str tokens</span>
+<span class="sd">    :return: new list of str token with the appearances of initial case letter replaced with tag</span>
+<span class="sd">    :rtype: build-in python list</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">is_initial_case_letter_format</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">isalpha</span><span class="p">()</span> <span class="ow">and</span> <span class="n">value</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;.&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="n">tokens</span> <span class="o">=</span> <span class="p">[</span><span class="n">token</span> <span class="k">if</span> <span class="n">is_initial_case_letter_format</span><span class="p">(</span><span class="n">token</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span> <span class="k">else</span> <span class="n">initial_case_letter</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">tokens</span></div>
+
+<div class="viewcode-block" id="str_tokens_to_spacy_tokens"><a class="viewcode-back" href="../../../docs_main/text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.str_tokens_to_spacy_tokens">[docs]</a><span class="k">def</span> <span class="nf">str_tokens_to_spacy_tokens</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="n">nlp_model</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Transform a list of str tokens in a list of the equivalent spacy entities</span>
+<span class="sd">    :param tokens: list of str tokens</span>
+<span class="sd">    :param nlp_model: what kind of modifier we want to use</span>
+<span class="sd">    :return: new list of str tokens that includes spacy tokens</span>
+<span class="sd">    :rtype: built-in python list</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="c1"># convert string tokens back into spacy entities</span>
+    <span class="n">raw_text</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
+    <span class="n">tokens</span> <span class="o">=</span> <span class="n">get_spacy_tokens_from_raw_text</span><span class="p">(</span><span class="n">raw_text</span><span class="p">,</span> <span class="n">nlp_model</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">tokens</span></div>
+
+
+<div class="viewcode-block" id="spacy_tokens_to_str_tokens"><a class="viewcode-back" href="../../../docs_main/text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.spacy_tokens_to_str_tokens">[docs]</a><span class="k">def</span> <span class="nf">spacy_tokens_to_str_tokens</span><span class="p">(</span><span class="n">tokens</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Transform a list of spacy tokens in a list of the equivalent str entities</span>
+<span class="sd">    :param tokens: list of spacy tokens</span>
+<span class="sd">    :return: new list of spacy tokens</span>
+<span class="sd">    :rtype: built-in python list</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="c1"># convert tokens from spacy entity to built-in string</span>
+    <span class="n">tokens</span> <span class="o">=</span> <span class="p">[</span><span class="n">token</span><span class="o">.</span><span class="n">text</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">tokens</span></div>
+
+
+<div class="viewcode-block" id="str_tokens_to_str"><a class="viewcode-back" href="../../../docs_main/text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.str_tokens_to_str">[docs]</a><span class="k">def</span> <span class="nf">str_tokens_to_str</span><span class="p">(</span><span class="n">tokens</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Transform a list of str token in a string equivalent</span>
+<span class="sd">    :param tokens: list of str tokens</span>
+<span class="sd">    :return: string</span>
+<span class="sd">    :rtype: built-in python string</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Ana.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

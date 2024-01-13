@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>src.model_classes.StaticClassifier &mdash; MLO-DCM 1.0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js?v=7da82d16"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            MLO-DCM
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../docs_main/modules.html">main</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../docs_model_classes/modules.html">model_classes</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">MLO-DCM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">src.model_classes.StaticClassifier</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for src.model_classes.StaticClassifier</h1><div class="highlight"><pre>
+<span></span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">This class represent a static classifier for a model. Static classifier in this context refer to a classical solver (model) e.g</span>
+<span class="sd">RandomForestClassifier, XGBoostClassifier, SVM etc; these are heavily different from a Deep Learning model or Neural Network that usually</span>
+<span class="sd">require a complex architecture and other things that must to be considered.</span>
+
+<span class="sd">This class works as a wrapper for classifiers from sklearn package; it incorporate the already implemented features from sklearn</span>
+<span class="sd">and allow user to use them in a proper way.</span>
+
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="kn">from</span> <span class="nn">src.main.model_utilities</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">precision_score</span><span class="p">,</span> <span class="n">recall_score</span><span class="p">,</span> <span class="n">f1_score</span>
+<span class="kn">from</span> <span class="nn">src.main.model_utilities</span> <span class="kn">import</span> <span class="o">*</span>
+
+<div class="viewcode-block" id="StaticClassifier"><a class="viewcode-back" href="../../../docs_model_classes/StaticClassifier.html#src.model_classes.StaticClassifier.StaticClassifier">[docs]</a><span class="k">class</span> <span class="nc">StaticClassifier</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_classifier</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Constructor, where only the classifier object is passed (it does not need to store the data)</span>
+<span class="sd">        :param model_classifier: the model classifier</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_classifier</span> <span class="o">=</span> <span class="n">model_classifier</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__confusion_matrix</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1"># confusion matrix is a private member (variable); set it after fit_train_evaluate()</span>
+        <span class="c1"># get it via get_confusion_matrix()</span>
+
+<div class="viewcode-block" id="StaticClassifier.set_model_params"><a class="viewcode-back" href="../../../docs_model_classes/StaticClassifier.html#src.model_classes.StaticClassifier.StaticClassifier.set_model_params">[docs]</a>    <span class="k">def</span> <span class="nf">set_model_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_params</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Setter for new parameter data</span>
+<span class="sd">        :param new_params: the new input variable; represented by a map where we have the key - model parameter name and the value - parameter value, e.g &#39;n_estimators&#39;: 200&#39;</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_classifier</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="o">**</span><span class="n">new_params</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="StaticClassifier.get_model_params"><a class="viewcode-back" href="../../../docs_model_classes/StaticClassifier.html#src.model_classes.StaticClassifier.StaticClassifier.get_model_params">[docs]</a>    <span class="k">def</span> <span class="nf">get_model_params</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Getter for the param data</span>
+<span class="sd">        :return: a copy of the content of the data param</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_classifier</span><span class="o">.</span><span class="n">get_params</span><span class="p">()</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="StaticClassifier.fit_train_evaluate"><a class="viewcode-back" href="../../../docs_model_classes/StaticClassifier.html#src.model_classes.StaticClassifier.StaticClassifier.fit_train_evaluate">[docs]</a>    <span class="k">def</span> <span class="nf">fit_train_evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dict_data</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Method for fitting the data, training the model, testing the result, and returning the corresponding metrics of the confusion matrix</span>
+<span class="sd">        :param dict_data: dictionary with the data (we assume that the given data is preprocessed)</span>
+<span class="sd">        :return: dictionary with the metrics resulted from the confusion matrix</span>
+<span class="sd">        :rtype: build-in python dictionary</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">dict_data</span><span class="p">[</span><span class="n">X_TRAIN</span><span class="p">],</span> <span class="n">dict_data</span><span class="p">[</span><span class="n">Y_TRAIN</span><span class="p">])</span>
+        <span class="n">y_pred</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">dict_data</span><span class="p">[</span><span class="n">X_TEST</span><span class="p">])</span>
+        <span class="n">res_conf_matrix</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">dict_data</span><span class="p">[</span><span class="n">Y_TEST</span><span class="p">],</span> <span class="n">y_pred</span><span class="p">)</span>
+
+        <span class="c1"># save confusion matrix into the classifier</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__confusion_matrix</span> <span class="o">=</span> <span class="n">res_conf_matrix</span>
+
+        <span class="n">metrics_dict</span> <span class="o">=</span> <span class="n">get_model_evaluation_metrics</span><span class="p">(</span><span class="n">res_conf_matrix</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;accuracy manually: &quot;</span><span class="p">,</span> <span class="n">metrics_dict</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">])</span>
+        <span class="c1">#print(&quot;accuracy automate: &quot;, accuracy_score(y_pred,dict_data[Y_TEST] ))</span>
+        <span class="c1">#</span>
+        <span class="c1"># print(&quot;precision calculated manually: &quot;, metrics_dict[&#39;precision&#39;])</span>
+        <span class="c1"># print(&quot;precision&quot;, precision_score(y_pred, dict_data[Y_TEST], average=&#39;weighted&#39;))</span>
+        <span class="c1">#</span>
+        <span class="c1"># print(&quot;recall calculated manually: &quot;, metrics_dict[&#39;recall&#39;])</span>
+        <span class="c1"># print(&quot;recall: &quot;, recall_score(y_pred, dict_data[Y_TEST], average=&#39;weighted&#39;))</span>
+        <span class="c1">#</span>
+        <span class="c1"># print(&quot;specificity calculated manually: &quot;, metrics_dict[&#39;specificity&#39;])</span>
+        <span class="c1">#</span>
+        <span class="c1"># print(&quot;f1-score calculated manually: &quot;, metrics_dict[&#39;f1_score&#39;])</span>
+        <span class="c1"># print(&quot;f1-score: &quot;, f1_score(y_pred, dict_data[Y_TEST], average=&#39;weighted&#39;))</span>
+
+        <span class="k">return</span> <span class="n">metrics_dict</span></div>
+
+<div class="viewcode-block" id="StaticClassifier.predict"><a class="viewcode-back" href="../../../docs_model_classes/StaticClassifier.html#src.model_classes.StaticClassifier.StaticClassifier.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_point</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Method used to predict the label for a value passed as a input (we assume that the given data is preprocessed )</span>
+<span class="sd">        :param data_point: a given value</span>
+<span class="sd">        :return: the predicted label</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">predicted_label</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_point</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">predicted_label</span></div>
+
+    <span class="c1"># for a given data_point return the predicted probabilities for every label</span>
+    <span class="c1">#  assume that the given data is preprocessed</span>
+<div class="viewcode-block" id="StaticClassifier.predict_probabilities"><a class="viewcode-back" href="../../../docs_model_classes/StaticClassifier.html#src.model_classes.StaticClassifier.StaticClassifier.predict_probabilities">[docs]</a>    <span class="k">def</span> <span class="nf">predict_probabilities</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_point</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Method that calculates for a given data_point the predicted probabilities</span>
+<span class="sd">        :param data_point: a given data point</span>
+<span class="sd">        :return: list with the predicted probabilities for every label</span>
+<span class="sd">        :rtype: build-in python list</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">predicted_probabilities</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_classifier</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">data_point</span><span class="p">)</span>
+        <span class="n">predicted_probabilities</span> <span class="o">=</span> <span class="n">predicted_probabilities</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span> <span class="c1"># convert to built-in list</span>
+        <span class="n">predicted_labels_with_probabilities</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_model_classes</span><span class="p">(),</span> <span class="n">predicted_probabilities</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">predicted_labels_with_probabilities</span></div>
+
+<div class="viewcode-block" id="StaticClassifier.get_model_classes"><a class="viewcode-back" href="../../../docs_model_classes/StaticClassifier.html#src.model_classes.StaticClassifier.StaticClassifier.get_model_classes">[docs]</a>    <span class="k">def</span> <span class="nf">get_model_classes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Method used to get the model classes</span>
+<span class="sd">        :return: list with the model classes</span>
+<span class="sd">        :rtype: build-in python list</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_classifier</span><span class="o">.</span><span class="n">classes_</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="StaticClassifier.get_confusion_matrix"><a class="viewcode-back" href="../../../docs_model_classes/StaticClassifier.html#src.model_classes.StaticClassifier.StaticClassifier.get_confusion_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">get_confusion_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Method to get the confusion matrix</span>
+<span class="sd">        :return: list with the confusion matrix</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__confusion_matrix</span></div>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Method to get the string representation of the class instance</span>
+<span class="sd">        :return: string with the representations</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">model_parameters</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_model_params</span><span class="p">()</span>
+        <span class="n">print_result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_classifier</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="k">for</span> <span class="n">param</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">model_parameters</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">print_result</span> <span class="o">=</span> <span class="n">print_result</span> <span class="o">+</span> <span class="n">param</span> <span class="o">+</span> <span class="s2">&quot;: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+
+        <span class="n">print_result</span> <span class="o">=</span> <span class="n">print_result</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">print_result</span>
+
+<div class="viewcode-block" id="StaticClassifier.short_str"><a class="viewcode-back" href="../../../docs_model_classes/StaticClassifier.html#src.model_classes.StaticClassifier.StaticClassifier.short_str">[docs]</a>    <span class="k">def</span> <span class="nf">short_str</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Name of the class</span>
+<span class="sd">        :return: string with the name of the class</span>
+<span class="sd">        :rtype: build-in python string</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_classifier</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Ana.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

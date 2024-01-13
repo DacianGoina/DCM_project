@@ -21,7 +21,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="FeaturesExtractor module" href="FeaturesExtractor.html" />
+    <link rel="next" title="Doc2VecFE module" href="Doc2VecFE.html" />
     <link rel="prev" title="model_classes" href="modules.html" /> 
 </head>
 
@@ -48,10 +48,22 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../docs_main/modules.html">main</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">model_classes</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">CountVectorizerFE module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">CountVectorizerFE module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#src.model_classes.CountVectorizerFE.CountVectorizerFE"><code class="docutils literal notranslate"><span class="pre">CountVectorizerFE</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#src.model_classes.CountVectorizerFE.CountVectorizerFE.get_extractor_params"><code class="docutils literal notranslate"><span class="pre">CountVectorizerFE.get_extractor_params()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.model_classes.CountVectorizerFE.CountVectorizerFE.get_vocabulary"><code class="docutils literal notranslate"><span class="pre">CountVectorizerFE.get_vocabulary()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.model_classes.CountVectorizerFE.CountVectorizerFE.set_extractor_params"><code class="docutils literal notranslate"><span class="pre">CountVectorizerFE.set_extractor_params()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.model_classes.CountVectorizerFE.CountVectorizerFE.short_str"><code class="docutils literal notranslate"><span class="pre">CountVectorizerFE.short_str()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.model_classes.CountVectorizerFE.CountVectorizerFE.transform_data"><code class="docutils literal notranslate"><span class="pre">CountVectorizerFE.transform_data()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Doc2VecFE.html">Doc2VecFE module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="FeaturesExtractor.html">FeaturesExtractor module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="HashingVectorizerFE.html">HashingVectorizerFE module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ModelManager.html">ModelManager module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ModelWorker.html">ModelWorker module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="StaticClassifier.html">StaticClassifier module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="TfidfVectorizerFE.html">TfidfVectorizerFE module</a></li>
 </ul>
@@ -83,8 +95,51 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="countvectorizerfe-module">
-<h1>CountVectorizerFE module<a class="headerlink" href="#countvectorizerfe-module" title="Permalink to this heading"></a></h1>
+  <section id="module-src.model_classes.CountVectorizerFE">
+<span id="countvectorizerfe-module"></span><h1>CountVectorizerFE module<a class="headerlink" href="#module-src.model_classes.CountVectorizerFE" title="Permalink to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.model_classes.CountVectorizerFE.CountVectorizerFE">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.model_classes.CountVectorizerFE.</span></span><span class="sig-name descname"><span class="pre">CountVectorizerFE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/model_classes/CountVectorizerFE.html#CountVectorizerFE"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.model_classes.CountVectorizerFE.CountVectorizerFE" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="FeaturesExtractor.html#src.model_classes.FeaturesExtractor.FeaturesExtractor" title="src.model_classes.FeaturesExtractor.FeaturesExtractor"><code class="xref py py-class docutils literal notranslate"><span class="pre">FeaturesExtractor</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.model_classes.CountVectorizerFE.CountVectorizerFE.get_extractor_params">
+<span class="sig-name descname"><span class="pre">get_extractor_params</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/model_classes/CountVectorizerFE.html#CountVectorizerFE.get_extractor_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.model_classes.CountVectorizerFE.CountVectorizerFE.get_extractor_params" title="Permalink to this definition"></a></dt>
+<dd><p>Getter for the param data
+:return: a copy of the content of the data param</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.model_classes.CountVectorizerFE.CountVectorizerFE.get_vocabulary">
+<span class="sig-name descname"><span class="pre">get_vocabulary</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/model_classes/CountVectorizerFE.html#CountVectorizerFE.get_vocabulary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.model_classes.CountVectorizerFE.CountVectorizerFE.get_vocabulary" title="Permalink to this definition"></a></dt>
+<dd><p>Method for returning the dictionary where keys are unique words in the feature matrix, and values are their corresponding indices
+:return: dictionary with the pairs (unique words, corresponding indices)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.model_classes.CountVectorizerFE.CountVectorizerFE.set_extractor_params">
+<span class="sig-name descname"><span class="pre">set_extractor_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_params</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/model_classes/CountVectorizerFE.html#CountVectorizerFE.set_extractor_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.model_classes.CountVectorizerFE.CountVectorizerFE.set_extractor_params" title="Permalink to this definition"></a></dt>
+<dd><p>Setter for new parameter data
+:param new_params: the new input variable</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.model_classes.CountVectorizerFE.CountVectorizerFE.short_str">
+<span class="sig-name descname"><span class="pre">short_str</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/model_classes/CountVectorizerFE.html#CountVectorizerFE.short_str"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.model_classes.CountVectorizerFE.CountVectorizerFE.short_str" title="Permalink to this definition"></a></dt>
+<dd><p>Name of the class
+:return: string with the name of the class
+:rtype: build-in python string</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.model_classes.CountVectorizerFE.CountVectorizerFE.transform_data">
+<span class="sig-name descname"><span class="pre">transform_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/model_classes/CountVectorizerFE.html#CountVectorizerFE.transform_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.model_classes.CountVectorizerFE.CountVectorizerFE.transform_data" title="Permalink to this definition"></a></dt>
+<dd><p>Method for transforming the input data
+:param data: input variable
+:return: transformed data</p>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 
 
@@ -92,7 +147,7 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="modules.html" class="btn btn-neutral float-left" title="model_classes" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="FeaturesExtractor.html" class="btn btn-neutral float-right" title="FeaturesExtractor module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="Doc2VecFE.html" class="btn btn-neutral float-right" title="Doc2VecFE module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

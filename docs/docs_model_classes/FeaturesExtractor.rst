@@ -1,7 +1,7 @@
 FeaturesExtractor module
 ========================
 
-.. automodule:: FeaturesExtractor
+.. automodule:: src.model_classes.FeaturesExtractor
    :members:
    :undoc-members:
    :show-inheritance:
