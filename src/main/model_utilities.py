@@ -92,7 +92,7 @@ def shuffle_dataframe(df, no_of_times = 1):
     '''
     new_df = df.copy()
     for i in range(no_of_times):
-        new_df = new_df.sample(frac = 1, ignore_index=True)
+        new_df = new_df.sample(frac = 1, ignore_index=True, random_state = 10)
 
     return new_df
 

@@ -53,36 +53,42 @@ EXTRACTORS_OUTPUT_KEY = "extractors"
 
 
 
-def manager_execute(input_data_path, output_objects_paths, save_model_objs = False):
+def manager_execute(preprocessed_data_path, raw_data_path, output_objects_paths, save_model_objs = False):
     '''
     Function to read and process the data set, aggregates all operations of the manager (splitting the data and training the model, can be considered root function)
-    :param input_data_path: the path pf the file; file should be a CSV and we can assume that the data included is preprocessed
+    :param preprocessed_data_path: the path pf the file; file should be a CSV and we can assume that the data included is preprocessed
+    :param raw_data_path: the path pf the file; file should be a CSV
     :param output_objects_paths: dictionary that contains paths for the directories where the resulted objects will be saved
     :param save_model_objs: option if we save or not the objects as binary format
     :return: None
     '''
-    # read data
-    data = pd.read_csv(input_data_path)
+    # read preprocessed data
+    preprocessed_data = pd.read_csv(preprocessed_data_path)
 
-    # shuffle data
-    data = shuffle_dataframe(data, no_of_times=3)
+    # read raw data
+    raw_data = pd.read_csv(raw_data_path)
 
-    # get independent features and target variable
-    X_data = data['content']
-    y_data = data['label']
+    # shuffle processed data
+    preprocessed_data = shuffle_dataframe(preprocessed_data, no_of_times=3)
 
-    the_extractors = build_features_extractors(X_data)
+    # shuffle raw data
+    raw_data = shuffle_dataframe(raw_data, no_of_times=3)
+
+    # # get independent features and target variable
+    # X_data = data['content']
+    # y_data = data['label']
+
+    the_extractors = build_features_extractors(preprocessed_data['content'], raw_data['content'])
     the_classifiers = build_classifiers()
 
     # initialize and save classifiers / features extractors
-    model_fit_train_predict(X_data, y_data, the_classifiers, the_extractors, output_objects_paths, save_model_objs)
+    model_fit_train_predict(preprocessed_data, raw_data, the_classifiers, the_extractors, output_objects_paths, save_model_objs)
 
 
-def model_fit_train_predict(X_data, y_data, classifiers, features_extractors, output_objects_paths, save_model_objects = False):
+def model_fit_train_predict(preprocessed_data, raw_data, classifiers, features_extractors, output_objects_paths, save_model_objects = False):
     '''
     Function to initialise the model components, it runs and save the extractors and classifiers
-    :param X_data: pandas data frame series , represents independent features
-    :param y_data: pandas data frame series, represents target variable
+    TODO preprocessed_data, raw_data
     :param classifiers: list with the classifiers, StaticClassifier instances
     :param features_extractors: list with the features extractors, FeaturesExtractor instances
     :param output_objects_paths: dictionary that contains paths for the directories where the resulted objects will be saved
@@ -95,10 +101,20 @@ def model_fit_train_predict(X_data, y_data, classifiers, features_extractors, ou
 
     # transform X data using every feature extractor, store the results
     for extractor in features_extractors:
+        X_data = None
+
+        # for doc2vec use raw data
+        if extractor.short_str() == 'Doc2Vec':
+            X_data = raw_data['content']
+        else:
+            X_data = preprocessed_data['content']
+
         transformed_data = extractor.transform_data(X_data.copy())
         numerical_data[extractor.short_str()] = transformed_data
         if save_model_objects is True:
             save_model_component(extractor, extractor.short_str(), output_objects_paths[EXTRACTORS_OUTPUT_KEY])
+
+    y_data = preprocessed_data['label']
 
     # cross product for classifier and data transformed with features extractors
     classifier_to_extractor = itertools.product(classifiers, list(numerical_data.keys()))
@@ -137,19 +153,21 @@ def build_classifiers():
     return classifiers
 
 
-def build_features_extractors(data):
+def build_features_extractors(processed_data, raw_data):
     '''
     Function that initialise the features extractors
-    :param data: pandas data frame  series (the data is just fitted, not transformed)
+    :param processed_data: pandas data frame  series (the data is just fitted, not transformed)
+    :param raw_data: pandas data frame  series
     :return: list with all used features extractors
     :rtype: build-in python list
     '''
-    cv = CountVectorizerFE(data.copy())
-    tfidf = TfidfVectorizerFE(data.copy())
-    hashing_vec = HashingVectorizerFE(data.copy())
-    doc2vec = Doc2VecFE(data.copy())
+    # cv = CountVectorizerFE(processed_data.copy())
+    # tfidf = TfidfVectorizerFE(processed_data.copy())
+    # hashing_vec = HashingVectorizerFE(processed_data.copy())
+    doc2vec = Doc2VecFE(raw_data.copy())
 
-    features_extractors = [cv, tfidf, hashing_vec, doc2vec]
+    #features_extractors = [cv, tfidf, hashing_vec, doc2vec]
+    features_extractors = [doc2vec]
 
     return features_extractors
 
@@ -191,8 +209,10 @@ def save_model_component(object, object_name, directory_path):
 if __name__ == "__main__":
     print("Main")
     preprocessed_data_file_path = '../file_name_v6.csv'
+    raw_data_file_path = '../all_contents.csv'
     classifiers_objs_output_dir =  "../../model_objects/classifiers"
     extractors_objs_output_dir = "../../model_objects/features_extractors"
 
+
     # root function of manager - this start everything
-    manager_execute(preprocessed_data_file_path, {CLASSIFIERS_OUTPUT_KEY:classifiers_objs_output_dir, EXTRACTORS_OUTPUT_KEY:extractors_objs_output_dir}, save_model_objs=False)
+    manager_execute(preprocessed_data_file_path, raw_data_file_path, {CLASSIFIERS_OUTPUT_KEY:classifiers_objs_output_dir, EXTRACTORS_OUTPUT_KEY:extractors_objs_output_dir}, save_model_objs=False)
