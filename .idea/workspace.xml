@@ -6,9 +6,163 @@
   <component name="ChangeListManager">
     <list default="true" id="0cebda5f-c239-41f2-a456-3468870c5bac" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model_classes/Doc2VecFE.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/model_classes/Doc2VecFE.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model_classes/ModelWorker.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/model_classes/ModelWorker.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/_build/doctrees/docs_main/modules.doctree" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_build/doctrees/docs_main/modules.doctree" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/_build/doctrees/docs_main/preprocessing_flow.doctree" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_build/doctrees/docs_main/preprocessing_flow.doctree" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/_build/doctrees/docs_main/save_model_bento_ml.doctree" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/_build/doctrees/docs_main/text_preprocessing_utilities.doctree" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_build/doctrees/docs_main/text_preprocessing_utilities.doctree" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/_build/doctrees/environment.pickle" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_build/doctrees/environment.pickle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/_build/html/.buildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_build/html/.buildinfo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/_build/html/_modules/src/main/preprocessing_flow.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_build/html/_modules/src/main/preprocessing_flow.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/_build/html/_modules/src/main/text_preprocessing_utilities.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_build/html/_modules/src/main/text_preprocessing_utilities.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/_build/html/_sources/docs_main/modules.rst.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_build/html/_sources/docs_main/modules.rst.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/_build/html/_sources/docs_main/save_model_bento_ml.rst.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/_build/html/docs_main/consts_values.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_build/html/docs_main/consts_values.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/_build/html/docs_main/io_utilities.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_build/html/docs_main/io_utilities.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/_build/html/docs_main/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_build/html/docs_main/main.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/_build/html/docs_main/model_utilities.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_build/html/docs_main/model_utilities.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/_build/html/docs_main/modules.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_build/html/docs_main/modules.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/_build/html/docs_main/preprocessing_flow.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_build/html/docs_main/preprocessing_flow.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/_build/html/docs_main/save_model_bento_ml.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/_build/html/docs_main/text_preprocessing_utilities.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_build/html/docs_main/text_preprocessing_utilities.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/_build/html/docs_main/unit_test_model_utilities.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_build/html/docs_main/unit_test_model_utilities.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/_build/html/docs_main/unit_test_text_preprocessing_utilities.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_build/html/docs_main/unit_test_text_preprocessing_utilities.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/_build/html/genindex.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_build/html/genindex.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/_build/html/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_build/html/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/_build/html/objects.inv" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_build/html/objects.inv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/_build/html/py-modindex.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_build/html/py-modindex.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/_build/html/searchindex.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_build/html/searchindex.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/docs_main/modules.rst" beforeDir="false" afterPath="$PROJECT_DIR$/docs/docs_main/modules.rst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/docs_main/save_model_bento_ml.rst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/doctrees/docs/CountVectorizerFE.doctree" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/doctrees/docs/FeaturesExtractor.doctree" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/doctrees/docs/HashingVectorizerFE.doctree" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/doctrees/docs/ModelManager.doctree" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/doctrees/docs/StaticClassifier.doctree" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/doctrees/docs/TfidfVectorizerFE.doctree" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/doctrees/docs/docs_main/index.doctree" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/doctrees/docs/docs_main/main.doctree" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/doctrees/docs/docs_main/modules.doctree" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/doctrees/docs/docs_model_classes/CountVectorizerFE.doctree" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/doctrees/docs/docs_model_classes/FeaturesExtractor.doctree" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/doctrees/docs/docs_model_classes/HashingVectorizerFE.doctree" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/doctrees/docs/docs_model_classes/ModelManager.doctree" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/doctrees/docs/docs_model_classes/StaticClassifier.doctree" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/doctrees/docs/docs_model_classes/TfidfVectorizerFE.doctree" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/doctrees/docs/docs_model_classes/modules.doctree" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/doctrees/docs/main.doctree" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/doctrees/docs/modules.doctree" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/doctrees/docs_main/main.doctree" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/doctrees/docs_main/modules.doctree" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/doctrees/docs_model_classes/CountVectorizerFE.doctree" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/doctrees/docs_model_classes/FeaturesExtractor.doctree" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/doctrees/docs_model_classes/HashingVectorizerFE.doctree" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/doctrees/docs_model_classes/ModelManager.doctree" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/doctrees/docs_model_classes/StaticClassifier.doctree" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/doctrees/docs_model_classes/TfidfVectorizerFE.doctree" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/doctrees/docs_model_classes/modules.doctree" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/doctrees/environment.pickle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/doctrees/index.doctree" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/.buildinfo" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_modules/CountVectorizerFE.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_modules/FeaturesExtractor.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_modules/HashingVectorizerFE.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_modules/TfidfVectorizerFE.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_modules/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_modules/io_utilities.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_modules/model_utilities.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_sources/docs/CountVectorizerFE.rst.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_sources/docs/FeaturesExtractor.rst.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_sources/docs/HashingVectorizerFE.rst.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_sources/docs/ModelManager.rst.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_sources/docs/StaticClassifier.rst.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_sources/docs/TfidfVectorizerFE.rst.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_sources/docs/docs_main/index.rst.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_sources/docs/docs_main/main.rst.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_sources/docs/docs_main/modules.rst.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_sources/docs/docs_model_classes/CountVectorizerFE.rst.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_sources/docs/docs_model_classes/FeaturesExtractor.rst.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_sources/docs/docs_model_classes/HashingVectorizerFE.rst.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_sources/docs/docs_model_classes/ModelManager.rst.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_sources/docs/docs_model_classes/StaticClassifier.rst.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_sources/docs/docs_model_classes/TfidfVectorizerFE.rst.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_sources/docs/docs_model_classes/modules.rst.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_sources/docs/main.rst.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_sources/docs/modules.rst.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_sources/docs_main/main.rst.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_sources/docs_main/modules.rst.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_sources/docs_model_classes/CountVectorizerFE.rst.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_sources/docs_model_classes/FeaturesExtractor.rst.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_sources/docs_model_classes/HashingVectorizerFE.rst.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_sources/docs_model_classes/ModelManager.rst.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_sources/docs_model_classes/StaticClassifier.rst.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_sources/docs_model_classes/TfidfVectorizerFE.rst.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_sources/docs_model_classes/modules.rst.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_sources/index.rst.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_static/_sphinx_javascript_frameworks_compat.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_static/basic.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_static/css/badge_only.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_static/css/fonts/Roboto-Slab-Bold.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_static/css/fonts/Roboto-Slab-Bold.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_static/css/fonts/Roboto-Slab-Regular.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_static/css/fonts/Roboto-Slab-Regular.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_static/css/fonts/fontawesome-webfont.eot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_static/css/fonts/fontawesome-webfont.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_static/css/fonts/fontawesome-webfont.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_static/css/fonts/fontawesome-webfont.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_static/css/fonts/fontawesome-webfont.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_static/css/fonts/lato-bold-italic.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_static/css/fonts/lato-bold-italic.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_static/css/fonts/lato-bold.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_static/css/fonts/lato-bold.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_static/css/fonts/lato-normal-italic.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_static/css/fonts/lato-normal-italic.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_static/css/fonts/lato-normal.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_static/css/fonts/lato-normal.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_static/css/theme.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_static/doctools.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_static/documentation_options.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_static/file.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_static/jquery.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_static/js/badge_only.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_static/js/html5shiv-printshiv.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_static/js/html5shiv.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_static/js/theme.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_static/language_data.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_static/minus.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_static/plus.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_static/pygments.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_static/searchtools.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/_static/sphinx_highlight.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/docs/docs_main/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/docs/docs_main/main.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/docs/docs_main/modules.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/docs/docs_model_classes/CountVectorizerFE.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/docs/docs_model_classes/FeaturesExtractor.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/docs/docs_model_classes/HashingVectorizerFE.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/docs/docs_model_classes/ModelManager.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/docs/docs_model_classes/StaticClassifier.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/docs/docs_model_classes/TfidfVectorizerFE.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/docs/docs_model_classes/modules.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/docs_main/main.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/docs_main/modules.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/docs_model_classes/CountVectorizerFE.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/docs_model_classes/FeaturesExtractor.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/docs_model_classes/HashingVectorizerFE.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/docs_model_classes/ModelManager.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/docs_model_classes/StaticClassifier.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/docs_model_classes/TfidfVectorizerFE.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/docs_model_classes/modules.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/genindex.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/objects.inv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/py-modindex.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/search.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_build/html/searchindex.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/preprocessing_flow.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/preprocessing_flow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/save_model_bento_ml.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/text_preprocessing_utilities.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/text_preprocessing_utilities.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model_classes/__init__.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,18 +198,28 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
   <component name="ProblemsViewState">
     <option name="selectedIndex" value="1" />
   </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": -1
+}]]></component>
   <component name="ProjectId" id="2YoeiUjp0A5j8T2ZCV4K2vXZ91P" />
   <component name="ProjectViewState">
     <option name="autoscrollFromSource" value="true" />
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
-  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "git-widget-placeholder": "documentation__sphinx",
+    "settings.editor.selected.configurable": "preferences.lookFeel"
+  }
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Dacian\Desktop\MLO_DCM\src\main" />
@@ -274,14 +438,13 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/src/main/io_utilities.py</url>
-          <line>19</line>
+          <line>20</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -311,12 +474,5 @@
         <watch expression="data" />
       </configuration>
     </watches-manager>
-  </component>
-  <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/MLO_DCM$preprocessing_flow.coverage" NAME="preprocessing_flow Coverage Results" MODIFIED="1702888692833" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
-    <SUITE FILE_PATH="coverage/MLO_DCM$main.coverage" NAME="main Coverage Results" MODIFIED="1704041399657" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
-    <SUITE FILE_PATH="coverage/MLO_DCM$ModelManager.coverage" NAME="ModelManager Coverage Results" MODIFIED="1704043369284" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/model_classes" />
-    <SUITE FILE_PATH="coverage/MLO_DCM$Unittests_in_unit_test_text_preprocessing_utilities_py.coverage" NAME="Unittests in unit_test_text_preprocessing_utilities.py Coverage Results" MODIFIED="1702489694044" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/main" />
-    <SUITE FILE_PATH="coverage/MLO_DCM$ModelWorker.coverage" NAME="ModelWorker Coverage Results" MODIFIED="1704043145819" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/model_classes" />
   </component>
 </project>

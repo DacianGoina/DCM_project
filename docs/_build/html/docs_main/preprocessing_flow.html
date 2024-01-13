@@ -21,7 +21,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="save_model_bento_ml module" href="save_model_bento_ml.html" />
+    <link rel="next" title="text_preprocessing_utilities module" href="text_preprocessing_utilities.html" />
     <link rel="prev" title="model_utilities module" href="model_utilities.html" /> 
 </head>
 
@@ -60,7 +60,6 @@
 <li class="toctree-l3"><a class="reference internal" href="#src.main.preprocessing_flow.read_preprocess_and_export"><code class="docutils literal notranslate"><span class="pre">read_preprocess_and_export()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="save_model_bento_ml.html">save_model_bento_ml module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="text_preprocessing_utilities.html">text_preprocessing_utilities module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="unit_test_model_utilities.html">unit_test_model_utilities module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="unit_test_text_preprocessing_utilities.html">unit_test_text_preprocessing_utilities module</a></li>
@@ -99,24 +98,12 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="src.main.preprocessing_flow.apply_custom_tokenizer_iteratively">
 <span class="sig-prename descclassname"><span class="pre">src.main.preprocessing_flow.</span></span><span class="sig-name descname"><span class="pre">apply_custom_tokenizer_iteratively</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raw_text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nlp_model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iterations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/preprocessing_flow.html#apply_custom_tokenizer_iteratively"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.preprocessing_flow.apply_custom_tokenizer_iteratively" title="Permalink to this definition"></a></dt>
-<dd><blockquote>
-<div><p>Function to apply a tokenizer function iteratively over a raw text given as input (similar to usage of epochs in deep learning)</p>
-</div></blockquote>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>raw_text</strong> – a given raw text, string value</p></li>
-<li><p><strong>nlp_model</strong> – the model used to process the text</p></li>
-<li><p><strong>iterations</strong> – the number of processing made on the text</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>list of str tokens</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>build-in python list</p>
-</dd>
-</dl>
+<dd><p>Function to apply a tokenizer function iteratively over a raw text given as input (similar to usage of epochs in deep learning)
+:param raw_text: a given raw text, string value
+:param nlp_model: the model used to process the text
+:param iterations: the number of processing made on the text
+:return: list of str tokens
+:rtype: build-in python list</p>
 </dd></dl>
 
 <dl class="py function">
@@ -174,7 +161,7 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="model_utilities.html" class="btn btn-neutral float-left" title="model_utilities module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="save_model_bento_ml.html" class="btn btn-neutral float-right" title="save_model_bento_ml module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="text_preprocessing_utilities.html" class="btn btn-neutral float-right" title="text_preprocessing_utilities module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

@@ -100,11 +100,10 @@ def to_lowercase(text):
 
 def remove_excessive_space(text):
     '''
-    Remove excessive white spaces like " ", \n, \t from the beginning and ending of text
-    :param text - input text; it's a native python string
-    :return: the given text without spaces;
+    Remove excessive white spaces like " ", "\n", "\t" from the beginning and ending of text
+    :param text: the given text without spaces
+    :return: string
     :rtype: built-in python string
-
     '''
     return text.strip()
 

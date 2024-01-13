@@ -102,7 +102,7 @@ def custom_tokenizer(raw_text, nlp_model):
 
 def apply_custom_tokenizer_iteratively(raw_text, nlp_model, iterations = 2):
     '''
-     Function to apply a tokenizer function iteratively over a raw text given as input (similar to usage of epochs in deep learning)
+    Function to apply a tokenizer function iteratively over a raw text given as input (similar to usage of epochs in deep learning)
     :param raw_text: a given raw text, string value
     :param nlp_model: the model used to process the text
     :param iterations: the number of processing made on the text
