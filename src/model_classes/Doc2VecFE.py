@@ -121,4 +121,4 @@ class Doc2VecFE(FeaturesExtractor):
             :return: string with the name of the class
             :rtype: build-in python string
             '''
-            return "Doc2Vec_RAW"
+            return "Doc2Vec"

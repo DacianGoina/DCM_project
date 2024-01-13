@@ -6,15 +6,16 @@
   <component name="ChangeListManager">
     <list default="true" id="0cebda5f-c239-41f2-a456-3468870c5bac" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model_objects/classifiers/AdaBoostClassifier_Doc2Vec_RAW.pkl" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/model_objects/classifiers/DecisionTreeClassifier_Doc2Vec_RAW.pkl" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/model_objects/classifiers/LogisticRegression_Doc2Vec_RAW.pkl" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/model_objects/classifiers/MultinomialNB_Doc2Vec_RAW.pkl" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/model_objects/classifiers/RandomForestClassifier_Doc2Vec_RAW.pkl" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/model_objects/classifiers/SVC_Doc2Vec_RAW.pkl" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/model_utilities.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/model_utilities.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model_objects/RoBERTa/readme.txt" beforeDir="false" afterPath="$PROJECT_DIR$/model_objects/RoBERTa/readme.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/all_contents.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/file_name_v4.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/file_name_v5.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/file_name_v6.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/file_name.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/file_name_v2.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/file_name_v3.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model_classes/Doc2VecFE.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/model_classes/Doc2VecFE.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model_classes/ModelManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/model_classes/ModelManager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/starting_instructions.txt" beforeDir="false" afterPath="$PROJECT_DIR$/starting_instructions.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -331,7 +332,7 @@
     <SUITE FILE_PATH="coverage/MLO_DCM$RoBERTa_worker.coverage" NAME="RoBERTa_worker Coverage Results" MODIFIED="1705165847058" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/model_classes" />
     <SUITE FILE_PATH="coverage/MLO_DCM$preprocessing_flow.coverage" NAME="preprocessing_flow Coverage Results" MODIFIED="1702888692833" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/MLO_DCM$main.coverage" NAME="main Coverage Results" MODIFIED="1704041399657" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
-    <SUITE FILE_PATH="coverage/MLO_DCM$ModelManager.coverage" NAME="ModelManager Coverage Results" MODIFIED="1705171231815" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/model_classes" />
+    <SUITE FILE_PATH="coverage/MLO_DCM$ModelManager.coverage" NAME="ModelManager Coverage Results" MODIFIED="1705173057739" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/model_classes" />
     <SUITE FILE_PATH="coverage/MLO_DCM$Unittests_in_unit_test_text_preprocessing_utilities_py.coverage" NAME="Unittests in unit_test_text_preprocessing_utilities.py Coverage Results" MODIFIED="1702489694044" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/main" />
     <SUITE FILE_PATH="coverage/MLO_DCM$ModelWorker.coverage" NAME="ModelWorker Coverage Results" MODIFIED="1705166633061" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/model_classes" />
   </component>

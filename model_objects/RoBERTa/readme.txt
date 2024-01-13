@@ -7,4 +7,4 @@ Some information:
 4. roberta_dcm.pkl is the binary serialization of the model (after training and testing)
 5. the predicted output is a numerical value - see the substitution dictionary to obtain the predicted document class - string value
 6. The training and testing was done on unpreprocessed data (so raw data from files); predictions should be done in the same way
-
+7. all-contents.csv contains all raw data used for training and testing but gathered together into a csv file
