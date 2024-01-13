@@ -215,4 +215,4 @@ if __name__ == "__main__":
 
 
     # root function of manager - this start everything
-    manager_execute(preprocessed_data_file_path, raw_data_file_path, {CLASSIFIERS_OUTPUT_KEY:classifiers_objs_output_dir, EXTRACTORS_OUTPUT_KEY:extractors_objs_output_dir}, save_model_objs=False)
+    manager_execute(preprocessed_data_file_path, raw_data_file_path, {CLASSIFIERS_OUTPUT_KEY:classifiers_objs_output_dir, EXTRACTORS_OUTPUT_KEY:extractors_objs_output_dir}, save_model_objs=True)

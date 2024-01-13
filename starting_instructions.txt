@@ -34,3 +34,8 @@ NOTE 13/01/024
 
 For Doc2Vec with raw data instead of preprocesed data: overall the results are quiet similar, only for DecisionTreeClassifier is a moderate-high difference in terms of accuracy: Doc2Vec with preprocessing provide around 0.48 accuracy and Doc2Vec with accuracy over 0.62
 This commit include code with Doc2Vec using raw data but in the next commit the classifiers that use Doc2Vec trained on raw text will be added BUT the code will return to previous form
+
+code changes - commit info:
+name: doc2vec with raw text CODE
+sha: 171d88f391c62edc64996cf48690f23fcb211eff
+link: https://github.com/DacianGoina/MLO_DCM/commit/171d88f391c62edc64996cf48690f23fcb211eff

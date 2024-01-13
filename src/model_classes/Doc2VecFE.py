@@ -40,7 +40,7 @@ class Doc2VecFE(FeaturesExtractor):
         :return: list of lists with numerical values/feature (the values are scaled to be positive values)
         :rtype: build-in python list
         '''
-        super().set_data(data.copy())
+        #super().set_data(data.copy())
         data = self.__convert_data_to_str_tokens(data)
         resulted_vectors = []
 
@@ -121,4 +121,4 @@ class Doc2VecFE(FeaturesExtractor):
             :return: string with the name of the class
             :rtype: build-in python string
             '''
-            return "Doc2Vec"
+            return "Doc2Vec_RAW"
