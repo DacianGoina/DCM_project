@@ -6,7 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="0cebda5f-c239-41f2-a456-3468870c5bac" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model_classes/Doc2VecFE.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/model_classes/Doc2VecFE.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model_objects/classifiers/AdaBoostClassifier_Doc2Vec_RAW.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/model_objects/classifiers/DecisionTreeClassifier_Doc2Vec_RAW.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/model_objects/classifiers/LogisticRegression_Doc2Vec_RAW.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/model_objects/classifiers/MultinomialNB_Doc2Vec_RAW.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/model_objects/classifiers/RandomForestClassifier_Doc2Vec_RAW.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/model_objects/classifiers/SVC_Doc2Vec_RAW.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/model_utilities.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/model_utilities.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model_classes/ModelManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/model_classes/ModelManager.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/starting_instructions.txt" beforeDir="false" afterPath="$PROJECT_DIR$/starting_instructions.txt" afterDir="false" />
     </list>
@@ -310,7 +316,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/src/model_classes/ModelManager.py</url>
-          <line>99</line>
+          <line>93</line>
           <option name="timeStamp" value="27" />
         </line-breakpoint>
       </breakpoints>
