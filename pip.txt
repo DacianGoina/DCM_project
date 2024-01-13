@@ -17,3 +17,6 @@ pip install gensim  			(gensim-4.3.2?)
 
 python -m spacy download en_core_web_sm
 python -m spacy download en_core_web_md  NOT
+
+pip install simpletransformers
+pip install sympy
