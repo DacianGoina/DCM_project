@@ -22,7 +22,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="HashingVectorizerFE module" href="HashingVectorizerFE.html" />
-    <link rel="prev" title="CountVectorizerFE module" href="CountVectorizerFE.html" /> 
+    <link rel="prev" title="Doc2VecFE module" href="Doc2VecFE.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -49,9 +49,22 @@
 <li class="toctree-l1"><a class="reference internal" href="../docs_main/modules.html">main</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">model_classes</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="CountVectorizerFE.html">CountVectorizerFE module</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">FeaturesExtractor module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Doc2VecFE.html">Doc2VecFE module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">FeaturesExtractor module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#src.model_classes.FeaturesExtractor.FeaturesExtractor"><code class="docutils literal notranslate"><span class="pre">FeaturesExtractor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#src.model_classes.FeaturesExtractor.FeaturesExtractor.get_data"><code class="docutils literal notranslate"><span class="pre">FeaturesExtractor.get_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.model_classes.FeaturesExtractor.FeaturesExtractor.get_extractor_params"><code class="docutils literal notranslate"><span class="pre">FeaturesExtractor.get_extractor_params()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.model_classes.FeaturesExtractor.FeaturesExtractor.get_vocabulary"><code class="docutils literal notranslate"><span class="pre">FeaturesExtractor.get_vocabulary()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.model_classes.FeaturesExtractor.FeaturesExtractor.set_data"><code class="docutils literal notranslate"><span class="pre">FeaturesExtractor.set_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.model_classes.FeaturesExtractor.FeaturesExtractor.set_extractor_params"><code class="docutils literal notranslate"><span class="pre">FeaturesExtractor.set_extractor_params()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.model_classes.FeaturesExtractor.FeaturesExtractor.transform_data"><code class="docutils literal notranslate"><span class="pre">FeaturesExtractor.transform_data()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="HashingVectorizerFE.html">HashingVectorizerFE module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ModelManager.html">ModelManager module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ModelWorker.html">ModelWorker module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="StaticClassifier.html">StaticClassifier module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="TfidfVectorizerFE.html">TfidfVectorizerFE module</a></li>
 </ul>
@@ -83,15 +96,70 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="featuresextractor-module">
-<h1>FeaturesExtractor module<a class="headerlink" href="#featuresextractor-module" title="Permalink to this heading"></a></h1>
+  <section id="module-src.model_classes.FeaturesExtractor">
+<span id="featuresextractor-module"></span><h1>FeaturesExtractor module<a class="headerlink" href="#module-src.model_classes.FeaturesExtractor" title="Permalink to this heading"></a></h1>
+<p>This class represent a feature extractor, i.e a entity that is capable to convert text to numerical values that later are used for classification.
+The instance of this class receive the data (X) and the a feature extractor from sklearn module;
+the data is transformed to numerical values and returned</p>
+<p>This class act as a abstract class; instead of using it directly use the derived classes</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.model_classes.FeaturesExtractor.FeaturesExtractor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.model_classes.FeaturesExtractor.</span></span><span class="sig-name descname"><span class="pre">FeaturesExtractor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/model_classes/FeaturesExtractor.html#FeaturesExtractor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.model_classes.FeaturesExtractor.FeaturesExtractor" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.model_classes.FeaturesExtractor.FeaturesExtractor.get_data">
+<span class="sig-name descname"><span class="pre">get_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/model_classes/FeaturesExtractor.html#FeaturesExtractor.get_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.model_classes.FeaturesExtractor.FeaturesExtractor.get_data" title="Permalink to this definition"></a></dt>
+<dd><p>Getter for the data
+:return: a copy of the data object</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.model_classes.FeaturesExtractor.FeaturesExtractor.get_extractor_params">
+<span class="sig-name descname"><span class="pre">get_extractor_params</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/model_classes/FeaturesExtractor.html#FeaturesExtractor.get_extractor_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.model_classes.FeaturesExtractor.FeaturesExtractor.get_extractor_params" title="Permalink to this definition"></a></dt>
+<dd><p>Pure virtual method, used to get feature extractor params
+:return: None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.model_classes.FeaturesExtractor.FeaturesExtractor.get_vocabulary">
+<span class="sig-name descname"><span class="pre">get_vocabulary</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/model_classes/FeaturesExtractor.html#FeaturesExtractor.get_vocabulary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.model_classes.FeaturesExtractor.FeaturesExtractor.get_vocabulary" title="Permalink to this definition"></a></dt>
+<dd><p>Abstract method, return the vocabulary: the pairs of (token-positions) provided by the extractor after the transformation
+:return: None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.model_classes.FeaturesExtractor.FeaturesExtractor.set_data">
+<span class="sig-name descname"><span class="pre">set_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/model_classes/FeaturesExtractor.html#FeaturesExtractor.set_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.model_classes.FeaturesExtractor.FeaturesExtractor.set_data" title="Permalink to this definition"></a></dt>
+<dd><p>Setter for the data
+:param new_data: the new value of the data param
+:return: None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.model_classes.FeaturesExtractor.FeaturesExtractor.set_extractor_params">
+<span class="sig-name descname"><span class="pre">set_extractor_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_params</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/model_classes/FeaturesExtractor.html#FeaturesExtractor.set_extractor_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.model_classes.FeaturesExtractor.FeaturesExtractor.set_extractor_params" title="Permalink to this definition"></a></dt>
+<dd><p>Pure virtual method, setter for the extractor params (with a dictionary)
+:param new_params: dictionary with the new values for the extractor
+:return: None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.model_classes.FeaturesExtractor.FeaturesExtractor.transform_data">
+<span class="sig-name descname"><span class="pre">transform_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/model_classes/FeaturesExtractor.html#FeaturesExtractor.transform_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.model_classes.FeaturesExtractor.FeaturesExtractor.transform_data" title="Permalink to this definition"></a></dt>
+<dd><p>Pure virtual method, that transform the passed data (we assume that the extractor has been already fitted with some data)
+:param data: passed data
+:return: None</p>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="CountVectorizerFE.html" class="btn btn-neutral float-left" title="CountVectorizerFE module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Doc2VecFE.html" class="btn btn-neutral float-left" title="Doc2VecFE module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="HashingVectorizerFE.html" class="btn btn-neutral float-right" title="HashingVectorizerFE module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

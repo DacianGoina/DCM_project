@@ -1,7 +1,7 @@
 CountVectorizerFE module
 ========================
 
-.. automodule:: CountVectorizerFE
+.. automodule:: src.model_classes.CountVectorizerFE
    :members:
    :undoc-members:
    :show-inheritance:

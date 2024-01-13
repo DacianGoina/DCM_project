@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>src.model_classes.ModelManager &mdash; MLO-DCM 1.0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js?v=7da82d16"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            MLO-DCM
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../docs_main/modules.html">main</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../docs_model_classes/modules.html">model_classes</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">MLO-DCM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">src.model_classes.ModelManager</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for src.model_classes.ModelManager</h1><div class="highlight"><pre>
+<span></span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">This class works as a model manager - it create and save model that will be used for the classification.</span>
+<span class="sd">Manage classifiers and features extractors; along with data split and other steps</span>
+
+<span class="sd">The Model Manager flow steps are the following:</span>
+<span class="sd">    1. received the preprocessed data from our original dataset</span>
+<span class="sd">    2. create features extractor and classifiers concrete objects</span>
+<span class="sd">    3. use every features extractor to convert preprocessed text data to numerical features</span>
+<span class="sd">    4. save features extractor as binary objects, to be reused later</span>
+<span class="sd">    5. split obtained numerical feature for training and testing stages</span>
+<span class="sd">    6. use a cross product logic classifiers x features extractors resulting in (classifier, features_extractor) pairs</span>
+<span class="sd">    7. for every (classifier, features_extractor) pair, the classifier is fitted with the provided data,</span>
+<span class="sd">        then it is trained and evaluated; the classifiers objects are saved as binary objects to be reused later</span>
+
+<span class="sd">Observations:</span>
+<span class="sd">    1. every features extractors is saved only once (one file per features extractor)</span>
+<span class="sd">    2. every classifier resulting from any (classifier, features_extractor) is saved, thus for classifiers cl, there will</span>
+<span class="sd">        k instances of it, one instance for every features extractors that provide data for training / testing for it</span>
+<span class="sd">    3. classifiers and features extractors to be saved in specific locations</span>
+
+
+<span class="sd">Aim: the persisted model objects: classifiers and features extractor are reused later when a prediction is requested</span>
+
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;../src/main&#39;</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">src.model_classes.StaticClassifier</span> <span class="kn">import</span> <span class="n">StaticClassifier</span>
+<span class="kn">from</span> <span class="nn">src.model_classes.CountVectorizerFE</span> <span class="kn">import</span> <span class="n">CountVectorizerFE</span>
+<span class="kn">from</span> <span class="nn">src.model_classes.TfidfVectorizerFE</span> <span class="kn">import</span>  <span class="n">TfidfVectorizerFE</span>
+<span class="kn">from</span> <span class="nn">src.model_classes.HashingVectorizerFE</span> <span class="kn">import</span> <span class="n">HashingVectorizerFE</span>
+<span class="kn">from</span> <span class="nn">src.model_classes.Doc2VecFE</span> <span class="kn">import</span> <span class="n">Doc2VecFE</span>
+<span class="kn">from</span> <span class="nn">src.main.model_utilities</span> <span class="kn">import</span>  <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">src.main.io_utilities</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">svm</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">AdaBoostClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.naive_bayes</span> <span class="kn">import</span> <span class="n">MultinomialNB</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">MinMaxScaler</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">sparse</span>
+
+<span class="kn">import</span> <span class="nn">spacy</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">CLASSIFIERS_OUTPUT_KEY</span> <span class="o">=</span> <span class="s2">&quot;classifiers&quot;</span>
+<span class="n">EXTRACTORS_OUTPUT_KEY</span> <span class="o">=</span> <span class="s2">&quot;extractors&quot;</span>
+
+
+
+<div class="viewcode-block" id="manager_execute"><a class="viewcode-back" href="../../../docs_model_classes/ModelManager.html#src.model_classes.ModelManager.manager_execute">[docs]</a><span class="k">def</span> <span class="nf">manager_execute</span><span class="p">(</span><span class="n">input_data_path</span><span class="p">,</span> <span class="n">output_objects_paths</span><span class="p">,</span> <span class="n">save_model_objs</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Function to read and process the data set, aggregates all operations of the manager (splitting the data and training the model, can be considered root function)</span>
+<span class="sd">    :param input_data_path: the path pf the file; file should be a CSV and we can assume that the data included is preprocessed</span>
+<span class="sd">    :param output_objects_paths: dictionary that contains paths for the directories where the resulted objects will be saved</span>
+<span class="sd">    :param save_model_objs: option if we save or not the objects as binary format</span>
+<span class="sd">    :return: None</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="c1"># read data</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">input_data_path</span><span class="p">)</span>
+
+    <span class="c1"># shuffle data</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">shuffle_dataframe</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">no_of_times</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+    <span class="c1"># get independent features and target variable</span>
+    <span class="n">X_data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">]</span>
+    <span class="n">y_data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span>
+
+    <span class="n">the_extractors</span> <span class="o">=</span> <span class="n">build_features_extractors</span><span class="p">(</span><span class="n">X_data</span><span class="p">)</span>
+    <span class="n">the_classifiers</span> <span class="o">=</span> <span class="n">build_classifiers</span><span class="p">()</span>
+
+    <span class="c1"># initialize and save classifiers / features extractors</span>
+    <span class="n">model_fit_train_predict</span><span class="p">(</span><span class="n">X_data</span><span class="p">,</span> <span class="n">y_data</span><span class="p">,</span> <span class="n">the_classifiers</span><span class="p">,</span> <span class="n">the_extractors</span><span class="p">,</span> <span class="n">output_objects_paths</span><span class="p">,</span> <span class="n">save_model_objs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="model_fit_train_predict"><a class="viewcode-back" href="../../../docs_model_classes/ModelManager.html#src.model_classes.ModelManager.model_fit_train_predict">[docs]</a><span class="k">def</span> <span class="nf">model_fit_train_predict</span><span class="p">(</span><span class="n">X_data</span><span class="p">,</span> <span class="n">y_data</span><span class="p">,</span> <span class="n">classifiers</span><span class="p">,</span> <span class="n">features_extractors</span><span class="p">,</span> <span class="n">output_objects_paths</span><span class="p">,</span> <span class="n">save_model_objects</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Function to initialise the model components, it runs and save the extractors and classifiers</span>
+<span class="sd">    :param X_data: pandas data frame series , represents independent features</span>
+<span class="sd">    :param y_data: pandas data frame series, represents target variable</span>
+<span class="sd">    :param classifiers: list with the classifiers, StaticClassifier instances</span>
+<span class="sd">    :param features_extractors: list with the features extractors, FeaturesExtractor instances</span>
+<span class="sd">    :param output_objects_paths: dictionary that contains paths for the directories where the resulted objects will be saved</span>
+<span class="sd">    :param save_model_objects:  option if we save or not the objects as binary format</span>
+<span class="sd">    :return: dictionary with classifiers amd features extractors used and the metrics obtained</span>
+<span class="sd">    :rtype: build-in python dictionary</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="n">numerical_data</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span><span class="c1"># key: name of extractor, key data: resulted data upon transformation</span>
+
+    <span class="c1"># transform X data using every feature extractor, store the results</span>
+    <span class="k">for</span> <span class="n">extractor</span> <span class="ow">in</span> <span class="n">features_extractors</span><span class="p">:</span>
+        <span class="n">transformed_data</span> <span class="o">=</span> <span class="n">extractor</span><span class="o">.</span><span class="n">transform_data</span><span class="p">(</span><span class="n">X_data</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+        <span class="n">numerical_data</span><span class="p">[</span><span class="n">extractor</span><span class="o">.</span><span class="n">short_str</span><span class="p">()]</span> <span class="o">=</span> <span class="n">transformed_data</span>
+        <span class="k">if</span> <span class="n">save_model_objects</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">save_model_component</span><span class="p">(</span><span class="n">extractor</span><span class="p">,</span> <span class="n">extractor</span><span class="o">.</span><span class="n">short_str</span><span class="p">(),</span> <span class="n">output_objects_paths</span><span class="p">[</span><span class="n">EXTRACTORS_OUTPUT_KEY</span><span class="p">])</span>
+
+    <span class="c1"># cross product for classifier and data transformed with features extractors</span>
+    <span class="n">classifier_to_extractor</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="n">classifiers</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">numerical_data</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">classifier</span><span class="p">,</span> <span class="n">extractor</span><span class="p">)</span> <span class="ow">in</span> <span class="n">classifier_to_extractor</span><span class="p">:</span>
+        <span class="n">numerical_features</span> <span class="o">=</span> <span class="n">numerical_data</span><span class="p">[</span><span class="n">extractor</span><span class="p">]</span>
+        <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">split_model_data</span><span class="p">(</span><span class="n">X_data</span><span class="o">=</span> <span class="n">numerical_features</span><span class="p">,</span> <span class="n">y_data</span><span class="o">=</span> <span class="n">y_data</span><span class="p">,</span> <span class="n">test_size_value</span> <span class="o">=</span> <span class="mf">0.25</span><span class="p">,</span> <span class="n">random_state_val</span> <span class="o">=</span> <span class="n">SPLIT_DATA_RANDOM_STATE_VALUE</span><span class="p">)</span>
+        <span class="n">data_dict</span> <span class="o">=</span> <span class="n">build_data_dictionary</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+
+        <span class="n">working_set_name</span> <span class="o">=</span>  <span class="n">get_classifier_to_extractor_str</span><span class="p">(</span><span class="n">classifier</span><span class="o">.</span><span class="n">short_str</span><span class="p">(),</span> <span class="n">extractor</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">working_set_name</span><span class="p">)</span>
+        <span class="n">resulted_metrics</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">fit_train_evaluate</span><span class="p">(</span><span class="n">data_dict</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">save_model_objects</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">save_model_component</span><span class="p">(</span><span class="n">classifier</span><span class="p">,</span> <span class="n">working_set_name</span><span class="p">,</span> <span class="n">output_objects_paths</span><span class="p">[</span><span class="n">CLASSIFIERS_OUTPUT_KEY</span><span class="p">])</span>
+
+        <span class="n">results</span><span class="p">[</span><span class="n">working_set_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">resulted_metrics</span>
+
+    <span class="k">return</span> <span class="n">results</span></div>
+
+
+<div class="viewcode-block" id="build_classifiers"><a class="viewcode-back" href="../../../docs_model_classes/ModelManager.html#src.model_classes.ModelManager.build_classifiers">[docs]</a><span class="k">def</span> <span class="nf">build_classifiers</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Function that initialise all the classifiers</span>
+<span class="sd">    :return: list with all used classifiers</span>
+<span class="sd">    :rtype: build-in python list</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">rf</span> <span class="o">=</span> <span class="n">StaticClassifier</span><span class="p">(</span><span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span> <span class="o">=</span> <span class="mi">150</span><span class="p">))</span>
+    <span class="n">svc_cl</span> <span class="o">=</span> <span class="n">StaticClassifier</span><span class="p">(</span><span class="n">svm</span><span class="o">.</span><span class="n">SVC</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="n">probability</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span> <span class="o">=</span> <span class="mi">3</span><span class="p">))</span>
+    <span class="n">dt</span> <span class="o">=</span> <span class="n">StaticClassifier</span><span class="p">(</span><span class="n">DecisionTreeClassifier</span><span class="p">())</span>
+    <span class="n">lr</span> <span class="o">=</span> <span class="n">StaticClassifier</span><span class="p">(</span><span class="n">LogisticRegression</span><span class="p">(</span><span class="n">max_iter</span> <span class="o">=</span> <span class="mi">250</span><span class="p">,</span> <span class="n">solver</span> <span class="o">=</span> <span class="s2">&quot;liblinear&quot;</span><span class="p">))</span>
+    <span class="n">adaboost_cl</span> <span class="o">=</span> <span class="n">StaticClassifier</span><span class="p">(</span><span class="n">AdaBoostClassifier</span><span class="p">(</span><span class="n">n_estimators</span> <span class="o">=</span> <span class="mi">150</span><span class="p">,</span> <span class="n">estimator</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span> <span class="o">=</span> <span class="mi">150</span><span class="p">)))</span>
+    <span class="n">naive_bayes</span> <span class="o">=</span> <span class="n">StaticClassifier</span><span class="p">(</span><span class="n">MultinomialNB</span><span class="p">())</span>
+
+    <span class="n">classifiers</span> <span class="o">=</span> <span class="p">[</span><span class="n">rf</span><span class="p">,</span> <span class="n">svc_cl</span><span class="p">,</span> <span class="n">naive_bayes</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">lr</span><span class="p">,</span> <span class="n">adaboost_cl</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">classifiers</span></div>
+
+
+<div class="viewcode-block" id="build_features_extractors"><a class="viewcode-back" href="../../../docs_model_classes/ModelManager.html#src.model_classes.ModelManager.build_features_extractors">[docs]</a><span class="k">def</span> <span class="nf">build_features_extractors</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Function that initialise the features extractors</span>
+<span class="sd">    :param data: pandas data frame  series (the data is just fitted, not transformed)</span>
+<span class="sd">    :return: list with all used features extractors</span>
+<span class="sd">    :rtype: build-in python list</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">cv</span> <span class="o">=</span> <span class="n">CountVectorizerFE</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+    <span class="n">tfidf</span> <span class="o">=</span> <span class="n">TfidfVectorizerFE</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+    <span class="n">hashing_vec</span> <span class="o">=</span> <span class="n">HashingVectorizerFE</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+    <span class="n">doc2vec</span> <span class="o">=</span> <span class="n">Doc2VecFE</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+
+    <span class="n">features_extractors</span> <span class="o">=</span> <span class="p">[</span><span class="n">cv</span><span class="p">,</span> <span class="n">tfidf</span><span class="p">,</span> <span class="n">hashing_vec</span><span class="p">,</span> <span class="n">doc2vec</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">features_extractors</span></div>
+
+
+<div class="viewcode-block" id="get_classifier_to_extractor_str"><a class="viewcode-back" href="../../../docs_model_classes/ModelManager.html#src.model_classes.ModelManager.get_classifier_to_extractor_str">[docs]</a><span class="k">def</span> <span class="nf">get_classifier_to_extractor_str</span><span class="p">(</span><span class="n">classifier_name</span><span class="p">,</span> <span class="n">features_extractor_name</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Function that returns the pairs of classifiers and features extractors</span>
+<span class="sd">    :param classifier_name: string with the name of the classifier</span>
+<span class="sd">    :param features_extractor_name: string with the name of the features extractor</span>
+<span class="sd">    :return: string with (classifier, features extractor) pair</span>
+<span class="sd">    :rtype: build-in python string</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="n">classifier_name</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="n">features_extractor_name</span></div>
+
+
+<div class="viewcode-block" id="reverse_classifier_to_extractor_str"><a class="viewcode-back" href="../../../docs_model_classes/ModelManager.html#src.model_classes.ModelManager.reverse_classifier_to_extractor_str">[docs]</a><span class="k">def</span> <span class="nf">reverse_classifier_to_extractor_str</span><span class="p">(</span><span class="n">compound_name</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Function that return the components of a compound name (classifier, extractor); reverse engineering for get_classifier_to_extractor_str method</span>
+<span class="sd">    :param compound_name: string with the pairs (classifier, features extractor)</span>
+<span class="sd">    :return: tuple with classifier, features extractor names</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">components</span> <span class="o">=</span> <span class="n">compound_name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">components</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">components</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span></div>
+
+
+<span class="c1"># IN: object itself (python object), object name (str), directory path</span>
+<span class="c1"># save a model component to binary object</span>
+<div class="viewcode-block" id="save_model_component"><a class="viewcode-back" href="../../../docs_model_classes/ModelManager.html#src.model_classes.ModelManager.save_model_component">[docs]</a><span class="k">def</span> <span class="nf">save_model_component</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">object_name</span><span class="p">,</span> <span class="n">directory_path</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Function that saves a model component to a binary object</span>
+<span class="sd">    :param object: the object we want to transform</span>
+<span class="sd">    :param object_name: string with the object name</span>
+<span class="sd">    :param directory_path: the directory where is located</span>
+<span class="sd">    :return: None</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">file_path</span> <span class="o">=</span> <span class="n">directory_path</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">object_name</span>
+    <span class="n">export_as_binary_obj</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">file_path</span><span class="p">)</span></div>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Main&quot;</span><span class="p">)</span>
+    <span class="n">preprocessed_data_file_path</span> <span class="o">=</span> <span class="s1">&#39;../file_name_v6.csv&#39;</span>
+    <span class="n">classifiers_objs_output_dir</span> <span class="o">=</span>  <span class="s2">&quot;../../model_objects/classifiers&quot;</span>
+    <span class="n">extractors_objs_output_dir</span> <span class="o">=</span> <span class="s2">&quot;../../model_objects/features_extractors&quot;</span>
+
+    <span class="c1"># root function of manager - this start everything</span>
+    <span class="n">manager_execute</span><span class="p">(</span><span class="n">preprocessed_data_file_path</span><span class="p">,</span> <span class="p">{</span><span class="n">CLASSIFIERS_OUTPUT_KEY</span><span class="p">:</span><span class="n">classifiers_objs_output_dir</span><span class="p">,</span> <span class="n">EXTRACTORS_OUTPUT_KEY</span><span class="p">:</span><span class="n">extractors_objs_output_dir</span><span class="p">},</span> <span class="n">save_model_objs</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Ana.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -21,7 +21,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="StaticClassifier module" href="StaticClassifier.html" />
+    <link rel="next" title="ModelWorker module" href="ModelWorker.html" />
     <link rel="prev" title="HashingVectorizerFE module" href="HashingVectorizerFE.html" /> 
 </head>
 
@@ -49,9 +49,20 @@
 <li class="toctree-l1"><a class="reference internal" href="../docs_main/modules.html">main</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">model_classes</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="CountVectorizerFE.html">CountVectorizerFE module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Doc2VecFE.html">Doc2VecFE module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="FeaturesExtractor.html">FeaturesExtractor module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="HashingVectorizerFE.html">HashingVectorizerFE module</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">ModelManager module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">ModelManager module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#src.model_classes.ModelManager.build_classifiers"><code class="docutils literal notranslate"><span class="pre">build_classifiers()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.model_classes.ModelManager.build_features_extractors"><code class="docutils literal notranslate"><span class="pre">build_features_extractors()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.model_classes.ModelManager.get_classifier_to_extractor_str"><code class="docutils literal notranslate"><span class="pre">get_classifier_to_extractor_str()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.model_classes.ModelManager.manager_execute"><code class="docutils literal notranslate"><span class="pre">manager_execute()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.model_classes.ModelManager.model_fit_train_predict"><code class="docutils literal notranslate"><span class="pre">model_fit_train_predict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.model_classes.ModelManager.reverse_classifier_to_extractor_str"><code class="docutils literal notranslate"><span class="pre">reverse_classifier_to_extractor_str()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.model_classes.ModelManager.save_model_component"><code class="docutils literal notranslate"><span class="pre">save_model_component()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ModelWorker.html">ModelWorker module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="StaticClassifier.html">StaticClassifier module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="TfidfVectorizerFE.html">TfidfVectorizerFE module</a></li>
 </ul>
@@ -83,8 +94,106 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="modelmanager-module">
-<h1>ModelManager module<a class="headerlink" href="#modelmanager-module" title="Permalink to this heading"></a></h1>
+  <section id="module-src.model_classes.ModelManager">
+<span id="modelmanager-module"></span><h1>ModelManager module<a class="headerlink" href="#module-src.model_classes.ModelManager" title="Permalink to this heading"></a></h1>
+<p>This class works as a model manager - it create and save model that will be used for the classification.
+Manage classifiers and features extractors; along with data split and other steps</p>
+<dl class="simple">
+<dt>The Model Manager flow steps are the following:</dt><dd><ol class="arabic simple">
+<li><p>received the preprocessed data from our original dataset</p></li>
+<li><p>create features extractor and classifiers concrete objects</p></li>
+<li><p>use every features extractor to convert preprocessed text data to numerical features</p></li>
+<li><p>save features extractor as binary objects, to be reused later</p></li>
+<li><p>split obtained numerical feature for training and testing stages</p></li>
+<li><p>use a cross product logic classifiers x features extractors resulting in (classifier, features_extractor) pairs</p></li>
+<li><dl class="simple">
+<dt>for every (classifier, features_extractor) pair, the classifier is fitted with the provided data,</dt><dd><p>then it is trained and evaluated; the classifiers objects are saved as binary objects to be reused later</p>
+</dd>
+</dl>
+</li>
+</ol>
+</dd>
+<dt>Observations:</dt><dd><ol class="arabic simple">
+<li><p>every features extractors is saved only once (one file per features extractor)</p></li>
+<li><dl class="simple">
+<dt>every classifier resulting from any (classifier, features_extractor) is saved, thus for classifiers cl, there will</dt><dd><p>k instances of it, one instance for every features extractors that provide data for training / testing for it</p>
+</dd>
+</dl>
+</li>
+<li><p>classifiers and features extractors to be saved in specific locations</p></li>
+</ol>
+</dd>
+</dl>
+<p>Aim: the persisted model objects: classifiers and features extractor are reused later when a prediction is requested</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="src.model_classes.ModelManager.build_classifiers">
+<span class="sig-prename descclassname"><span class="pre">src.model_classes.ModelManager.</span></span><span class="sig-name descname"><span class="pre">build_classifiers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/model_classes/ModelManager.html#build_classifiers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.model_classes.ModelManager.build_classifiers" title="Permalink to this definition"></a></dt>
+<dd><p>Function that initialise all the classifiers
+:return: list with all used classifiers
+:rtype: build-in python list</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.model_classes.ModelManager.build_features_extractors">
+<span class="sig-prename descclassname"><span class="pre">src.model_classes.ModelManager.</span></span><span class="sig-name descname"><span class="pre">build_features_extractors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/model_classes/ModelManager.html#build_features_extractors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.model_classes.ModelManager.build_features_extractors" title="Permalink to this definition"></a></dt>
+<dd><p>Function that initialise the features extractors
+:param data: pandas data frame  series (the data is just fitted, not transformed)
+:return: list with all used features extractors
+:rtype: build-in python list</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.model_classes.ModelManager.get_classifier_to_extractor_str">
+<span class="sig-prename descclassname"><span class="pre">src.model_classes.ModelManager.</span></span><span class="sig-name descname"><span class="pre">get_classifier_to_extractor_str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">classifier_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features_extractor_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/model_classes/ModelManager.html#get_classifier_to_extractor_str"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.model_classes.ModelManager.get_classifier_to_extractor_str" title="Permalink to this definition"></a></dt>
+<dd><p>Function that returns the pairs of classifiers and features extractors
+:param classifier_name: string with the name of the classifier
+:param features_extractor_name: string with the name of the features extractor
+:return: string with (classifier, features extractor) pair
+:rtype: build-in python string</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.model_classes.ModelManager.manager_execute">
+<span class="sig-prename descclassname"><span class="pre">src.model_classes.ModelManager.</span></span><span class="sig-name descname"><span class="pre">manager_execute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_objects_paths</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_model_objs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/model_classes/ModelManager.html#manager_execute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.model_classes.ModelManager.manager_execute" title="Permalink to this definition"></a></dt>
+<dd><p>Function to read and process the data set, aggregates all operations of the manager (splitting the data and training the model, can be considered root function)
+:param input_data_path: the path pf the file; file should be a CSV and we can assume that the data included is preprocessed
+:param output_objects_paths: dictionary that contains paths for the directories where the resulted objects will be saved
+:param save_model_objs: option if we save or not the objects as binary format
+:return: None</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.model_classes.ModelManager.model_fit_train_predict">
+<span class="sig-prename descclassname"><span class="pre">src.model_classes.ModelManager.</span></span><span class="sig-name descname"><span class="pre">model_fit_train_predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classifiers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features_extractors</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_objects_paths</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_model_objects</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/model_classes/ModelManager.html#model_fit_train_predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.model_classes.ModelManager.model_fit_train_predict" title="Permalink to this definition"></a></dt>
+<dd><p>Function to initialise the model components, it runs and save the extractors and classifiers
+:param X_data: pandas data frame series , represents independent features
+:param y_data: pandas data frame series, represents target variable
+:param classifiers: list with the classifiers, StaticClassifier instances
+:param features_extractors: list with the features extractors, FeaturesExtractor instances
+:param output_objects_paths: dictionary that contains paths for the directories where the resulted objects will be saved
+:param save_model_objects:  option if we save or not the objects as binary format
+:return: dictionary with classifiers amd features extractors used and the metrics obtained
+:rtype: build-in python dictionary</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.model_classes.ModelManager.reverse_classifier_to_extractor_str">
+<span class="sig-prename descclassname"><span class="pre">src.model_classes.ModelManager.</span></span><span class="sig-name descname"><span class="pre">reverse_classifier_to_extractor_str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">compound_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/model_classes/ModelManager.html#reverse_classifier_to_extractor_str"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.model_classes.ModelManager.reverse_classifier_to_extractor_str" title="Permalink to this definition"></a></dt>
+<dd><p>Function that return the components of a compound name (classifier, extractor); reverse engineering for get_classifier_to_extractor_str method
+:param compound_name: string with the pairs (classifier, features extractor)
+:return: tuple with classifier, features extractor names</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.model_classes.ModelManager.save_model_component">
+<span class="sig-prename descclassname"><span class="pre">src.model_classes.ModelManager.</span></span><span class="sig-name descname"><span class="pre">save_model_component</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">object_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">directory_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/model_classes/ModelManager.html#save_model_component"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.model_classes.ModelManager.save_model_component" title="Permalink to this definition"></a></dt>
+<dd><p>Function that saves a model component to a binary object
+:param object: the object we want to transform
+:param object_name: string with the object name
+:param directory_path: the directory where is located
+:return: None</p>
+</dd></dl>
+
 </section>
 
 
@@ -92,7 +201,7 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="HashingVectorizerFE.html" class="btn btn-neutral float-left" title="HashingVectorizerFE module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="StaticClassifier.html" class="btn btn-neutral float-right" title="StaticClassifier module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="ModelWorker.html" class="btn btn-neutral float-right" title="ModelWorker module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

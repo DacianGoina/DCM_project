@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>src.main.unit_test_text_preprocessing_utilities &mdash; MLO-DCM 1.0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js?v=7da82d16"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            MLO-DCM
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../docs_main/modules.html">main</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../docs_model_classes/modules.html">model_classes</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">MLO-DCM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">src.main.unit_test_text_preprocessing_utilities</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for src.main.unit_test_text_preprocessing_utilities</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">import</span> <span class="nn">spacy</span>
+<span class="kn">from</span> <span class="nn">src.main.text_preprocessing_utilities</span> <span class="kn">import</span> <span class="o">*</span>
+
+<div class="viewcode-block" id="UnitTests"><a class="viewcode-back" href="../../../docs_main/unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests">[docs]</a><span class="k">class</span> <span class="nc">UnitTests</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+<div class="viewcode-block" id="UnitTests.test_is_str_numeric"><a class="viewcode-back" href="../../../docs_main/unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_is_str_numeric">[docs]</a>    <span class="k">def</span> <span class="nf">test_is_str_numeric</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Unit test for is_str_numeric when it has numerical/non numerical values</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">is_str_numeric</span><span class="p">(</span><span class="s2">&quot;123&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">is_str_numeric</span><span class="p">(</span><span class="s2">&quot;3.14&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">is_str_numeric</span><span class="p">(</span><span class="s2">&quot;-42&quot;</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">is_str_numeric</span><span class="p">(</span><span class="s2">&quot;abc&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">is_str_numeric</span><span class="p">(</span><span class="s2">&quot;1a2b3c&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">is_str_numeric</span><span class="p">(</span><span class="s2">&quot;3.14.15&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">is_str_numeric</span><span class="p">(</span><span class="s2">&quot;infinity&quot;</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="UnitTests.test_is_str_valid_date"><a class="viewcode-back" href="../../../docs_main/unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_is_str_valid_date">[docs]</a>    <span class="k">def</span> <span class="nf">test_is_str_valid_date</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Unit test for valid/non valid dates</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">is_str_valid_date</span><span class="p">(</span><span class="s2">&quot;2022-01-01&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">is_str_valid_date</span><span class="p">(</span><span class="s2">&quot;2023-12-31&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">is_str_valid_date</span><span class="p">(</span><span class="s2">&quot;1990-05-20&quot;</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">is_str_valid_date</span><span class="p">(</span><span class="s2">&quot;2022-13-01&quot;</span><span class="p">))</span> <span class="c1"># invalid month</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">is_str_valid_date</span><span class="p">(</span><span class="s2">&quot;2023-02-30&quot;</span><span class="p">))</span>  <span class="c1"># invalid day for February</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">is_str_valid_date</span><span class="p">(</span><span class="s2">&quot;2021-12-32&quot;</span><span class="p">))</span>  <span class="c1"># invalid day for December</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">is_str_valid_date</span><span class="p">(</span><span class="s2">&quot;2022-02-29&quot;</span><span class="p">))</span>  <span class="c1"># non-leap year</span></div>
+
+<div class="viewcode-block" id="UnitTests.test_is_str_fraction"><a class="viewcode-back" href="../../../docs_main/unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_is_str_fraction">[docs]</a>    <span class="k">def</span> <span class="nf">test_is_str_fraction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Unit test for valid types of fractions and invalid inputs</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">is_str_fraction</span><span class="p">(</span><span class="s2">&quot;3/4&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">is_str_fraction</span><span class="p">(</span><span class="s2">&quot;2/5&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">is_str_fraction</span><span class="p">(</span><span class="s2">&quot;7/10&quot;</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">is_str_fraction</span><span class="p">(</span><span class="s2">&quot;1/ 3&quot;</span><span class="p">))</span>  <span class="c1"># contains one space</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">is_str_fraction</span><span class="p">(</span><span class="s2">&quot;2 / 3&quot;</span><span class="p">))</span>  <span class="c1"># contains spaces</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">is_str_fraction</span><span class="p">(</span><span class="s2">&quot;abc&quot;</span><span class="p">))</span>  <span class="c1"># value that is not a fraction</span></div>
+
+<div class="viewcode-block" id="UnitTests.test_get_lowercase_words_from_str"><a class="viewcode-back" href="../../../docs_main/unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_get_lowercase_words_from_str">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_lowercase_words_from_str</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Unit test for different cases that includes multiple lowercase words and mixed words (formed with lower and upper cases)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">get_lowercase_words_from_str</span><span class="p">(</span><span class="s2">&quot;hello world&quot;</span><span class="p">),</span> <span class="p">[</span><span class="s2">&quot;hello&quot;</span><span class="p">,</span> <span class="s2">&quot;world&quot;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">get_lowercase_words_from_str</span><span class="p">(</span><span class="s2">&quot;   python &quot;</span><span class="p">),</span> <span class="p">[</span><span class="s2">&quot;python&quot;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">get_lowercase_words_from_str</span><span class="p">(</span><span class="s2">&quot;one two tree&quot;</span><span class="p">),</span> <span class="p">[</span><span class="s2">&quot;one&quot;</span><span class="p">,</span> <span class="s2">&quot;two&quot;</span><span class="p">,</span> <span class="s2">&quot;tree&quot;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">get_lowercase_words_from_str</span><span class="p">(</span><span class="s2">&quot;Hello World&quot;</span><span class="p">),[</span><span class="s2">&quot;ello&quot;</span><span class="p">,</span> <span class="s2">&quot;orld&quot;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">get_lowercase_words_from_str</span><span class="p">(</span><span class="s2">&quot;PyThoN ProgRaMMing&quot;</span><span class="p">),</span> <span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;ho&#39;</span><span class="p">,</span> <span class="s1">&#39;rog&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;ing&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">get_lowercase_words_from_str</span><span class="p">(</span><span class="s2">&quot;ONE TwO trEE&quot;</span><span class="p">),</span> <span class="p">[</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="s1">&#39;tr&#39;</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="UnitTests.test_to_lowercase"><a class="viewcode-back" href="../../../docs_main/unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_to_lowercase">[docs]</a>    <span class="k">def</span> <span class="nf">test_to_lowercase</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Unit test for text lowercase</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">to_lowercase</span><span class="p">(</span><span class="s2">&quot;ThIs Is A MiXeD CaSe TeXT&quot;</span><span class="p">),</span> <span class="s2">&quot;this is a mixed case text&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">to_lowercase</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">),</span> <span class="s2">&quot;&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="UnitTests.test_remove_excessive_space"><a class="viewcode-back" href="../../../docs_main/unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_remove_excessive_space">[docs]</a>    <span class="k">def</span> <span class="nf">test_remove_excessive_space</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Unit test to see if the spaces are eliminated in strings with multiple spaces</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">remove_excessive_space</span><span class="p">(</span><span class="s2">&quot;    hello world              &quot;</span><span class="p">),</span> <span class="s2">&quot;hello world&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">remove_excessive_space</span><span class="p">(</span><span class="s2">&quot;                  python programming     &quot;</span><span class="p">),</span> <span class="s2">&quot;python programming&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">remove_excessive_space</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">keep coding</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">),</span> <span class="s2">&quot;keep coding&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">remove_excessive_space</span><span class="p">(</span><span class="s2">&quot;hello&quot;</span><span class="p">),</span> <span class="s2">&quot;hello&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">remove_excessive_space</span><span class="p">(</span><span class="s2">&quot;hello world&quot;</span><span class="p">),</span> <span class="s2">&quot;hello world&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">remove_excessive_space</span><span class="p">(</span><span class="s2">&quot;one two tree&quot;</span><span class="p">),</span> <span class="s2">&quot;one two tree&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="UnitTests.test_remove_spacy_punctuations"><a class="viewcode-back" href="../../../docs_main/unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_remove_spacy_punctuations">[docs]</a>    <span class="k">def</span> <span class="nf">test_remove_spacy_punctuations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Unit test for list with multiple punctuations and null list</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="nb">input</span> <span class="o">=</span> <span class="s2">&quot;Hello , world ! What is ? yes .&quot;</span>
+        <span class="n">nlp</span> <span class="o">=</span> <span class="n">spacy</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;en_core_web_md&quot;</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">remove_spacy_punctuations</span><span class="p">(</span><span class="n">nlp</span><span class="p">(</span><span class="nb">input</span><span class="p">))</span>
+        <span class="n">expected_result</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">nlp</span><span class="p">(</span><span class="s2">&quot;Hello world What is yes&quot;</span><span class="p">))</span>
+        <span class="n">equal</span> <span class="o">=</span> <span class="nb">all</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">text</span> <span class="o">==</span> <span class="n">y</span><span class="o">.</span><span class="n">text</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">expected_result</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">equal</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">remove_spacy_punctuations</span><span class="p">([]),</span> <span class="p">[])</span></div>
+
+<div class="viewcode-block" id="UnitTests.test_lemmatize_spacy_tokens"><a class="viewcode-back" href="../../../docs_main/unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_lemmatize_spacy_tokens">[docs]</a>    <span class="k">def</span> <span class="nf">test_lemmatize_spacy_tokens</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Unit test for list of words that contains lematized words</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">nlp</span> <span class="o">=</span> <span class="n">spacy</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;en_core_web_sm&quot;</span><span class="p">)</span>
+
+        <span class="n">input_text</span> <span class="o">=</span> <span class="s2">&quot;This is a sample sentence with some lemmatizable words&quot;</span>
+        <span class="n">input_tokens</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="n">input_text</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">lemmatize_spacy_tokens</span><span class="p">(</span><span class="n">input_tokens</span><span class="p">),</span> <span class="p">[</span><span class="s1">&#39;this&#39;</span><span class="p">,</span> <span class="s1">&#39;be&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;sample&#39;</span><span class="p">,</span> <span class="s1">&#39;sentence&#39;</span><span class="p">,</span> <span class="s1">&#39;with&#39;</span><span class="p">,</span> <span class="s1">&#39;some&#39;</span><span class="p">,</span> <span class="s1">&#39;lemmatizable&#39;</span><span class="p">,</span> <span class="s1">&#39;word&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">lemmatize_spacy_tokens</span><span class="p">([]),</span> <span class="p">[])</span></div>
+
+<div class="viewcode-block" id="UnitTests.test_str_tokens_remove_stopwords"><a class="viewcode-back" href="../../../docs_main/unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_tokens_remove_stopwords">[docs]</a>    <span class="k">def</span> <span class="nf">test_str_tokens_remove_stopwords</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Unit test for removing stopwords from a list of tokens</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">str_tokens_remove_stopwords</span><span class="p">([</span><span class="s2">&quot;this&quot;</span><span class="p">,</span> <span class="s2">&quot;is&quot;</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;test&quot;</span><span class="p">,</span> <span class="s2">&quot;sentence&quot;</span><span class="p">])</span>
+        <span class="n">expected_result</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">,</span> <span class="s1">&#39;sentence&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">expected_result</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">([],</span> <span class="p">[])</span></div>
+
+<div class="viewcode-block" id="UnitTests.test_get_str_tokens_freq"><a class="viewcode-back" href="../../../docs_main/unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_get_str_tokens_freq">[docs]</a>    <span class="k">def</span>  <span class="nf">test_get_str_tokens_freq</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Unit test for function that gets the tokens frequencies</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">input_tokens</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;apple&quot;</span><span class="p">,</span> <span class="s2">&quot;banana&quot;</span><span class="p">,</span> <span class="s2">&quot;apple&quot;</span><span class="p">,</span> <span class="s2">&quot;orange&quot;</span><span class="p">,</span> <span class="s2">&quot;banana&quot;</span><span class="p">,</span> <span class="s2">&quot;apple&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">get_str_tokens_freq</span><span class="p">(</span><span class="n">input_tokens</span><span class="p">),</span> <span class="p">{</span><span class="s2">&quot;apple&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;banana&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;orange&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">get_str_tokens_freq</span><span class="p">([]),</span> <span class="p">{})</span></div>
+
+<div class="viewcode-block" id="UnitTests.test_get_str_tokens_freq_for_lists"><a class="viewcode-back" href="../../../docs_main/unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_get_str_tokens_freq_for_lists">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_str_tokens_freq_for_lists</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Unit test for function thst the tokens frequencies from list of lists</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">input_lists</span> <span class="o">=</span> <span class="p">[[</span><span class="s2">&quot;apple&quot;</span><span class="p">,</span> <span class="s2">&quot;banana&quot;</span><span class="p">,</span> <span class="s2">&quot;apple&quot;</span><span class="p">,</span> <span class="s2">&quot;orange&quot;</span><span class="p">,</span> <span class="s2">&quot;banana&quot;</span><span class="p">,</span> <span class="s2">&quot;apple&quot;</span><span class="p">],</span>
+                       <span class="p">[</span><span class="s2">&quot;banana&quot;</span><span class="p">,</span> <span class="s2">&quot;orange&quot;</span><span class="p">,</span> <span class="s2">&quot;orange&quot;</span><span class="p">,</span> <span class="s2">&quot;kiwi&quot;</span><span class="p">,</span> <span class="s2">&quot;kiwi&quot;</span><span class="p">],</span>
+                       <span class="p">[</span><span class="s2">&quot;apple&quot;</span><span class="p">,</span> <span class="s2">&quot;apple&quot;</span><span class="p">,</span> <span class="s2">&quot;kiwi&quot;</span><span class="p">,</span> <span class="s2">&quot;banana&quot;</span><span class="p">]]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">get_str_tokens_freq_for_lists</span><span class="p">(</span><span class="n">input_lists</span><span class="p">),</span> <span class="p">{</span><span class="s2">&quot;apple&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;banana&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;orange&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;kiwi&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">get_str_tokens_freq_for_lists</span><span class="p">([]),</span> <span class="p">{})</span></div>
+
+<div class="viewcode-block" id="UnitTests.test_get_rare_tokens"><a class="viewcode-back" href="../../../docs_main/unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_get_rare_tokens">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_rare_tokens</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Unit test for function that extracts rare tokens</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">input_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;apple&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;banana&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;orange&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;kiwi&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;pear&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+        <span class="n">threshold</span> <span class="o">=</span> <span class="mi">3</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">get_rare_tokens</span><span class="p">(</span><span class="n">input_dict</span><span class="p">,</span> <span class="n">threshold</span><span class="p">),</span> <span class="p">{</span><span class="s2">&quot;kiwi&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;orange&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;pear&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">get_rare_tokens</span><span class="p">({},</span> <span class="mi">1</span><span class="p">),</span> <span class="p">{})</span></div>
+
+<div class="viewcode-block" id="UnitTests.test_handle_rare_str_tokens"><a class="viewcode-back" href="../../../docs_main/unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_handle_rare_str_tokens">[docs]</a>    <span class="k">def</span> <span class="nf">test_handle_rare_str_tokens</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Unit test for function that eliminates or replace rare words</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">input_tokens</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;apple&quot;</span><span class="p">,</span> <span class="s2">&quot;banana&quot;</span><span class="p">,</span> <span class="s2">&quot;orange&quot;</span><span class="p">,</span> <span class="s2">&quot;kiwi&quot;</span><span class="p">,</span> <span class="s2">&quot;pear&quot;</span><span class="p">]</span>
+        <span class="n">input_dict_of_freq</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;apple&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;banana&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;orange&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;kiwi&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;pear&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+        <span class="n">replace_with</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">handle_rare_str_tokens</span><span class="p">(</span><span class="n">tokens</span><span class="o">=</span><span class="n">input_tokens</span><span class="p">,</span> <span class="n">dict_of_freq</span><span class="o">=</span><span class="n">input_dict_of_freq</span><span class="p">,</span> <span class="n">replace_with</span><span class="o">=</span><span class="n">replace_with</span><span class="p">),</span> <span class="p">[])</span>
+
+        <span class="n">input_tokens</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;apple&quot;</span><span class="p">,</span> <span class="s2">&quot;banana&quot;</span><span class="p">,</span> <span class="s2">&quot;orange&quot;</span><span class="p">,</span> <span class="s2">&quot;kiwi&quot;</span><span class="p">,</span> <span class="s2">&quot;pear&quot;</span><span class="p">]</span>
+        <span class="n">input_dict_of_freq</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;apple&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;banana&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">}</span>
+        <span class="n">replace_with</span> <span class="o">=</span> <span class="s2">&quot;RARE&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">handle_rare_str_tokens</span><span class="p">(</span><span class="n">tokens</span><span class="o">=</span><span class="n">input_tokens</span><span class="p">,</span> <span class="n">dict_of_freq</span><span class="o">=</span><span class="n">input_dict_of_freq</span><span class="p">,</span> <span class="n">replace_with</span><span class="o">=</span><span class="n">replace_with</span><span class="p">),</span> <span class="p">[</span><span class="s1">&#39;[UNK]&#39;</span><span class="p">,</span> <span class="s1">&#39;[UNK]&#39;</span><span class="p">,</span> <span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="s1">&#39;kiwi&#39;</span><span class="p">,</span> <span class="s1">&#39;pear&#39;</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="UnitTests.test_spacy_tokens_pos"><a class="viewcode-back" href="../../../docs_main/unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_spacy_tokens_pos">[docs]</a>    <span class="k">def</span> <span class="nf">test_spacy_tokens_pos</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Unit test for function that creates a list of tuples containing token and it&#39;s position</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">nlp</span> <span class="o">=</span> <span class="n">spacy</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;en_core_web_sm&quot;</span><span class="p">)</span>
+        <span class="n">sentence</span> <span class="o">=</span> <span class="s2">&quot;The quick brown fox jumps over the lazy dog.&quot;</span>
+        <span class="n">spacy_tokens</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">nlp</span><span class="p">(</span><span class="n">sentence</span><span class="p">))</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">spacy_tokens_pos</span><span class="p">(</span><span class="n">spacy_tokens</span><span class="p">)</span>
+        <span class="n">expected_result</span> <span class="o">=</span> <span class="p">[(</span><span class="n">token</span><span class="p">,</span> <span class="n">token</span><span class="o">.</span><span class="n">pos_</span><span class="p">)</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">spacy_tokens</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">expected_result</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">spacy_tokens_pos</span><span class="p">([]),</span> <span class="p">[])</span></div>
+
+<div class="viewcode-block" id="UnitTests.test_get_spacy_tokens_from_raw_text"><a class="viewcode-back" href="../../../docs_main/unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_get_spacy_tokens_from_raw_text">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_spacy_tokens_from_raw_text</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Unit test for functions that extracts spacy tokens from raw text</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">nlp</span> <span class="o">=</span> <span class="n">spacy</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;en_core_web_sm&quot;</span><span class="p">)</span>
+        <span class="n">raw_text</span> <span class="o">=</span> <span class="s2">&quot;This is a sample sentence.&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">get_spacy_tokens_from_raw_text</span><span class="p">(</span><span class="n">raw_text</span><span class="p">,</span> <span class="n">nlp</span><span class="p">)</span>
+        <span class="n">expected_result</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">nlp</span><span class="p">(</span><span class="n">raw_text</span><span class="p">))</span>
+        <span class="n">equal</span> <span class="o">=</span> <span class="nb">all</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">text</span> <span class="o">==</span> <span class="n">y</span><span class="o">.</span><span class="n">text</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">expected_result</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">equal</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">get_spacy_tokens_from_raw_text</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">spacy</span><span class="o">.</span><span class="n">blank</span><span class="p">(</span><span class="s2">&quot;en&quot;</span><span class="p">)),</span> <span class="p">[])</span></div>
+
+<div class="viewcode-block" id="UnitTests.test_str_remove_junk_spaces"><a class="viewcode-back" href="../../../docs_main/unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_remove_junk_spaces">[docs]</a>    <span class="k">def</span> <span class="nf">test_str_remove_junk_spaces</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Unit test for functions that removes junk spaces in list</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">tokens_with_junk_spaces</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;  word1  &#39;</span><span class="p">,</span> <span class="s1">&#39;word2</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\r</span><span class="s1">word3</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;word4</span><span class="se">\n\n</span><span class="s1">  &#39;</span><span class="p">]</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">str_remove_junk_spaces</span><span class="p">(</span><span class="n">tokens_with_junk_spaces</span><span class="p">)</span>
+        <span class="n">expected_result</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;word1&#39;</span><span class="p">,</span> <span class="s1">&#39;word2&#39;</span><span class="p">,</span> <span class="s1">&#39;word3&#39;</span><span class="p">,</span> <span class="s1">&#39;word4&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">expected_result</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">str_remove_junk_spaces</span><span class="p">([]),</span> <span class="p">[])</span></div>
+
+<div class="viewcode-block" id="UnitTests.test_str_years_to_spoken_words"><a class="viewcode-back" href="../../../docs_main/unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_years_to_spoken_words">[docs]</a>    <span class="k">def</span> <span class="nf">test_str_years_to_spoken_words</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Unit test for function that transform numerical year in text year</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">tokens_with_years</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;The&#39;</span><span class="p">,</span> <span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="s1">&#39;1990&#39;</span><span class="p">,</span> <span class="s1">&#39;marked&#39;</span><span class="p">,</span> <span class="s1">&#39;the&#39;</span><span class="p">,</span> <span class="s1">&#39;beginning&#39;</span><span class="p">,</span> <span class="s1">&#39;of&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;new&#39;</span><span class="p">,</span> <span class="s1">&#39;era&#39;</span><span class="p">]</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">str_years_to_spoken_words</span><span class="p">(</span><span class="n">tokens_with_years</span><span class="p">)</span>
+        <span class="n">expected_result</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;The&#39;</span><span class="p">,</span> <span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="s1">&#39;nineteen&#39;</span><span class="p">,</span> <span class="s1">&#39;ninety&#39;</span><span class="p">,</span> <span class="s1">&#39;marked&#39;</span><span class="p">,</span> <span class="s1">&#39;the&#39;</span><span class="p">,</span> <span class="s1">&#39;beginning&#39;</span><span class="p">,</span> <span class="s1">&#39;of&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;new&#39;</span><span class="p">,</span> <span class="s1">&#39;era&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">expected_result</span><span class="p">)</span>
+
+        <span class="n">tokens_with_years</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;1992&#39;</span><span class="p">,</span> <span class="s1">&#39;463&#39;</span><span class="p">,</span> <span class="s1">&#39;1234&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;13&#39;</span><span class="p">,</span> <span class="s1">&#39;45&#39;</span><span class="p">,</span> <span class="s1">&#39;1432&#39;</span><span class="p">]</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">str_years_to_spoken_words</span><span class="p">(</span><span class="n">tokens_with_years</span><span class="p">)</span>
+        <span class="n">expected_result</span> <span class="o">=</span><span class="p">[</span><span class="s1">&#39;nineteen&#39;</span><span class="p">,</span> <span class="s1">&#39;ninety&#39;</span><span class="p">,</span> <span class="s1">&#39;two&#39;</span><span class="p">,</span> <span class="s1">&#39;463&#39;</span><span class="p">,</span> <span class="s1">&#39;twelve&#39;</span><span class="p">,</span> <span class="s1">&#39;thirty&#39;</span><span class="p">,</span> <span class="s1">&#39;four&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;13&#39;</span><span class="p">,</span> <span class="s1">&#39;45&#39;</span><span class="p">,</span> <span class="s1">&#39;fourteen&#39;</span><span class="p">,</span> <span class="s1">&#39;thirty&#39;</span><span class="p">,</span> <span class="s1">&#39;two&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">expected_result</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="UnitTests.test_str_numeric_values_to_spoken_words"><a class="viewcode-back" href="../../../docs_main/unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_numeric_values_to_spoken_words">[docs]</a>    <span class="k">def</span> <span class="nf">test_str_numeric_values_to_spoken_words</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Unit test for function that transform numerical values in test</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">input_tokens</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;54&#39;</span><span class="p">,</span> <span class="s1">&#39;2.5&#39;</span><span class="p">,</span> <span class="s1">&#39;10&#39;</span><span class="p">,</span> <span class="s1">&#39;3.14&#39;</span><span class="p">,</span> <span class="s1">&#39;abc&#39;</span><span class="p">,</span> <span class="s1">&#39;123.45&#39;</span><span class="p">]</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">str_numeric_values_to_spoken_words</span><span class="p">(</span><span class="n">input_tokens</span><span class="p">)</span>
+        <span class="n">expected_output</span> <span class="o">=</span><span class="p">[</span><span class="s1">&#39;fifty&#39;</span><span class="p">,</span> <span class="s1">&#39;four&#39;</span><span class="p">,</span> <span class="s1">&#39;two&#39;</span><span class="p">,</span> <span class="s1">&#39;point&#39;</span><span class="p">,</span> <span class="s1">&#39;five&#39;</span><span class="p">,</span> <span class="s1">&#39;ten&#39;</span><span class="p">,</span> <span class="s1">&#39;three&#39;</span><span class="p">,</span> <span class="s1">&#39;point&#39;</span><span class="p">,</span> <span class="s1">&#39;one&#39;</span><span class="p">,</span> <span class="s1">&#39;four&#39;</span><span class="p">,</span> <span class="s1">&#39;abc&#39;</span><span class="p">,</span> <span class="s1">&#39;one&#39;</span><span class="p">,</span> <span class="s1">&#39;hundred&#39;</span><span class="p">,</span> <span class="s1">&#39;and&#39;</span><span class="p">,</span> <span class="s1">&#39;twenty&#39;</span><span class="p">,</span> <span class="s1">&#39;three&#39;</span><span class="p">,</span> <span class="s1">&#39;point&#39;</span><span class="p">,</span> <span class="s1">&#39;four&#39;</span><span class="p">,</span> <span class="s1">&#39;five&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">expected_output</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">str_numeric_values_to_spoken_words</span><span class="p">([]),</span> <span class="p">[])</span></div>
+
+<div class="viewcode-block" id="UnitTests.test_str_ordinal_numbers_to_spoken_words"><a class="viewcode-back" href="../../../docs_main/unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_ordinal_numbers_to_spoken_words">[docs]</a>    <span class="k">def</span> <span class="nf">test_str_ordinal_numbers_to_spoken_words</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Unit test for functions that transform ordinal number in text</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">input_tokens</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;st&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;nd&#39;</span><span class="p">,</span> <span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;rd&#39;</span><span class="p">,</span> <span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="s1">&#39;th&#39;</span><span class="p">,</span> <span class="s1">&#39;abc&#39;</span><span class="p">,</span> <span class="s1">&#39;5&#39;</span><span class="p">,</span> <span class="s1">&#39;th&#39;</span><span class="p">]</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">str_ordinal_numbers_to_spoken_words</span><span class="p">(</span><span class="n">input_tokens</span><span class="p">)</span>
+        <span class="n">expected_output</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;first&#39;</span><span class="p">,</span> <span class="s1">&#39;second&#39;</span><span class="p">,</span> <span class="s1">&#39;third&#39;</span><span class="p">,</span> <span class="s1">&#39;fourth&#39;</span><span class="p">,</span> <span class="s1">&#39;abc&#39;</span><span class="p">,</span> <span class="s1">&#39;fifth&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">expected_output</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">str_ordinal_numbers_to_spoken_words</span><span class="p">([]),</span> <span class="p">[])</span></div>
+
+<div class="viewcode-block" id="UnitTests.test_str_currency_to_spoken_words"><a class="viewcode-back" href="../../../docs_main/unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_currency_to_spoken_words">[docs]</a>    <span class="k">def</span> <span class="nf">test_str_currency_to_spoken_words</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Unit test for functions that transform currency in text</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">input_tokens</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;$&#39;</span><span class="p">,</span> <span class="s1">&#39;EUR&#39;</span><span class="p">,</span> <span class="s1">&#39;£&#39;</span><span class="p">,</span> <span class="s1">&#39;CHF&#39;</span><span class="p">,</span> <span class="s1">&#39;5&#39;</span><span class="p">,</span> <span class="s1">&#39;USD&#39;</span><span class="p">,</span> <span class="s1">&#39;10%&#39;</span><span class="p">,</span> <span class="s1">&#39;JPY&#39;</span><span class="p">,</span> <span class="s1">&#39;15&#39;</span><span class="p">,</span> <span class="s1">&#39;AUD&#39;</span><span class="p">]</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">str_currency_to_spoken_words</span><span class="p">(</span><span class="n">input_tokens</span><span class="p">)</span>
+        <span class="n">expected_output</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;dollars&#39;</span><span class="p">,</span> <span class="s1">&#39;euros&#39;</span><span class="p">,</span> <span class="s1">&#39;sterling&#39;</span><span class="p">,</span> <span class="s1">&#39;swiss francs&#39;</span><span class="p">,</span> <span class="s1">&#39;5&#39;</span><span class="p">,</span> <span class="s1">&#39;dollars&#39;</span><span class="p">,</span> <span class="s1">&#39;10%&#39;</span><span class="p">,</span> <span class="s1">&#39;yens&#39;</span><span class="p">,</span> <span class="s1">&#39;15&#39;</span><span class="p">,</span> <span class="s1">&#39;dollars&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">expected_output</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">str_currency_to_spoken_words</span><span class="p">([]),</span> <span class="p">[])</span></div>
+
+<div class="viewcode-block" id="UnitTests.test_str_remove_common_chars"><a class="viewcode-back" href="../../../docs_main/unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_remove_common_chars">[docs]</a>    <span class="k">def</span> <span class="nf">test_str_remove_common_chars</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Unit test for functions that removes common chars such as \</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">input_tokens</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;apple&#39;</span><span class="p">,</span> <span class="s1">&#39;&quot;banana&quot;&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\&#39;</span><span class="s1">orange</span><span class="se">\&#39;</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;cherry&#39;</span><span class="p">,</span> <span class="s1">&#39;grape&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\&#39;</span><span class="s1">mango</span><span class="se">\&#39;</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;kiwi&#39;</span><span class="p">]</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">str_remove_common_chars</span><span class="p">(</span><span class="n">input_tokens</span><span class="p">)</span>
+        <span class="n">expected_output</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;apple&#39;</span><span class="p">,</span> <span class="s1">&#39;&quot;banana&quot;&#39;</span><span class="p">,</span> <span class="s2">&quot;&#39;orange&#39;&quot;</span><span class="p">,</span> <span class="s1">&#39;cherry&#39;</span><span class="p">,</span> <span class="s1">&#39;grape&#39;</span><span class="p">,</span> <span class="s2">&quot;&#39;mango&#39;&quot;</span><span class="p">,</span> <span class="s1">&#39;kiwi&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">expected_output</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">str_remove_common_chars</span><span class="p">([]),</span> <span class="p">[])</span></div>
+
+
+<div class="viewcode-block" id="UnitTests.test_remove_str_tokens_len_less_than_threshold"><a class="viewcode-back" href="../../../docs_main/unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_remove_str_tokens_len_less_than_threshold">[docs]</a>    <span class="k">def</span> <span class="nf">test_remove_str_tokens_len_less_than_threshold</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Unit test for functions that removes tokens with length smaller than a threshold</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">input_tokens</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;apple&#39;</span><span class="p">,</span> <span class="s1">&#39;banana&#39;</span><span class="p">,</span> <span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="s1">&#39;cherry&#39;</span><span class="p">,</span> <span class="s1">&#39;grape&#39;</span><span class="p">,</span> <span class="s1">&#39;mango&#39;</span><span class="p">,</span> <span class="s1">&#39;kiwi&#39;</span><span class="p">]</span>
+        <span class="n">threshold_value</span> <span class="o">=</span> <span class="mi">5</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">remove_str_tokens_len_less_than_threshold</span><span class="p">(</span><span class="n">input_tokens</span><span class="p">,</span> <span class="n">threshold_value</span><span class="p">)</span>
+        <span class="n">expected_output</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;apple&#39;</span><span class="p">,</span> <span class="s1">&#39;banana&#39;</span><span class="p">,</span> <span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="s1">&#39;cherry&#39;</span><span class="p">,</span> <span class="s1">&#39;grape&#39;</span><span class="p">,</span> <span class="s1">&#39;mango&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">expected_output</span><span class="p">)</span>
+
+        <span class="n">threshold_value</span> <span class="o">=</span> <span class="mi">6</span>
+        <span class="n">expected_output</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;apple&#39;</span><span class="p">,</span> <span class="s1">&#39;banana&#39;</span><span class="p">,</span> <span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="s1">&#39;cherry&#39;</span><span class="p">,</span> <span class="s1">&#39;grape&#39;</span><span class="p">,</span> <span class="s1">&#39;mango&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">expected_output</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="UnitTests.test_str_fraction_to_spoken_words"><a class="viewcode-back" href="../../../docs_main/unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_fraction_to_spoken_words">[docs]</a>    <span class="k">def</span> <span class="nf">test_str_fraction_to_spoken_words</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Unit test for function that transform fractions to text</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">input_tokens</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;1/2&#39;</span><span class="p">,</span> <span class="s1">&#39;2/3&#39;</span><span class="p">,</span> <span class="s1">&#39;3/4&#39;</span><span class="p">,</span> <span class="s1">&#39;5/8&#39;</span><span class="p">,</span> <span class="s1">&#39;1/4&#39;</span><span class="p">]</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">str_fraction_to_spoken_words</span><span class="p">(</span><span class="n">input_tokens</span><span class="p">)</span>
+        <span class="n">expected_output</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;one&#39;</span><span class="p">,</span> <span class="s1">&#39;half&#39;</span><span class="p">,</span> <span class="s1">&#39;two&#39;</span><span class="p">,</span> <span class="s1">&#39;third&#39;</span><span class="p">,</span> <span class="s1">&#39;three&#39;</span><span class="p">,</span> <span class="s1">&#39;fourth&#39;</span><span class="p">,</span> <span class="s1">&#39;five&#39;</span><span class="p">,</span> <span class="s1">&#39;eighth&#39;</span><span class="p">,</span> <span class="s1">&#39;one&#39;</span><span class="p">,</span> <span class="s1">&#39;fourth&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">expected_output</span><span class="p">)</span>
+
+        <span class="n">input_tokens</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;2/5&#39;</span><span class="p">,</span> <span class="s1">&#39;3/7&#39;</span><span class="p">,</span> <span class="s1">&#39;4/9&#39;</span><span class="p">,</span> <span class="s1">&#39;6/11&#39;</span><span class="p">,</span> <span class="s1">&#39;1/3&#39;</span><span class="p">]</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">str_fraction_to_spoken_words</span><span class="p">(</span><span class="n">input_tokens</span><span class="p">)</span>
+        <span class="n">expected_output</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;two&#39;</span><span class="p">,</span> <span class="s1">&#39;fifth&#39;</span><span class="p">,</span> <span class="s1">&#39;three&#39;</span><span class="p">,</span> <span class="s1">&#39;seventh&#39;</span><span class="p">,</span> <span class="s1">&#39;four&#39;</span><span class="p">,</span> <span class="s1">&#39;ninth&#39;</span><span class="p">,</span> <span class="s1">&#39;six&#39;</span><span class="p">,</span> <span class="s1">&#39;eleventh&#39;</span><span class="p">,</span> <span class="s1">&#39;one&#39;</span><span class="p">,</span> <span class="s1">&#39;third&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">expected_output</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="UnitTests.test_str_emails_to_email_tag"><a class="viewcode-back" href="../../../docs_main/unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_emails_to_email_tag">[docs]</a>    <span class="k">def</span> <span class="nf">test_str_emails_to_email_tag</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Unit test for function that replace email with an email tag</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">input_tokens</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;john.doe@example.com&#39;</span><span class="p">,</span> <span class="s1">&#39;alice.smith@gmail.com&#39;</span><span class="p">,</span> <span class="s1">&#39;info@company.com&#39;</span><span class="p">]</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">str_emails_to_email_tag</span><span class="p">(</span><span class="n">input_tokens</span><span class="p">)</span>
+        <span class="n">expected_output</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;email&#39;</span><span class="p">,</span> <span class="s1">&#39;email&#39;</span><span class="p">,</span> <span class="s1">&#39;email&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">expected_output</span><span class="p">)</span>
+
+        <span class="n">input_tokens</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;customer&#39;</span><span class="p">,</span> <span class="s1">&#39;support@helpdesk.com&#39;</span><span class="p">,</span> <span class="s1">&#39;team&#39;</span><span class="p">,</span> <span class="s1">&#39;sales@business.co&#39;</span><span class="p">,</span> <span class="s1">&#39;contact&#39;</span><span class="p">]</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">str_emails_to_email_tag</span><span class="p">(</span><span class="n">input_tokens</span><span class="p">)</span>
+        <span class="n">expected_output</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;customer&#39;</span><span class="p">,</span> <span class="s1">&#39;email&#39;</span><span class="p">,</span> <span class="s1">&#39;team&#39;</span><span class="p">,</span> <span class="s1">&#39;email&#39;</span><span class="p">,</span> <span class="s1">&#39;contact&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">expected_output</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="UnitTests.test_str_dates_to_date_tag"><a class="viewcode-back" href="../../../docs_main/unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_dates_to_date_tag">[docs]</a>    <span class="k">def</span> <span class="nf">test_str_dates_to_date_tag</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Unit test for function that replace dates to tag date</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">input_tokens</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;2022-01-01&#39;</span><span class="p">,</span> <span class="s1">&#39;apple&#39;</span><span class="p">,</span> <span class="s1">&#39;2023-12-31&#39;</span><span class="p">,</span> <span class="s1">&#39;banana&#39;</span><span class="p">]</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">str_dates_to_date_tag</span><span class="p">(</span><span class="n">input_tokens</span><span class="p">)</span>
+        <span class="n">expected_output</span> <span class="o">=</span> <span class="p">[</span><span class="n">calendar_date_tag</span><span class="p">,</span> <span class="s1">&#39;apple&#39;</span><span class="p">,</span> <span class="n">calendar_date_tag</span><span class="p">,</span> <span class="s1">&#39;banana&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">expected_output</span><span class="p">)</span>
+
+        <span class="n">input_tokens</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;apple&#39;</span><span class="p">,</span> <span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="s1">&#39;banana&#39;</span><span class="p">]</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">str_dates_to_date_tag</span><span class="p">(</span><span class="n">input_tokens</span><span class="p">)</span>
+        <span class="n">expected_output</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;apple&#39;</span><span class="p">,</span> <span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="s1">&#39;banana&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">expected_output</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="UnitTests.test_str_tokens_to_spacy_tokens"><a class="viewcode-back" href="../../../docs_main/unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_tokens_to_spacy_tokens">[docs]</a>    <span class="k">def</span> <span class="nf">test_str_tokens_to_spacy_tokens</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Unit test for function that transforms str tokens in spacy tokens</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">nlp</span> <span class="o">=</span> <span class="n">spacy</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;en_core_web_sm&quot;</span><span class="p">)</span>
+        <span class="n">input_tokens</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;apple&#39;</span><span class="p">,</span> <span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="s1">&#39;banana&#39;</span><span class="p">]</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">str_tokens_to_spacy_tokens</span><span class="p">(</span><span class="n">input_tokens</span><span class="p">,</span> <span class="n">nlp</span><span class="p">)</span>
+        <span class="n">expected_result</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">nlp</span><span class="p">(</span><span class="n">input_token</span><span class="p">)</span> <span class="k">for</span> <span class="n">input_token</span> <span class="ow">in</span> <span class="n">input_tokens</span> <span class="p">)</span>
+        <span class="n">equal</span> <span class="o">=</span> <span class="nb">all</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">text</span> <span class="o">==</span> <span class="n">y</span><span class="o">.</span><span class="n">text</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">expected_result</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">equal</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">str_tokens_to_spacy_tokens</span><span class="p">([],</span> <span class="n">nlp</span><span class="p">),</span> <span class="p">[])</span></div>
+
+<div class="viewcode-block" id="UnitTests.test_spacy_tokens_to_str_tokens"><a class="viewcode-back" href="../../../docs_main/unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_spacy_tokens_to_str_tokens">[docs]</a>    <span class="k">def</span> <span class="nf">test_spacy_tokens_to_str_tokens</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Unit test for function that transforms spacy tokens in str tokens</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">nlp</span> <span class="o">=</span> <span class="n">spacy</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;en_core_web_sm&quot;</span><span class="p">)</span>
+        <span class="n">input_tokens</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="s2">&quot;apple orange banana&quot;</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">spacy_tokens_to_str_tokens</span><span class="p">(</span><span class="n">input_tokens</span><span class="p">)</span>
+        <span class="n">expected_output</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;apple&quot;</span><span class="p">,</span> <span class="s2">&quot;orange&quot;</span><span class="p">,</span> <span class="s2">&quot;banana&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">expected_output</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">spacy_tokens_to_str_tokens</span><span class="p">([]),</span> <span class="p">[])</span></div>
+
+<div class="viewcode-block" id="UnitTests.test_str_tokens_to_str"><a class="viewcode-back" href="../../../docs_main/unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_tokens_to_str">[docs]</a>    <span class="k">def</span> <span class="nf">test_str_tokens_to_str</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Unit test for function that transforms str tokens in str</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">input_tokens</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;apple&quot;</span><span class="p">,</span> <span class="s2">&quot;orange&quot;</span><span class="p">,</span> <span class="s2">&quot;banana&quot;</span><span class="p">]</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">str_tokens_to_str</span><span class="p">(</span><span class="n">input_tokens</span><span class="p">)</span>
+        <span class="n">expected_result</span> <span class="o">=</span> <span class="s2">&quot;apple orange banana&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">expected_result</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">str_tokens_to_str</span><span class="p">([]),</span> <span class="s1">&#39;&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="UnitTests.test_str_tokens_replace_quote_with_tag"><a class="viewcode-back" href="../../../docs_main/unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_tokens_replace_quote_with_tag">[docs]</a>    <span class="k">def</span> <span class="nf">test_str_tokens_replace_quote_with_tag</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Unit tests for function that replace a given symbol with a specified tag</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">str_tokens_replace_symbol_with_tag</span><span class="p">([</span><span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;This&quot;</span><span class="p">,</span> <span class="s2">&quot;is&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;statement&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;!&quot;</span><span class="p">],</span> <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;[tag]&quot;</span><span class="p">)</span>
+        <span class="n">expected_result</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;[tag]&quot;</span><span class="p">,</span> <span class="s2">&quot;This&quot;</span><span class="p">,</span> <span class="s2">&quot;is&quot;</span><span class="p">,</span> <span class="s2">&quot;[tag]&quot;</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;statement&quot;</span><span class="p">,</span> <span class="s2">&quot;[tag]&quot;</span><span class="p">,</span> <span class="s2">&quot;!&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">expected_result</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">str_tokens_replace_symbol_with_tag</span><span class="p">([],</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span> <span class="p">[])</span></div>
+
+<div class="viewcode-block" id="UnitTests.test_str_tokens_numbers_with_separators_to_spoken_words"><a class="viewcode-back" href="../../../docs_main/unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_tokens_numbers_with_separators_to_spoken_words">[docs]</a>    <span class="k">def</span> <span class="nf">test_str_tokens_numbers_with_separators_to_spoken_words</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Unit test for function that transform numbers that contains separators in spoken words</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="nb">input</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;there&#39;</span><span class="p">,</span> <span class="s1">&#39;are&#39;</span><span class="p">,</span> <span class="s1">&#39;10,500,400&#39;</span><span class="p">,</span> <span class="s1">&#39;variants&#39;</span><span class="p">,</span> <span class="s1">&#39;and&#39;</span><span class="p">,</span> <span class="s1">&#39;78,392&#39;</span><span class="p">,</span> <span class="s1">&#39;methods&#39;</span><span class="p">]</span>
+        <span class="n">expected_output</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;there&#39;</span><span class="p">,</span> <span class="s1">&#39;are&#39;</span><span class="p">,</span> <span class="s1">&#39;ten&#39;</span><span class="p">,</span> <span class="s1">&#39;million&#39;</span><span class="p">,</span> <span class="s1">&#39;five&#39;</span><span class="p">,</span> <span class="s1">&#39;hundred&#39;</span><span class="p">,</span> <span class="s1">&#39;thousand&#39;</span><span class="p">,</span> <span class="s1">&#39;four&#39;</span><span class="p">,</span> <span class="s1">&#39;hundred&#39;</span><span class="p">,</span> <span class="s1">&#39;variants&#39;</span><span class="p">,</span> <span class="s1">&#39;and&#39;</span><span class="p">,</span> <span class="s1">&#39;seventy&#39;</span><span class="p">,</span> <span class="s1">&#39;eight&#39;</span><span class="p">,</span> <span class="s1">&#39;thousand&#39;</span><span class="p">,</span> <span class="s1">&#39;three&#39;</span><span class="p">,</span> <span class="s1">&#39;hundred&#39;</span><span class="p">,</span> <span class="s1">&#39;and&#39;</span><span class="p">,</span> <span class="s1">&#39;ninety&#39;</span><span class="p">,</span> <span class="s1">&#39;two&#39;</span><span class="p">,</span> <span class="s1">&#39;methods&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">str_tokens_numbers_with_separators_to_spoken_words</span><span class="p">(</span><span class="nb">input</span><span class="p">),</span> <span class="n">expected_output</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">str_tokens_numbers_with_separators_to_spoken_words</span><span class="p">([</span><span class="s1">&#39;10,3,alb&#39;</span><span class="p">]),</span> <span class="p">[</span><span class="s1">&#39;10,3,alb&#39;</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="UnitTests.test_str_number_with_separators_to_integer_number"><a class="viewcode-back" href="../../../docs_main/unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_number_with_separators_to_integer_number">[docs]</a>    <span class="k">def</span> <span class="nf">test_str_number_with_separators_to_integer_number</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Unit test for function that transform string numerical values separated by commas in integer values</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="nb">input</span> <span class="o">=</span> <span class="s2">&quot;10,500,205&quot;</span>
+        <span class="n">expected_output</span> <span class="o">=</span> <span class="mi">10500205</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">str_number_with_separators_to_integer_number</span><span class="p">(</span><span class="nb">input</span><span class="p">),</span> <span class="n">expected_output</span><span class="p">)</span>
+
+        <span class="nb">input</span> <span class="o">=</span> <span class="s2">&quot;10500205&quot;</span>
+        <span class="n">expected_output</span> <span class="o">=</span> <span class="mi">10500205</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">str_number_with_separators_to_integer_number</span><span class="p">(</span><span class="nb">input</span><span class="p">),</span> <span class="n">expected_output</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="UnitTests.test_split_and_gather_str_tokens_by_separator"><a class="viewcode-back" href="../../../docs_main/unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_split_and_gather_str_tokens_by_separator">[docs]</a>    <span class="k">def</span> <span class="nf">test_split_and_gather_str_tokens_by_separator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Unit test for function that split all tokens by a given separator in multiple tokens and replace that tokens with the split values</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="nb">input</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;this&#39;</span><span class="p">,</span> <span class="s1">&#39;is&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;world,for&#39;</span><span class="p">,</span> <span class="s1">&#39;everyone,who,lives&#39;</span><span class="p">,</span> <span class="s1">&#39;here&#39;</span><span class="p">]</span>
+        <span class="n">expected_output</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;this&#39;</span><span class="p">,</span> <span class="s1">&#39;is&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;world&#39;</span><span class="p">,</span> <span class="s1">&#39;for&#39;</span><span class="p">,</span> <span class="s1">&#39;everyone&#39;</span> <span class="p">,</span> <span class="s1">&#39;who&#39;</span><span class="p">,</span> <span class="s1">&#39;lives&#39;</span><span class="p">,</span> <span class="s1">&#39;here&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">split_and_gather_str_tokens_by_separator</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">separator</span><span class="o">=</span><span class="s2">&quot;,&quot;</span><span class="p">),</span> <span class="n">expected_output</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">split_and_gather_str_tokens_by_separator</span><span class="p">([</span><span class="s1">&#39;nothing_to_split&#39;</span><span class="p">],</span> <span class="n">separator</span><span class="o">=</span><span class="s2">&quot;,&quot;</span><span class="p">),</span> <span class="p">[</span><span class="s1">&#39;nothing_to_split&#39;</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="UnitTests.test_is_6digits_date"><a class="viewcode-back" href="../../../docs_main/unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_is_6digits_date">[docs]</a>    <span class="k">def</span> <span class="nf">test_is_6digits_date</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Unit test to check if a string is a calendar date formed with  or not</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">is_6digits_date</span><span class="p">(</span><span class="s2">&quot;12-04-20&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">is_6digits_date</span><span class="p">(</span><span class="s2">&quot;27/07/09&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">is_6digits_date</span><span class="p">(</span><span class="s2">&quot;07.04.23&quot;</span><span class="p">))</span>
+
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">is_6digits_date</span><span class="p">(</span><span class="s2">&quot;12.09 20&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">is_6digits_date</span><span class="p">(</span><span class="s2">&quot;this&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">is_6digits_date</span><span class="p">(</span><span class="s2">&quot;14.05.1&quot;</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="UnitTests.test_str_6digits_dates_to_date_tag"><a class="viewcode-back" href="../../../docs_main/unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_6digits_dates_to_date_tag">[docs]</a>    <span class="k">def</span> <span class="nf">test_str_6digits_dates_to_date_tag</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Unit test for function that replace 6 digits dates appearances with c_date</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="nb">input</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;This&quot;</span><span class="p">,</span> <span class="s2">&quot;is&quot;</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;sample&quot;</span><span class="p">,</span> <span class="s2">&quot;date&quot;</span><span class="p">,</span> <span class="s2">&quot;14.05.93&quot;</span><span class="p">,</span> <span class="s2">&quot;in&quot;</span><span class="p">,</span> <span class="s2">&quot;the&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">]</span>
+        <span class="n">expected_output</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;This&quot;</span><span class="p">,</span> <span class="s2">&quot;is&quot;</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;sample&quot;</span><span class="p">,</span> <span class="s2">&quot;date&quot;</span><span class="p">,</span> <span class="s2">&quot;c_date&quot;</span><span class="p">,</span> <span class="s2">&quot;in&quot;</span><span class="p">,</span> <span class="s2">&quot;the&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">str_6digits_dates_to_date_tag</span><span class="p">(</span><span class="nb">input</span><span class="p">),</span> <span class="n">expected_output</span><span class="p">)</span>
+
+        <span class="nb">input</span> <span class="o">=</span>  <span class="p">[</span><span class="s2">&quot;No&quot;</span><span class="p">,</span> <span class="s2">&quot;date&quot;</span><span class="p">,</span> <span class="s2">&quot;here&quot;</span><span class="p">,</span> <span class="s2">&quot;123456&quot;</span><span class="p">,</span> <span class="s2">&quot;567890&quot;</span><span class="p">,</span> <span class="s2">&quot;abc&quot;</span><span class="p">]</span>
+        <span class="n">expected_output</span> <span class="o">=</span>  <span class="p">[</span><span class="s2">&quot;No&quot;</span><span class="p">,</span> <span class="s2">&quot;date&quot;</span><span class="p">,</span> <span class="s2">&quot;here&quot;</span><span class="p">,</span> <span class="s2">&quot;123456&quot;</span><span class="p">,</span> <span class="s2">&quot;567890&quot;</span><span class="p">,</span> <span class="s2">&quot;abc&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">str_6digits_dates_to_date_tag</span><span class="p">(</span><span class="nb">input</span><span class="p">),</span> <span class="n">expected_output</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="UnitTests.test_is_valid_url"><a class="viewcode-back" href="../../../docs_main/unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_is_valid_url">[docs]</a>    <span class="k">def</span> <span class="nf">test_is_valid_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Unit test for function that checks if a string is a valid URL or not</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">is_valid_url</span><span class="p">(</span><span class="s2">&quot;http://www.example.com&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">is_valid_url</span><span class="p">(</span><span class="s2">&quot;https://example.org/page&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">is_valid_url</span><span class="p">(</span><span class="s2">&quot;http://www.google.com&quot;</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">is_valid_url</span><span class="p">(</span><span class="s2">&quot;http://&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">is_valid_url</span><span class="p">(</span><span class="s2">&quot;ftpl..example.com&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">is_valid_url</span><span class="p">(</span><span class="s2">&quot;not an url&quot;</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="UnitTests.test_is_valid_resource"><a class="viewcode-back" href="../../../docs_main/unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_is_valid_resource">[docs]</a>    <span class="k">def</span> <span class="nf">test_is_valid_resource</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Unit test for function that checks if an url is in small notation</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">is_valid_resource</span><span class="p">(</span><span class="s2">&quot;ames.arc.nasa.gov&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">is_valid_resource</span><span class="p">(</span><span class="s2">&quot;prf.ssl.plf&quot;</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">is_valid_resource</span><span class="p">(</span><span class="s2">&quot;1234.resource.com&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">is_valid_resource</span><span class="p">(</span><span class="s2">&quot;invalid-resource&quot;</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="UnitTests.test_str_urls_to_url_tag"><a class="viewcode-back" href="../../../docs_main/unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_urls_to_url_tag">[docs]</a>    <span class="k">def</span> <span class="nf">test_str_urls_to_url_tag</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Unit test for function that replace URL with tag</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="nb">input</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Visit&quot;</span><span class="p">,</span> <span class="s2">&quot;our&quot;</span><span class="p">,</span> <span class="s2">&quot;website&quot;</span><span class="p">,</span> <span class="s2">&quot;at&quot;</span><span class="p">,</span> <span class="s2">&quot;https://www.example.com&quot;</span><span class="p">,</span> <span class="s2">&quot;for&quot;</span><span class="p">,</span> <span class="s2">&quot;more&quot;</span><span class="p">,</span> <span class="s2">&quot;information&quot;</span><span class="p">]</span>
+        <span class="n">expected_output</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Visit&quot;</span><span class="p">,</span> <span class="s2">&quot;our&quot;</span><span class="p">,</span> <span class="s2">&quot;website&quot;</span><span class="p">,</span> <span class="s2">&quot;at&quot;</span><span class="p">,</span> <span class="s2">&quot;url&quot;</span><span class="p">,</span> <span class="s2">&quot;for&quot;</span><span class="p">,</span> <span class="s2">&quot;more&quot;</span><span class="p">,</span> <span class="s2">&quot;information&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">str_urls_to_url_tag</span><span class="p">(</span><span class="nb">input</span><span class="p">),</span> <span class="n">expected_output</span><span class="p">)</span>
+
+        <span class="nb">input</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Invalid&quot;</span><span class="p">,</span> <span class="s2">&quot;URL&quot;</span><span class="p">,</span> <span class="s2">&quot;format&quot;</span><span class="p">,</span> <span class="s2">&quot;www.invalid-url.com&quot;</span><span class="p">]</span>
+        <span class="n">expected_output</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Invalid&quot;</span><span class="p">,</span> <span class="s2">&quot;URL&quot;</span><span class="p">,</span> <span class="s2">&quot;format&quot;</span><span class="p">,</span> <span class="s2">&quot;www.invalid-url.com&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">str_urls_to_url_tag</span><span class="p">(</span><span class="nb">input</span><span class="p">),</span> <span class="n">expected_output</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="UnitTests.test_str_initial_case_to_tag"><a class="viewcode-back" href="../../../docs_main/unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_initial_case_to_tag">[docs]</a>    <span class="k">def</span> <span class="nf">test_str_initial_case_to_tag</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">input</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;This&quot;</span><span class="p">,</span> <span class="s2">&quot;is&quot;</span><span class="p">,</span> <span class="s2">&quot;A.&quot;</span><span class="p">,</span> <span class="s2">&quot;sample&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="s2">&quot;including&quot;</span><span class="p">,</span> <span class="s2">&quot;a.&quot;</span><span class="p">,</span> <span class="s2">&quot;representation&quot;</span><span class="p">,</span> <span class="s2">&quot;of&quot;</span><span class="p">,</span> <span class="s2">&quot;e.&quot;</span><span class="p">]</span>
+        <span class="n">expected_output</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;This&quot;</span><span class="p">,</span> <span class="s2">&quot;is&quot;</span><span class="p">,</span> <span class="s2">&quot;init_case&quot;</span><span class="p">,</span> <span class="s2">&quot;sample&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="s2">&quot;including&quot;</span><span class="p">,</span> <span class="s2">&quot;init_case&quot;</span><span class="p">,</span> <span class="s2">&quot;representation&quot;</span><span class="p">,</span> <span class="s2">&quot;of&quot;</span><span class="p">,</span> <span class="s2">&quot;init_case&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">str_initial_case_to_tag</span><span class="p">(</span><span class="nb">input</span><span class="p">),</span> <span class="n">expected_output</span><span class="p">)</span>
+
+        <span class="nb">input</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Invalid&quot;</span><span class="p">,</span> <span class="s2">&quot;case&quot;</span><span class="p">,</span> <span class="s2">&quot;format&quot;</span><span class="p">,</span> <span class="s2">&quot;X&quot;</span><span class="p">,</span> <span class="s2">&quot;.&quot;</span><span class="p">]</span>
+        <span class="n">expected_output</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Invalid&quot;</span><span class="p">,</span> <span class="s2">&quot;case&quot;</span><span class="p">,</span> <span class="s2">&quot;format&quot;</span><span class="p">,</span> <span class="s2">&quot;X&quot;</span><span class="p">,</span> <span class="s2">&quot;.&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">str_initial_case_to_tag</span><span class="p">(</span><span class="nb">input</span><span class="p">),</span> <span class="n">expected_output</span><span class="p">)</span></div></div>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+
+
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Ana.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

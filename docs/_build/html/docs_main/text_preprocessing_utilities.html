@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>text_preprocessing_utilities module &mdash; MLO-DCM 1.0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=7da82d16"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="unit_test_model_utilities module" href="unit_test_model_utilities.html" />
+    <link rel="prev" title="save_model_bento_ml module" href="save_model_bento_ml.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            MLO-DCM
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">main</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="consts_values.html">consts_values module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="io_utilities.html">io_utilities module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="main.html">main module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model_utilities.html">model_utilities module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessing_flow.html">preprocessing_flow module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="save_model_bento_ml.html">save_model_bento_ml module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">text_preprocessing_utilities module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#src.main.text_preprocessing_utilities.get_lowercase_words_from_str"><code class="docutils literal notranslate"><span class="pre">get_lowercase_words_from_str()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.main.text_preprocessing_utilities.get_rare_tokens"><code class="docutils literal notranslate"><span class="pre">get_rare_tokens()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.main.text_preprocessing_utilities.get_spacy_tokens_from_raw_text"><code class="docutils literal notranslate"><span class="pre">get_spacy_tokens_from_raw_text()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.main.text_preprocessing_utilities.get_str_stopwords"><code class="docutils literal notranslate"><span class="pre">get_str_stopwords()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.main.text_preprocessing_utilities.get_str_tokens_freq"><code class="docutils literal notranslate"><span class="pre">get_str_tokens_freq()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.main.text_preprocessing_utilities.get_str_tokens_freq_for_lists"><code class="docutils literal notranslate"><span class="pre">get_str_tokens_freq_for_lists()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.main.text_preprocessing_utilities.handle_rare_str_tokens"><code class="docutils literal notranslate"><span class="pre">handle_rare_str_tokens()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.main.text_preprocessing_utilities.is_6digits_date"><code class="docutils literal notranslate"><span class="pre">is_6digits_date()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.main.text_preprocessing_utilities.is_str_fraction"><code class="docutils literal notranslate"><span class="pre">is_str_fraction()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.main.text_preprocessing_utilities.is_str_numeric"><code class="docutils literal notranslate"><span class="pre">is_str_numeric()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.main.text_preprocessing_utilities.is_str_valid_date"><code class="docutils literal notranslate"><span class="pre">is_str_valid_date()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.main.text_preprocessing_utilities.is_valid_resource"><code class="docutils literal notranslate"><span class="pre">is_valid_resource()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.main.text_preprocessing_utilities.is_valid_url"><code class="docutils literal notranslate"><span class="pre">is_valid_url()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.main.text_preprocessing_utilities.lemmatize_spacy_tokens"><code class="docutils literal notranslate"><span class="pre">lemmatize_spacy_tokens()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.main.text_preprocessing_utilities.remove_excessive_space"><code class="docutils literal notranslate"><span class="pre">remove_excessive_space()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.main.text_preprocessing_utilities.remove_spacy_punctuations"><code class="docutils literal notranslate"><span class="pre">remove_spacy_punctuations()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.main.text_preprocessing_utilities.remove_str_tokens_len_less_than_threshold"><code class="docutils literal notranslate"><span class="pre">remove_str_tokens_len_less_than_threshold()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.main.text_preprocessing_utilities.spacy_tokens_pos"><code class="docutils literal notranslate"><span class="pre">spacy_tokens_pos()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.main.text_preprocessing_utilities.spacy_tokens_to_str_tokens"><code class="docutils literal notranslate"><span class="pre">spacy_tokens_to_str_tokens()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.main.text_preprocessing_utilities.split_and_gather_str_tokens_by_separator"><code class="docutils literal notranslate"><span class="pre">split_and_gather_str_tokens_by_separator()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.main.text_preprocessing_utilities.str_6digits_dates_to_date_tag"><code class="docutils literal notranslate"><span class="pre">str_6digits_dates_to_date_tag()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.main.text_preprocessing_utilities.str_currency_to_spoken_words"><code class="docutils literal notranslate"><span class="pre">str_currency_to_spoken_words()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.main.text_preprocessing_utilities.str_dates_to_date_tag"><code class="docutils literal notranslate"><span class="pre">str_dates_to_date_tag()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.main.text_preprocessing_utilities.str_emails_to_email_tag"><code class="docutils literal notranslate"><span class="pre">str_emails_to_email_tag()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.main.text_preprocessing_utilities.str_fraction_to_spoken_words"><code class="docutils literal notranslate"><span class="pre">str_fraction_to_spoken_words()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.main.text_preprocessing_utilities.str_initial_case_to_tag"><code class="docutils literal notranslate"><span class="pre">str_initial_case_to_tag()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.main.text_preprocessing_utilities.str_number_with_separators_to_integer_number"><code class="docutils literal notranslate"><span class="pre">str_number_with_separators_to_integer_number()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.main.text_preprocessing_utilities.str_numeric_values_to_spoken_words"><code class="docutils literal notranslate"><span class="pre">str_numeric_values_to_spoken_words()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.main.text_preprocessing_utilities.str_ordinal_numbers_to_spoken_words"><code class="docutils literal notranslate"><span class="pre">str_ordinal_numbers_to_spoken_words()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.main.text_preprocessing_utilities.str_remove_common_chars"><code class="docutils literal notranslate"><span class="pre">str_remove_common_chars()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.main.text_preprocessing_utilities.str_remove_junk_spaces"><code class="docutils literal notranslate"><span class="pre">str_remove_junk_spaces()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.main.text_preprocessing_utilities.str_tokens_numbers_with_separators_to_spoken_words"><code class="docutils literal notranslate"><span class="pre">str_tokens_numbers_with_separators_to_spoken_words()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.main.text_preprocessing_utilities.str_tokens_remove_stopwords"><code class="docutils literal notranslate"><span class="pre">str_tokens_remove_stopwords()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.main.text_preprocessing_utilities.str_tokens_replace_symbol_with_tag"><code class="docutils literal notranslate"><span class="pre">str_tokens_replace_symbol_with_tag()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.main.text_preprocessing_utilities.str_tokens_to_spacy_tokens"><code class="docutils literal notranslate"><span class="pre">str_tokens_to_spacy_tokens()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.main.text_preprocessing_utilities.str_tokens_to_str"><code class="docutils literal notranslate"><span class="pre">str_tokens_to_str()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.main.text_preprocessing_utilities.str_urls_to_url_tag"><code class="docutils literal notranslate"><span class="pre">str_urls_to_url_tag()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.main.text_preprocessing_utilities.str_years_to_spoken_words"><code class="docutils literal notranslate"><span class="pre">str_years_to_spoken_words()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.main.text_preprocessing_utilities.to_lowercase"><code class="docutils literal notranslate"><span class="pre">to_lowercase()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="unit_test_model_utilities.html">unit_test_model_utilities module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="unit_test_text_preprocessing_utilities.html">unit_test_text_preprocessing_utilities module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../docs_model_classes/modules.html">model_classes</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">MLO-DCM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">main</a></li>
+      <li class="breadcrumb-item active">text_preprocessing_utilities module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/docs_main/text_preprocessing_utilities.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-src.main.text_preprocessing_utilities">
+<span id="text-preprocessing-utilities-module"></span><h1>text_preprocessing_utilities module<a class="headerlink" href="#module-src.main.text_preprocessing_utilities" title="Permalink to this heading"></a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="src.main.text_preprocessing_utilities.get_lowercase_words_from_str">
+<span class="sig-prename descclassname"><span class="pre">src.main.text_preprocessing_utilities.</span></span><span class="sig-name descname"><span class="pre">get_lowercase_words_from_str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">val</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/text_preprocessing_utilities.html#get_lowercase_words_from_str"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.text_preprocessing_utilities.get_lowercase_words_from_str" title="Permalink to this definition"></a></dt>
+<dd><p>Extract only lowercase words from str (e.g. ‘one’, ‘house’ from ‘one-house’, without ‘-’ or other characters)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>val</strong> – string</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>list with all lower case words</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>built-in python list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.main.text_preprocessing_utilities.get_rare_tokens">
+<span class="sig-prename descclassname"><span class="pre">src.main.text_preprocessing_utilities.</span></span><span class="sig-name descname"><span class="pre">get_rare_tokens</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dict_of_freq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/text_preprocessing_utilities.html#get_rare_tokens"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.text_preprocessing_utilities.get_rare_tokens" title="Permalink to this definition"></a></dt>
+<dd><blockquote>
+<div><p>Get all values that have a frequency smaller than a threshold</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lists_of_tokens</strong> – dictionary of frequency</p></li>
+<li><p><strong>threshold</strong> – a value of comparison</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a new dictionary that contains just the frequency’s smaller than the threshold</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>built-in python list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.main.text_preprocessing_utilities.get_spacy_tokens_from_raw_text">
+<span class="sig-prename descclassname"><span class="pre">src.main.text_preprocessing_utilities.</span></span><span class="sig-name descname"><span class="pre">get_spacy_tokens_from_raw_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nlp_model</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/text_preprocessing_utilities.html#get_spacy_tokens_from_raw_text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.text_preprocessing_utilities.get_spacy_tokens_from_raw_text" title="Permalink to this definition"></a></dt>
+<dd><p>Convert a raw text to a built-in python list of spacy.tokens.token.Token object (tokens);</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> – the input text; it’s a native python string</p></li>
+<li><p><strong>nlp_model</strong> – NLP model that is used to preprocess the text; it’s a spacy.lang object</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>list of words extracted from the input text</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>built-in python list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.main.text_preprocessing_utilities.get_str_stopwords">
+<span class="sig-prename descclassname"><span class="pre">src.main.text_preprocessing_utilities.</span></span><span class="sig-name descname"><span class="pre">get_str_stopwords</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/text_preprocessing_utilities.html#get_str_stopwords"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.text_preprocessing_utilities.get_str_stopwords" title="Permalink to this definition"></a></dt>
+<dd><p>Function that creates the list of stopwords (we exclude certain words that will not be considered stopwords)
+:return: list of str tokens that represent stopwords
+:rtype: build-in python list</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.main.text_preprocessing_utilities.get_str_tokens_freq">
+<span class="sig-prename descclassname"><span class="pre">src.main.text_preprocessing_utilities.</span></span><span class="sig-name descname"><span class="pre">get_str_tokens_freq</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tokens</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/text_preprocessing_utilities.html#get_str_tokens_freq"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.text_preprocessing_utilities.get_str_tokens_freq" title="Permalink to this definition"></a></dt>
+<dd><p>Get the frequency of the tokens given as param</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>tokens</strong> – list of str tokens</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a dictionary that has as key the token and as value the frequency</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>built-in python dictionary</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.main.text_preprocessing_utilities.get_str_tokens_freq_for_lists">
+<span class="sig-prename descclassname"><span class="pre">src.main.text_preprocessing_utilities.</span></span><span class="sig-name descname"><span class="pre">get_str_tokens_freq_for_lists</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lists_of_tokens</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/text_preprocessing_utilities.html#get_str_tokens_freq_for_lists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.text_preprocessing_utilities.get_str_tokens_freq_for_lists" title="Permalink to this definition"></a></dt>
+<dd><blockquote>
+<div><p>Get the frequency of a lists of tokens</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>lists_of_tokens</strong> – lists of str tokens ([[], [], …])</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a dictionary that has as key the token and as value the frequency from all lists</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>built-in python dictionary</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.main.text_preprocessing_utilities.handle_rare_str_tokens">
+<span class="sig-prename descclassname"><span class="pre">src.main.text_preprocessing_utilities.</span></span><span class="sig-name descname"><span class="pre">handle_rare_str_tokens</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tokens</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dict_of_freq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">replace_with</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'[UNK]'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/text_preprocessing_utilities.html#handle_rare_str_tokens"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.text_preprocessing_utilities.handle_rare_str_tokens" title="Permalink to this definition"></a></dt>
+<dd><blockquote>
+<div><p>Filter tokens by eliminating rare tokens</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tokens</strong> – list of tokens</p></li>
+<li><p><strong>dict_of_freq</strong> – dictionary of tokens frequency</p></li>
+<li><p><strong>replace_with</strong> – token value for replacement (if None, remove tokens, else replace with given value)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>filtered list of tokens without items in dictionary</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>built-in python list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.main.text_preprocessing_utilities.is_6digits_date">
+<span class="sig-prename descclassname"><span class="pre">src.main.text_preprocessing_utilities.</span></span><span class="sig-name descname"><span class="pre">is_6digits_date</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/text_preprocessing_utilities.html#is_6digits_date"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.text_preprocessing_utilities.is_6digits_date" title="Permalink to this definition"></a></dt>
+<dd><p>Function to verify if a string represents a calendar date (6 digits format, e.g. 14.05.93 -&gt; refer to a date from year 93); the separator can be “.”, “-”, “/”
+:param value: string value
+:return: bool value, true for calendar date, false otherwise
+:rtype: build-in python bool</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.main.text_preprocessing_utilities.is_str_fraction">
+<span class="sig-prename descclassname"><span class="pre">src.main.text_preprocessing_utilities.</span></span><span class="sig-name descname"><span class="pre">is_str_fraction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">val</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/text_preprocessing_utilities.html#is_str_fraction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.text_preprocessing_utilities.is_str_fraction" title="Permalink to this definition"></a></dt>
+<dd><p>Verifies if a string is a valid fraction</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>val</strong> – string</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool value (True or False)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>built-in python bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.main.text_preprocessing_utilities.is_str_numeric">
+<span class="sig-prename descclassname"><span class="pre">src.main.text_preprocessing_utilities.</span></span><span class="sig-name descname"><span class="pre">is_str_numeric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/text_preprocessing_utilities.html#is_str_numeric"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.text_preprocessing_utilities.is_str_numeric" title="Permalink to this definition"></a></dt>
+<dd><p>Verifies if a string is a numeric value</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>s</strong> – string</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool value (True or False)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>built-in python bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.main.text_preprocessing_utilities.is_str_valid_date">
+<span class="sig-prename descclassname"><span class="pre">src.main.text_preprocessing_utilities.</span></span><span class="sig-name descname"><span class="pre">is_str_valid_date</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">val</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/text_preprocessing_utilities.html#is_str_valid_date"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.text_preprocessing_utilities.is_str_valid_date" title="Permalink to this definition"></a></dt>
+<dd><p>Verifies if a string is a valid date</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>val</strong> – string</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool value (True or False)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>built-in python bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.main.text_preprocessing_utilities.is_valid_resource">
+<span class="sig-prename descclassname"><span class="pre">src.main.text_preprocessing_utilities.</span></span><span class="sig-name descname"><span class="pre">is_valid_resource</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/text_preprocessing_utilities.html#is_valid_resource"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.text_preprocessing_utilities.is_valid_resource" title="Permalink to this definition"></a></dt>
+<dd><p>Function that checks if an url is in small notation (kind of resource), “ames.arc.nasa.gov”
+:param value: string value
+:return: bool value, true for url in small notation, false otherwise
+:rtype: build-in python bool</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.main.text_preprocessing_utilities.is_valid_url">
+<span class="sig-prename descclassname"><span class="pre">src.main.text_preprocessing_utilities.</span></span><span class="sig-name descname"><span class="pre">is_valid_url</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/text_preprocessing_utilities.html#is_valid_url"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.text_preprocessing_utilities.is_valid_url" title="Permalink to this definition"></a></dt>
+<dd><p>Check if a given string is a valid URL/URI
+:param value: given string
+:return: bool value, true for URL, false otherwise
+:rtype: build-in python bool</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.main.text_preprocessing_utilities.lemmatize_spacy_tokens">
+<span class="sig-prename descclassname"><span class="pre">src.main.text_preprocessing_utilities.</span></span><span class="sig-name descname"><span class="pre">lemmatize_spacy_tokens</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tokens</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/text_preprocessing_utilities.html#lemmatize_spacy_tokens"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.text_preprocessing_utilities.lemmatize_spacy_tokens" title="Permalink to this definition"></a></dt>
+<dd><p>Apply lemmatization for a list of words.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>tokens</strong> – the input list with words; every element is a spacy.tokens.token.Token object</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a list constructed from the initial one but every with is lemmatized (converted to base form)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>built-in python list, every element is a spacy.tokens.token.Token object</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.main.text_preprocessing_utilities.remove_excessive_space">
+<span class="sig-prename descclassname"><span class="pre">src.main.text_preprocessing_utilities.</span></span><span class="sig-name descname"><span class="pre">remove_excessive_space</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/text_preprocessing_utilities.html#remove_excessive_space"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.text_preprocessing_utilities.remove_excessive_space" title="Permalink to this definition"></a></dt>
+<dd><blockquote>
+<div><p>Remove excessive white spaces like “ “,</p>
+</div></blockquote>
+<dl class="simple">
+<dt>,        from the beginning and ending of text</dt><dd><p>:param text - input text; it’s a native python string
+:return: the given text without spaces;
+:rtype: built-in python string</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.main.text_preprocessing_utilities.remove_spacy_punctuations">
+<span class="sig-prename descclassname"><span class="pre">src.main.text_preprocessing_utilities.</span></span><span class="sig-name descname"><span class="pre">remove_spacy_punctuations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tokens</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/text_preprocessing_utilities.html#remove_spacy_punctuations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.text_preprocessing_utilities.remove_spacy_punctuations" title="Permalink to this definition"></a></dt>
+<dd><p>Remove all the punctuations from the given text</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>tokens</strong> – the input list that contains all the words and punctuations</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a list with all words, without punctuations;</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>built-in python list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.main.text_preprocessing_utilities.remove_str_tokens_len_less_than_threshold">
+<span class="sig-prename descclassname"><span class="pre">src.main.text_preprocessing_utilities.</span></span><span class="sig-name descname"><span class="pre">remove_str_tokens_len_less_than_threshold</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tokens</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold_value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/text_preprocessing_utilities.html#remove_str_tokens_len_less_than_threshold"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.text_preprocessing_utilities.remove_str_tokens_len_less_than_threshold" title="Permalink to this definition"></a></dt>
+<dd><p>Remove all str tokens that have the length smaller than a threshold value
+:param tokens: list of str tokens
+:param threshold_value: a minim value for the length of a token
+:return: modified list of str tokens that excludes tokens of length smaller than threshold
+:rtype: built-in python list</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.main.text_preprocessing_utilities.spacy_tokens_pos">
+<span class="sig-prename descclassname"><span class="pre">src.main.text_preprocessing_utilities.</span></span><span class="sig-name descname"><span class="pre">spacy_tokens_pos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tokens</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/text_preprocessing_utilities.html#spacy_tokens_pos"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.text_preprocessing_utilities.spacy_tokens_pos" title="Permalink to this definition"></a></dt>
+<dd><blockquote>
+<div><p>Creates a list of tuples with every token and it’s frequency</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>tokens</strong> – list of spacy tokens</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>list of tuples that contains the token, and it’s position</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>built-in python list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.main.text_preprocessing_utilities.spacy_tokens_to_str_tokens">
+<span class="sig-prename descclassname"><span class="pre">src.main.text_preprocessing_utilities.</span></span><span class="sig-name descname"><span class="pre">spacy_tokens_to_str_tokens</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tokens</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/text_preprocessing_utilities.html#spacy_tokens_to_str_tokens"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.text_preprocessing_utilities.spacy_tokens_to_str_tokens" title="Permalink to this definition"></a></dt>
+<dd><p>Transform a list of spacy tokens in a list of the equivalent str entities
+:param tokens: list of spacy tokens
+:return: new list of spacy tokens
+:rtype: built-in python list</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.main.text_preprocessing_utilities.split_and_gather_str_tokens_by_separator">
+<span class="sig-prename descclassname"><span class="pre">src.main.text_preprocessing_utilities.</span></span><span class="sig-name descname"><span class="pre">split_and_gather_str_tokens_by_separator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tokens</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">separator</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/text_preprocessing_utilities.html#split_and_gather_str_tokens_by_separator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.text_preprocessing_utilities.split_and_gather_str_tokens_by_separator" title="Permalink to this definition"></a></dt>
+<dd><p>Splits all tokens that contains words split by a given separator (e.g. ‘tech,media’ which is a single token becomes after splitting by ‘,’ the tokens ‘tech’, ‘media’)
+:param tokens: list of str tokens
+:param separator: a given separator such as ‘,’
+:return: new list of str tokens that contains all tokens split by separator
+:rtype: build-in python list</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.main.text_preprocessing_utilities.str_6digits_dates_to_date_tag">
+<span class="sig-prename descclassname"><span class="pre">src.main.text_preprocessing_utilities.</span></span><span class="sig-name descname"><span class="pre">str_6digits_dates_to_date_tag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tokens</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/text_preprocessing_utilities.html#str_6digits_dates_to_date_tag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.text_preprocessing_utilities.str_6digits_dates_to_date_tag" title="Permalink to this definition"></a></dt>
+<dd><p>Function that replace a 6 digit date with a ‘c_date’ tag
+:param tokens: list of str token
+:return: new list of str tokens with all apparitions of 6 digit date replaced with ‘c_date’ tag
+:rtype: build-in python list</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.main.text_preprocessing_utilities.str_currency_to_spoken_words">
+<span class="sig-prename descclassname"><span class="pre">src.main.text_preprocessing_utilities.</span></span><span class="sig-name descname"><span class="pre">str_currency_to_spoken_words</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tokens</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/text_preprocessing_utilities.html#str_currency_to_spoken_words"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.text_preprocessing_utilities.str_currency_to_spoken_words" title="Permalink to this definition"></a></dt>
+<dd><p>Transform all currency values to their equivalent in text
+:param tokens: list of str tokens
+:return: modified list of str tokens that contains all currency values in text
+:rtype: built-in python list</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.main.text_preprocessing_utilities.str_dates_to_date_tag">
+<span class="sig-prename descclassname"><span class="pre">src.main.text_preprocessing_utilities.</span></span><span class="sig-name descname"><span class="pre">str_dates_to_date_tag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tokens</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/text_preprocessing_utilities.html#str_dates_to_date_tag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.text_preprocessing_utilities.str_dates_to_date_tag" title="Permalink to this definition"></a></dt>
+<dd><p>Reconstruct the list of str token replacing the valid dates with a specific tag
+:param tokens: list of str tokens
+:return: new list of str tokens with instances of [date] instead of the date
+:rtype: built-in python list</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.main.text_preprocessing_utilities.str_emails_to_email_tag">
+<span class="sig-prename descclassname"><span class="pre">src.main.text_preprocessing_utilities.</span></span><span class="sig-name descname"><span class="pre">str_emails_to_email_tag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tokens</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/text_preprocessing_utilities.html#str_emails_to_email_tag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.text_preprocessing_utilities.str_emails_to_email_tag" title="Permalink to this definition"></a></dt>
+<dd><p>Replaces all email addresses with ‘[email]’ tag constant value
+:param tokens: list of str tokens
+:return: new list of str tokens with instances of a tag ‘email’ (constant) instead of email address
+:rtype: built-in python list</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.main.text_preprocessing_utilities.str_fraction_to_spoken_words">
+<span class="sig-prename descclassname"><span class="pre">src.main.text_preprocessing_utilities.</span></span><span class="sig-name descname"><span class="pre">str_fraction_to_spoken_words</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tokens</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/text_preprocessing_utilities.html#str_fraction_to_spoken_words"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.text_preprocessing_utilities.str_fraction_to_spoken_words" title="Permalink to this definition"></a></dt>
+<dd><p>Transform all numerical fraction included in tokens in their equivalent text (this produce some chained tokens, e.g ‘one-half’ and not ‘one’ ‘half’)
+:param tokens: list of str tokens
+:return: modified list of str tokens that includes numerical fractions in text
+:rtype: built-in python list</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.main.text_preprocessing_utilities.str_initial_case_to_tag">
+<span class="sig-prename descclassname"><span class="pre">src.main.text_preprocessing_utilities.</span></span><span class="sig-name descname"><span class="pre">str_initial_case_to_tag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tokens</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/text_preprocessing_utilities.html#str_initial_case_to_tag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.text_preprocessing_utilities.str_initial_case_to_tag" title="Permalink to this definition"></a></dt>
+<dd><p>Function that replace initial case letters (e.g. “a.”, “F.”) to a specific tag
+:param tokens: list of str tokens
+:return: new list of str token with the appearances of initial case letter replaced with tag
+:rtype: build-in python list</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.main.text_preprocessing_utilities.str_number_with_separators_to_integer_number">
+<span class="sig-prename descclassname"><span class="pre">src.main.text_preprocessing_utilities.</span></span><span class="sig-name descname"><span class="pre">str_number_with_separators_to_integer_number</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">val</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/text_preprocessing_utilities.html#str_number_with_separators_to_integer_number"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.text_preprocessing_utilities.str_number_with_separators_to_integer_number" title="Permalink to this definition"></a></dt>
+<dd><p>Transform a string that represents a number with a comma to a number without commas/integer (e.g. “10,500,205” -&gt; 10500205)
+:param val: string value
+:return: integer
+:rtype: build-in python integer</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.main.text_preprocessing_utilities.str_numeric_values_to_spoken_words">
+<span class="sig-prename descclassname"><span class="pre">src.main.text_preprocessing_utilities.</span></span><span class="sig-name descname"><span class="pre">str_numeric_values_to_spoken_words</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tokens</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/text_preprocessing_utilities.html#str_numeric_values_to_spoken_words"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.text_preprocessing_utilities.str_numeric_values_to_spoken_words" title="Permalink to this definition"></a></dt>
+<dd><p>Transform all numerical values to their equivalent in text
+:param tokens: list of str tokens
+:return: modified list of str tokens that contains all numerical values in text
+:rtype: built-in python list</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.main.text_preprocessing_utilities.str_ordinal_numbers_to_spoken_words">
+<span class="sig-prename descclassname"><span class="pre">src.main.text_preprocessing_utilities.</span></span><span class="sig-name descname"><span class="pre">str_ordinal_numbers_to_spoken_words</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tokens</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/text_preprocessing_utilities.html#str_ordinal_numbers_to_spoken_words"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.text_preprocessing_utilities.str_ordinal_numbers_to_spoken_words" title="Permalink to this definition"></a></dt>
+<dd><p>Transform all ordinal values to their equivalent in text
+:param tokens: list of str tokens
+:return: modified list of str tokens that contains all ordinal values in text
+:rtype: built-in python list</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.main.text_preprocessing_utilities.str_remove_common_chars">
+<span class="sig-prename descclassname"><span class="pre">src.main.text_preprocessing_utilities.</span></span><span class="sig-name descname"><span class="pre">str_remove_common_chars</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tokens</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/text_preprocessing_utilities.html#str_remove_common_chars"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.text_preprocessing_utilities.str_remove_common_chars" title="Permalink to this definition"></a></dt>
+<dd><p>Remove all common chars such as ‘’ and ‘”’ from tokens list
+:param tokens: list of str tokens
+:return: modified list of str tokens that excludes common chars
+:rtype: built-in python list</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.main.text_preprocessing_utilities.str_remove_junk_spaces">
+<span class="sig-prename descclassname"><span class="pre">src.main.text_preprocessing_utilities.</span></span><span class="sig-name descname"><span class="pre">str_remove_junk_spaces</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tokens</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/text_preprocessing_utilities.html#str_remove_junk_spaces"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.text_preprocessing_utilities.str_remove_junk_spaces" title="Permalink to this definition"></a></dt>
+<dd><p>Removes junk spaces from a list of string tokens</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>tokens</strong> – list of string tokens</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>list of tokens without junk spaces</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>built-in python list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.main.text_preprocessing_utilities.str_tokens_numbers_with_separators_to_spoken_words">
+<span class="sig-prename descclassname"><span class="pre">src.main.text_preprocessing_utilities.</span></span><span class="sig-name descname"><span class="pre">str_tokens_numbers_with_separators_to_spoken_words</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tokens</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/text_preprocessing_utilities.html#str_tokens_numbers_with_separators_to_spoken_words"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.text_preprocessing_utilities.str_tokens_numbers_with_separators_to_spoken_words" title="Permalink to this definition"></a></dt>
+<dd><p>Function that converts the numbers that contain separators to spoken words,
+e.g “10,500,205” to spoken words (appending them to the list) [“ten”, “million”, “five”, “hundred”, “thousand”, “two”, “hundred”, “and”, “five”]
+:param tokens: list of str tokens
+:return: new list that contains the numbers with separators as spoken words
+:rtype: built-in python list</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.main.text_preprocessing_utilities.str_tokens_remove_stopwords">
+<span class="sig-prename descclassname"><span class="pre">src.main.text_preprocessing_utilities.</span></span><span class="sig-name descname"><span class="pre">str_tokens_remove_stopwords</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tokens</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/text_preprocessing_utilities.html#str_tokens_remove_stopwords"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.text_preprocessing_utilities.str_tokens_remove_stopwords" title="Permalink to this definition"></a></dt>
+<dd><p>Removes stopwords (defined also in this file) from a list of tokens</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>tokens</strong> – list of words; every element is a spacy.tokens.token.Token object</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a list constructed from the initial one without the stopwords</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>built-in python list, every element is a spacy.tokens.token.Token object</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.main.text_preprocessing_utilities.str_tokens_replace_symbol_with_tag">
+<span class="sig-prename descclassname"><span class="pre">src.main.text_preprocessing_utilities.</span></span><span class="sig-name descname"><span class="pre">str_tokens_replace_symbol_with_tag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tokens</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">symbol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/text_preprocessing_utilities.html#str_tokens_replace_symbol_with_tag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.text_preprocessing_utilities.str_tokens_replace_symbol_with_tag" title="Permalink to this definition"></a></dt>
+<dd><p>Function that replace a given symbol with a given tag (mention: structures such as ‘“cat’ will be converted into ‘[QUOTE] cat’)
+:param tokens: list of str tokens
+:param symbol: the symbol that wants to be modified
+:param tag: the tag that will replace the symbol value
+:return: new list of tokens with tag instances instead of symbol
+:rtype: built-in python list</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.main.text_preprocessing_utilities.str_tokens_to_spacy_tokens">
+<span class="sig-prename descclassname"><span class="pre">src.main.text_preprocessing_utilities.</span></span><span class="sig-name descname"><span class="pre">str_tokens_to_spacy_tokens</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tokens</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nlp_model</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/text_preprocessing_utilities.html#str_tokens_to_spacy_tokens"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.text_preprocessing_utilities.str_tokens_to_spacy_tokens" title="Permalink to this definition"></a></dt>
+<dd><p>Transform a list of str tokens in a list of the equivalent spacy entities
+:param tokens: list of str tokens
+:param nlp_model: what kind of modifier we want to use
+:return: new list of str tokens that includes spacy tokens
+:rtype: built-in python list</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.main.text_preprocessing_utilities.str_tokens_to_str">
+<span class="sig-prename descclassname"><span class="pre">src.main.text_preprocessing_utilities.</span></span><span class="sig-name descname"><span class="pre">str_tokens_to_str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tokens</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/text_preprocessing_utilities.html#str_tokens_to_str"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.text_preprocessing_utilities.str_tokens_to_str" title="Permalink to this definition"></a></dt>
+<dd><p>Transform a list of str token in a string equivalent
+:param tokens: list of str tokens
+:return: string
+:rtype: built-in python string</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.main.text_preprocessing_utilities.str_urls_to_url_tag">
+<span class="sig-prename descclassname"><span class="pre">src.main.text_preprocessing_utilities.</span></span><span class="sig-name descname"><span class="pre">str_urls_to_url_tag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tokens</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/text_preprocessing_utilities.html#str_urls_to_url_tag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.text_preprocessing_utilities.str_urls_to_url_tag" title="Permalink to this definition"></a></dt>
+<dd><p>Function that replace URL with specific tag
+:param tokens: list of str tokens
+:return: new list of str tokens with URL instances replaced with tag
+:rtype: build-in python list</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.main.text_preprocessing_utilities.str_years_to_spoken_words">
+<span class="sig-prename descclassname"><span class="pre">src.main.text_preprocessing_utilities.</span></span><span class="sig-name descname"><span class="pre">str_years_to_spoken_words</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tokens</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/text_preprocessing_utilities.html#str_years_to_spoken_words"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.text_preprocessing_utilities.str_years_to_spoken_words" title="Permalink to this definition"></a></dt>
+<dd><p>Transform the numerical years in their equivalent text
+:param tokens: list of str tokens
+:return: modified list of str tokens that has all numerical year instances transformed in their equivalent text
+:rtype: built-in python list</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.main.text_preprocessing_utilities.to_lowercase">
+<span class="sig-prename descclassname"><span class="pre">src.main.text_preprocessing_utilities.</span></span><span class="sig-name descname"><span class="pre">to_lowercase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/text_preprocessing_utilities.html#to_lowercase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.text_preprocessing_utilities.to_lowercase" title="Permalink to this definition"></a></dt>
+<dd><p>Transform text string in lowercase</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>test</strong> – string</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>lower case string</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>built-in python string</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="save_model_bento_ml.html" class="btn btn-neutral float-left" title="save_model_bento_ml module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="unit_test_model_utilities.html" class="btn btn-neutral float-right" title="unit_test_model_utilities module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Ana.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
