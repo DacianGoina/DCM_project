@@ -1,2 +1,3 @@
 *.pyc
 .idea/workspace.xml
+/model_objects/RoBERTa/roberta_dcm.pkl

@@ -190,7 +190,7 @@ def save_model_component(object, object_name, directory_path):
 
 if __name__ == "__main__":
     print("Main")
-    preprocessed_data_file_path = '../file_name_v6.csv'
+    preprocessed_data_file_path = '../../usable_data/file_name_v6.csv'
     classifiers_objs_output_dir =  "../../model_objects/classifiers"
     extractors_objs_output_dir = "../../model_objects/features_extractors"
 
