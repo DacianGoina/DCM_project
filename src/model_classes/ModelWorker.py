@@ -46,7 +46,7 @@ def perform_prediction(processed_text, raw_text = "", use_transformer = False):
     classifiers, extractors = import_model_objects()
 
     numerical_data = dict()
-    predictions = dict(); # d[classifier_extractor] = predicted_label
+    predictions = dict() # d[classifier_extractor] = predicted_label
 
     # convert preprocessed text into numerical features using the extractors
     for extractor_name in extractors.keys():
@@ -230,4 +230,4 @@ if __name__ == "__main__":
 
     # print('\n\n')
     #
-    # print(evaluate_classifiers())
+    print(evaluate_classifiers())

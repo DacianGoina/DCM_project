@@ -10,8 +10,6 @@ and allow user to use them in a proper way.
 '''
 
 from src.main.model_utilities import *
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
-from src.main.model_utilities import *
 
 class StaticClassifier:
 
@@ -55,18 +53,6 @@ class StaticClassifier:
 
         metrics_dict = get_model_evaluation_metrics(res_conf_matrix)
         print("accuracy manually: ", metrics_dict['accuracy'])
-        #print("accuracy automate: ", accuracy_score(y_pred,dict_data[Y_TEST] ))
-        #
-        # print("precision calculated manually: ", metrics_dict['precision'])
-        # print("precision", precision_score(y_pred, dict_data[Y_TEST], average='weighted'))
-        #
-        # print("recall calculated manually: ", metrics_dict['recall'])
-        # print("recall: ", recall_score(y_pred, dict_data[Y_TEST], average='weighted'))
-        #
-        # print("specificity calculated manually: ", metrics_dict['specificity'])
-        #
-        # print("f1-score calculated manually: ", metrics_dict['f1_score'])
-        # print("f1-score: ", f1_score(y_pred, dict_data[Y_TEST], average='weighted'))
 
         return metrics_dict
 

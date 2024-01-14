@@ -20,3 +20,5 @@ python -m spacy download en_core_web_md  NOT
 
 pip install simpletransformers
 pip install sympy
+
+pip install pylint

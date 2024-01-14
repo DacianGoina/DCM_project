@@ -1,0 +1,37 @@
+https://www.codeac.io/documentation/pylint-configuration.html
+
+pylint --output-format=colorized main model_classes   # this command look for all aspects
+
+pylint -d C,W --output-format=colorized main model_classes # this skip warnings and conventions; so look only for errors
+
+
+pylint --rcfile=.pylintrc main
+pylint --rcfile=.pylintrc model_classes
+
+
+pylint -d C,W --output-format=colorized --rcfile=.pylintrc main model_classes
+
+pylint -d C,W --output-format=colorized --disable=wildcard-import --rcfile=.pylintrc main model_classes
+
+pylint --output-format=colorized --disable=wildcard-import --rcfile=.pylintrc main model_classes
+
+
+[MESSAGES CONTROL]
+disable=wildcard-import
+
+replace with
+[MASTER]
+disable=wildcard-import
+
+how to use pylint: open anaconda prompt console, move to src folder, run:
+pylint -d C,W --output-format=colorized --rcfile=.pylintrc main model_classes
+
+better:
+pylint -d C,W,R --output-format=colorized --disable=wildcard-import --rcfile=.pylintrc main model_classes
+
+pylint -d R  --output-format=colorized --disable=wildcard-import --rcfile=.pylintrc main model_classes
+
+-d C,W refer to skip convension and warning messages
+--output-format=colorized refer to use colors for files names (at output)
+--rcfile=.pylintrc tell about the pylint config file
+main model_classes are the modules to be inspected
