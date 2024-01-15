@@ -1,0 +1,9 @@
+[MESSAGES CONTROL]
+disable=wildcard-import,E0602,E0401,missing-docstring
+
+#E0602 is used to skip wildcard-import '*'
+
+[FORMAT]
+
+# Maximum number of characters on a single line.
+max-line-length=200
