@@ -1,7 +1,7 @@
 TfidfVectorizerFE module
 ========================
 
-.. automodule:: TfidfVectorizerFE
+.. automodule:: src.model_classes.TfidfVectorizerFE
    :members:
    :undoc-members:
    :show-inheritance:

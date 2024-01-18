@@ -1,7 +1,7 @@
 StaticClassifier module
 =======================
 
-.. automodule:: StaticClassifier
+.. automodule:: src.model_classes.StaticClassifier
    :members:
    :undoc-members:
    :show-inheritance:

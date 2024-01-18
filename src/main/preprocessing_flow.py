@@ -182,6 +182,3 @@ def preprocess_file(file_path):
     result = str_tokens_to_str(tokens)
     return tokens
 
-## TODO
-## BE CARE; spacy consider common number as 'four', 'five' as common words;
-## to overcome this, we can remove stopwords before converting into spoken words OR use a custom stopwords lists

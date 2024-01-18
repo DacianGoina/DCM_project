@@ -21,7 +21,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="main package" href="main.html" />
+    <link rel="next" title="consts_values module" href="consts_values.html" />
     <link rel="prev" title="Welcome to MLO-DCM’s documentation!" href="../index.html" /> 
 </head>
 
@@ -47,7 +47,15 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">main</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="main.html">main package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="consts_values.html">consts_values module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="io_utilities.html">io_utilities module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="main.html">main module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model_utilities.html">model_utilities module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessing_flow.html">preprocessing_flow module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="save_model_bento_ml.html">save_model_bento_ml module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="text_preprocessing_utilities.html">text_preprocessing_utilities module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="unit_test_model_utilities.html">unit_test_model_utilities module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="unit_test_text_preprocessing_utilities.html">unit_test_text_preprocessing_utilities module</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../docs_model_classes/modules.html">model_classes</a></li>
@@ -81,25 +89,129 @@
 <h1>main<a class="headerlink" href="#main" title="Permalink to this heading"></a></h1>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="main.html">main package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="main.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="main.html#module-main.consts_values">main.consts_values module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="main.html#module-main.io_utilities">main.io_utilities module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="main.html#main.io_utilities.read_raw_data"><code class="docutils literal notranslate"><span class="pre">read_raw_data()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="main.html#main.io_utilities.read_txt_file"><code class="docutils literal notranslate"><span class="pre">read_txt_file()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="consts_values.html">consts_values module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="io_utilities.html">io_utilities module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="io_utilities.html#src.main.io_utilities.export_as_binary_obj"><code class="docutils literal notranslate"><span class="pre">export_as_binary_obj()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="io_utilities.html#src.main.io_utilities.import_binary_object"><code class="docutils literal notranslate"><span class="pre">import_binary_object()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="io_utilities.html#src.main.io_utilities.read_raw_data"><code class="docutils literal notranslate"><span class="pre">read_raw_data()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="io_utilities.html#src.main.io_utilities.read_txt_file"><code class="docutils literal notranslate"><span class="pre">read_txt_file()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="io_utilities.html#src.main.io_utilities.save_dict_to_json_file"><code class="docutils literal notranslate"><span class="pre">save_dict_to_json_file()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="main.html#module-main.main">main.main module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="main.html#module-main.model_utilities">main.model_utilities module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="main.html#main.model_utilities.build_data_dictionary"><code class="docutils literal notranslate"><span class="pre">build_data_dictionary()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="main.html#main.model_utilities.get_model_evaluation_metrics"><code class="docutils literal notranslate"><span class="pre">get_model_evaluation_metrics()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="main.html#main.model_utilities.shuffle_dataframe"><code class="docutils literal notranslate"><span class="pre">shuffle_dataframe()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="main.html#main.model_utilities.split_model_data"><code class="docutils literal notranslate"><span class="pre">split_model_data()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="main.html">main module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model_utilities.html">model_utilities module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="model_utilities.html#src.main.model_utilities.build_data_dictionary"><code class="docutils literal notranslate"><span class="pre">build_data_dictionary()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="model_utilities.html#src.main.model_utilities.get_model_evaluation_metrics"><code class="docutils literal notranslate"><span class="pre">get_model_evaluation_metrics()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="model_utilities.html#src.main.model_utilities.shuffle_dataframe"><code class="docutils literal notranslate"><span class="pre">shuffle_dataframe()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="model_utilities.html#src.main.model_utilities.split_model_data"><code class="docutils literal notranslate"><span class="pre">split_model_data()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="model_utilities.html#src.main.model_utilities.vocabulary_dict_to_json"><code class="docutils literal notranslate"><span class="pre">vocabulary_dict_to_json()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="main.html#main-preprocessing-flow-module">main.preprocessing_flow module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="main.html#main-text-preprocessing-utilities-module">main.text_preprocessing_utilities module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="main.html#module-main">Module contents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preprocessing_flow.html">preprocessing_flow module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="preprocessing_flow.html#src.main.preprocessing_flow.apply_custom_tokenizer_iteratively"><code class="docutils literal notranslate"><span class="pre">apply_custom_tokenizer_iteratively()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessing_flow.html#src.main.preprocessing_flow.custom_tokenizer"><code class="docutils literal notranslate"><span class="pre">custom_tokenizer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessing_flow.html#src.main.preprocessing_flow.get_nlp_model"><code class="docutils literal notranslate"><span class="pre">get_nlp_model()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessing_flow.html#src.main.preprocessing_flow.preprocess_file"><code class="docutils literal notranslate"><span class="pre">preprocess_file()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessing_flow.html#src.main.preprocessing_flow.process_df"><code class="docutils literal notranslate"><span class="pre">process_df()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessing_flow.html#src.main.preprocessing_flow.read_preprocess_and_export"><code class="docutils literal notranslate"><span class="pre">read_preprocess_and_export()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="save_model_bento_ml.html">save_model_bento_ml module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="text_preprocessing_utilities.html">text_preprocessing_utilities module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.get_lowercase_words_from_str"><code class="docutils literal notranslate"><span class="pre">get_lowercase_words_from_str()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.get_rare_tokens"><code class="docutils literal notranslate"><span class="pre">get_rare_tokens()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.get_spacy_tokens_from_raw_text"><code class="docutils literal notranslate"><span class="pre">get_spacy_tokens_from_raw_text()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.get_str_stopwords"><code class="docutils literal notranslate"><span class="pre">get_str_stopwords()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.get_str_tokens_freq"><code class="docutils literal notranslate"><span class="pre">get_str_tokens_freq()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.get_str_tokens_freq_for_lists"><code class="docutils literal notranslate"><span class="pre">get_str_tokens_freq_for_lists()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.handle_rare_str_tokens"><code class="docutils literal notranslate"><span class="pre">handle_rare_str_tokens()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.is_6digits_date"><code class="docutils literal notranslate"><span class="pre">is_6digits_date()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.is_str_fraction"><code class="docutils literal notranslate"><span class="pre">is_str_fraction()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.is_str_numeric"><code class="docutils literal notranslate"><span class="pre">is_str_numeric()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.is_str_valid_date"><code class="docutils literal notranslate"><span class="pre">is_str_valid_date()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.is_valid_resource"><code class="docutils literal notranslate"><span class="pre">is_valid_resource()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.is_valid_url"><code class="docutils literal notranslate"><span class="pre">is_valid_url()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.lemmatize_spacy_tokens"><code class="docutils literal notranslate"><span class="pre">lemmatize_spacy_tokens()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.remove_excessive_space"><code class="docutils literal notranslate"><span class="pre">remove_excessive_space()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.remove_spacy_punctuations"><code class="docutils literal notranslate"><span class="pre">remove_spacy_punctuations()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.remove_str_tokens_len_less_than_threshold"><code class="docutils literal notranslate"><span class="pre">remove_str_tokens_len_less_than_threshold()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.spacy_tokens_pos"><code class="docutils literal notranslate"><span class="pre">spacy_tokens_pos()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.spacy_tokens_to_str_tokens"><code class="docutils literal notranslate"><span class="pre">spacy_tokens_to_str_tokens()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.split_and_gather_str_tokens_by_separator"><code class="docutils literal notranslate"><span class="pre">split_and_gather_str_tokens_by_separator()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.str_6digits_dates_to_date_tag"><code class="docutils literal notranslate"><span class="pre">str_6digits_dates_to_date_tag()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.str_currency_to_spoken_words"><code class="docutils literal notranslate"><span class="pre">str_currency_to_spoken_words()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.str_dates_to_date_tag"><code class="docutils literal notranslate"><span class="pre">str_dates_to_date_tag()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.str_emails_to_email_tag"><code class="docutils literal notranslate"><span class="pre">str_emails_to_email_tag()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.str_fraction_to_spoken_words"><code class="docutils literal notranslate"><span class="pre">str_fraction_to_spoken_words()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.str_initial_case_to_tag"><code class="docutils literal notranslate"><span class="pre">str_initial_case_to_tag()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.str_number_with_separators_to_integer_number"><code class="docutils literal notranslate"><span class="pre">str_number_with_separators_to_integer_number()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.str_numeric_values_to_spoken_words"><code class="docutils literal notranslate"><span class="pre">str_numeric_values_to_spoken_words()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.str_ordinal_numbers_to_spoken_words"><code class="docutils literal notranslate"><span class="pre">str_ordinal_numbers_to_spoken_words()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.str_remove_common_chars"><code class="docutils literal notranslate"><span class="pre">str_remove_common_chars()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.str_remove_junk_spaces"><code class="docutils literal notranslate"><span class="pre">str_remove_junk_spaces()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.str_tokens_numbers_with_separators_to_spoken_words"><code class="docutils literal notranslate"><span class="pre">str_tokens_numbers_with_separators_to_spoken_words()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.str_tokens_remove_stopwords"><code class="docutils literal notranslate"><span class="pre">str_tokens_remove_stopwords()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.str_tokens_replace_symbol_with_tag"><code class="docutils literal notranslate"><span class="pre">str_tokens_replace_symbol_with_tag()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.str_tokens_to_spacy_tokens"><code class="docutils literal notranslate"><span class="pre">str_tokens_to_spacy_tokens()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.str_tokens_to_str"><code class="docutils literal notranslate"><span class="pre">str_tokens_to_str()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.str_urls_to_url_tag"><code class="docutils literal notranslate"><span class="pre">str_urls_to_url_tag()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.str_years_to_spoken_words"><code class="docutils literal notranslate"><span class="pre">str_years_to_spoken_words()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="text_preprocessing_utilities.html#src.main.text_preprocessing_utilities.to_lowercase"><code class="docutils literal notranslate"><span class="pre">to_lowercase()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="unit_test_model_utilities.html">unit_test_model_utilities module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="unit_test_model_utilities.html#src.main.unit_test_model_utilities.UnitTests"><code class="docutils literal notranslate"><span class="pre">UnitTests</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="unit_test_model_utilities.html#src.main.unit_test_model_utilities.UnitTests.test_build_data_dictionary"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_build_data_dictionary()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="unit_test_model_utilities.html#src.main.unit_test_model_utilities.UnitTests.test_get_model_evaluation_metrics"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_get_model_evaluation_metrics()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="unit_test_model_utilities.html#src.main.unit_test_model_utilities.UnitTests.test_shuffle_dataframe"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_shuffle_dataframe()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="unit_test_model_utilities.html#src.main.unit_test_model_utilities.UnitTests.test_split_model_data"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_split_model_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="unit_test_model_utilities.html#src.main.unit_test_model_utilities.UnitTests.test_vocabulary_dict_to_json"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_vocabulary_dict_to_json()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="unit_test_text_preprocessing_utilities.html">unit_test_text_preprocessing_utilities module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests"><code class="docutils literal notranslate"><span class="pre">UnitTests</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_get_lowercase_words_from_str"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_get_lowercase_words_from_str()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_get_rare_tokens"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_get_rare_tokens()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_get_spacy_tokens_from_raw_text"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_get_spacy_tokens_from_raw_text()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_get_str_tokens_freq"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_get_str_tokens_freq()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_get_str_tokens_freq_for_lists"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_get_str_tokens_freq_for_lists()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_handle_rare_str_tokens"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_handle_rare_str_tokens()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_is_6digits_date"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_is_6digits_date()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_is_str_fraction"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_is_str_fraction()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_is_str_numeric"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_is_str_numeric()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_is_str_valid_date"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_is_str_valid_date()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_is_valid_resource"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_is_valid_resource()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_is_valid_url"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_is_valid_url()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_lemmatize_spacy_tokens"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_lemmatize_spacy_tokens()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_remove_excessive_space"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_remove_excessive_space()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_remove_spacy_punctuations"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_remove_spacy_punctuations()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_remove_str_tokens_len_less_than_threshold"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_remove_str_tokens_len_less_than_threshold()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_spacy_tokens_pos"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_spacy_tokens_pos()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_spacy_tokens_to_str_tokens"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_spacy_tokens_to_str_tokens()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_split_and_gather_str_tokens_by_separator"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_split_and_gather_str_tokens_by_separator()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_6digits_dates_to_date_tag"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_str_6digits_dates_to_date_tag()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_currency_to_spoken_words"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_str_currency_to_spoken_words()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_dates_to_date_tag"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_str_dates_to_date_tag()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_emails_to_email_tag"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_str_emails_to_email_tag()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_fraction_to_spoken_words"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_str_fraction_to_spoken_words()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_initial_case_to_tag"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_str_initial_case_to_tag()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_number_with_separators_to_integer_number"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_str_number_with_separators_to_integer_number()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_numeric_values_to_spoken_words"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_str_numeric_values_to_spoken_words()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_ordinal_numbers_to_spoken_words"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_str_ordinal_numbers_to_spoken_words()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_remove_common_chars"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_str_remove_common_chars()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_remove_junk_spaces"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_str_remove_junk_spaces()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_tokens_numbers_with_separators_to_spoken_words"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_str_tokens_numbers_with_separators_to_spoken_words()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_tokens_remove_stopwords"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_str_tokens_remove_stopwords()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_tokens_replace_quote_with_tag"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_str_tokens_replace_quote_with_tag()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_tokens_to_spacy_tokens"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_str_tokens_to_spacy_tokens()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_tokens_to_str"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_str_tokens_to_str()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_urls_to_url_tag"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_str_urls_to_url_tag()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_years_to_spoken_words"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_str_years_to_spoken_words()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="unit_test_text_preprocessing_utilities.html#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_to_lowercase"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_to_lowercase()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -111,7 +223,7 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="../index.html" class="btn btn-neutral float-left" title="Welcome to MLO-DCM’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="main.html" class="btn btn-neutral float-right" title="main package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="consts_values.html" class="btn btn-neutral float-right" title="consts_values module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

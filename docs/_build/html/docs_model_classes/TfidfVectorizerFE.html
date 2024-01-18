@@ -48,11 +48,23 @@
 <li class="toctree-l1"><a class="reference internal" href="../docs_main/modules.html">main</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">model_classes</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="CountVectorizerFE.html">CountVectorizerFE module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Doc2VecFE.html">Doc2VecFE module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="FeaturesExtractor.html">FeaturesExtractor module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="HashingVectorizerFE.html">HashingVectorizerFE module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ModelManager.html">ModelManager module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ModelWorker.html">ModelWorker module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="StaticClassifier.html">StaticClassifier module</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">TfidfVectorizerFE module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">TfidfVectorizerFE module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#src.model_classes.TfidfVectorizerFE.TfidfVectorizerFE"><code class="docutils literal notranslate"><span class="pre">TfidfVectorizerFE</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#src.model_classes.TfidfVectorizerFE.TfidfVectorizerFE.get_extractor_params"><code class="docutils literal notranslate"><span class="pre">TfidfVectorizerFE.get_extractor_params()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.model_classes.TfidfVectorizerFE.TfidfVectorizerFE.get_vocabulary"><code class="docutils literal notranslate"><span class="pre">TfidfVectorizerFE.get_vocabulary()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.model_classes.TfidfVectorizerFE.TfidfVectorizerFE.set_extractor_params"><code class="docutils literal notranslate"><span class="pre">TfidfVectorizerFE.set_extractor_params()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.model_classes.TfidfVectorizerFE.TfidfVectorizerFE.short_str"><code class="docutils literal notranslate"><span class="pre">TfidfVectorizerFE.short_str()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.model_classes.TfidfVectorizerFE.TfidfVectorizerFE.transform_data"><code class="docutils literal notranslate"><span class="pre">TfidfVectorizerFE.transform_data()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -82,8 +94,51 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="tfidfvectorizerfe-module">
-<h1>TfidfVectorizerFE module<a class="headerlink" href="#tfidfvectorizerfe-module" title="Permalink to this heading"></a></h1>
+  <section id="module-src.model_classes.TfidfVectorizerFE">
+<span id="tfidfvectorizerfe-module"></span><h1>TfidfVectorizerFE module<a class="headerlink" href="#module-src.model_classes.TfidfVectorizerFE" title="Permalink to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.model_classes.TfidfVectorizerFE.TfidfVectorizerFE">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.model_classes.TfidfVectorizerFE.</span></span><span class="sig-name descname"><span class="pre">TfidfVectorizerFE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/model_classes/TfidfVectorizerFE.html#TfidfVectorizerFE"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.model_classes.TfidfVectorizerFE.TfidfVectorizerFE" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="FeaturesExtractor.html#src.model_classes.FeaturesExtractor.FeaturesExtractor" title="src.model_classes.FeaturesExtractor.FeaturesExtractor"><code class="xref py py-class docutils literal notranslate"><span class="pre">FeaturesExtractor</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.model_classes.TfidfVectorizerFE.TfidfVectorizerFE.get_extractor_params">
+<span class="sig-name descname"><span class="pre">get_extractor_params</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/model_classes/TfidfVectorizerFE.html#TfidfVectorizerFE.get_extractor_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.model_classes.TfidfVectorizerFE.TfidfVectorizerFE.get_extractor_params" title="Permalink to this definition"></a></dt>
+<dd><p>Getter for the param data
+:return: a copy of the content of the data param</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.model_classes.TfidfVectorizerFE.TfidfVectorizerFE.get_vocabulary">
+<span class="sig-name descname"><span class="pre">get_vocabulary</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/model_classes/TfidfVectorizerFE.html#TfidfVectorizerFE.get_vocabulary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.model_classes.TfidfVectorizerFE.TfidfVectorizerFE.get_vocabulary" title="Permalink to this definition"></a></dt>
+<dd><p>Method for returning the dictionary where keys are unique words in the feature matrix, and values are their corresponding indices
+:return: dictionary with the pairs (unique words, corresponding indices)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.model_classes.TfidfVectorizerFE.TfidfVectorizerFE.set_extractor_params">
+<span class="sig-name descname"><span class="pre">set_extractor_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_params</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/model_classes/TfidfVectorizerFE.html#TfidfVectorizerFE.set_extractor_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.model_classes.TfidfVectorizerFE.TfidfVectorizerFE.set_extractor_params" title="Permalink to this definition"></a></dt>
+<dd><p>Setter for new parameter data
+:param new_params: the new input variable</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.model_classes.TfidfVectorizerFE.TfidfVectorizerFE.short_str">
+<span class="sig-name descname"><span class="pre">short_str</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/model_classes/TfidfVectorizerFE.html#TfidfVectorizerFE.short_str"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.model_classes.TfidfVectorizerFE.TfidfVectorizerFE.short_str" title="Permalink to this definition"></a></dt>
+<dd><p>Name of the class
+:return: string with the name of the class
+:rtype: build-in python string</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.model_classes.TfidfVectorizerFE.TfidfVectorizerFE.transform_data">
+<span class="sig-name descname"><span class="pre">transform_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/model_classes/TfidfVectorizerFE.html#TfidfVectorizerFE.transform_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.model_classes.TfidfVectorizerFE.TfidfVectorizerFE.transform_data" title="Permalink to this definition"></a></dt>
+<dd><p>Method for transforming the input data
+:param data: input variable
+:return: transformed data</p>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 
 

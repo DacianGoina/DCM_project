@@ -9,4 +9,7 @@ main
    main
    model_utilities
    preprocessing_flow
+   save_model_bento_ml
    text_preprocessing_utilities
+   unit_test_model_utilities
+   unit_test_text_preprocessing_utilities

@@ -9,6 +9,7 @@ from src.main.text_preprocessing_utilities import *
 from src.main.io_utilities import *
 from src.model_classes.ModelManager import reverse_classifier_to_extractor_str
 from src.model_classes.ModelManager import get_classifier_to_extractor_str
+from src.model_classes.RoBERTa_worker import predict as RoBERTa_predict
 
 import os
 
@@ -17,23 +18,25 @@ EXTRACTORS_OBJECTS_DIRECTORY_PATH = "../../model_objects/features_extractors"
 CLASSIFIERS_OBJECTS_DIRECTORY_PATH = "../../model_objects/classifiers"
 
 
-def worker_execute(raw_text):
+def worker_execute(raw_text, use_transformer = False):
     '''
     Root function, calls the main functions
     :param raw_text: raw text used for classification
     :return: predicted label, inside a dictionary with additional information
     :rtype: build-in python dictionary
     '''
+    raw_text_copy = raw_text
+
     # preprocessing: convert raw text to text tokens
     tokens_as_single_str = preprocess_input(raw_text)
 
     # prediction using voting system
-    predictions_result = perform_prediction(tokens_as_single_str)
+    predictions_result = perform_prediction(tokens_as_single_str, raw_text_copy, use_transformer)
 
     return predictions_result
 
 
-def perform_prediction(processed_text):
+def perform_prediction(processed_text, raw_text = "", use_transformer = False):
     '''
     Function used to predicted label, inside a dict with additional information
     :param processed_text: string that represents the preprocessed text
@@ -43,7 +46,7 @@ def perform_prediction(processed_text):
     classifiers, extractors = import_model_objects()
 
     numerical_data = dict()
-    predictions = dict(); # d[classifier_extractor] = predicted_label
+    predictions = dict() # d[classifier_extractor] = predicted_label
 
     # convert preprocessed text into numerical features using the extractors
     for extractor_name in extractors.keys():
@@ -62,6 +65,10 @@ def perform_prediction(processed_text):
             predictions[classifier_extractor_pair_name] = predicted_label
 
     prediction_results = dict()
+
+    if use_transformer is True:
+        label_predicted_with_RoBERTa = RoBERTa_predict(raw_text)
+        prediction_results['predicted_label_RoBERTa'] = label_predicted_with_RoBERTa
 
     predicted_label_final, top_predicted_labels = voting_system(predictions, n_highest_probs=2)
     prediction_results['predicted_label'] = predicted_label_final
@@ -197,7 +204,7 @@ def evaluate_classifiers():
     return results
 
 
-def predict_input_from_file(file_path):
+def predict_from_file(file_path, use_transformer = False):
     '''
     Function that reads text from a file located at a given path and perform prediction on it and return the resulted dictionary
     :param file_path: the path of a file
@@ -205,7 +212,7 @@ def predict_input_from_file(file_path):
     :rtype: build-in python dictionary
     '''
     text_input = read_txt_file(file_path)
-    prediction_result = worker_execute(text_input)
+    prediction_result = worker_execute(text_input, use_transformer = use_transformer)
     return prediction_result
 
 if __name__ == "__main__":
@@ -216,11 +223,11 @@ if __name__ == "__main__":
     business_doc_path = "../../testing_files//business_doc.txt"
     history_text_path = "../../testing_files//history_doc.txt"
     file_path_basketball = "../../testing_files//basketball.txt"
-    print(predict_input_from_file(business_doc_path))
+    print(predict_from_file(business_doc_path, use_transformer=True))
 
     # result1 = worker_execute(sport)
     # print(result1)
 
     # print('\n\n')
     #
-    # print(evaluate_classifiers())
+    print(evaluate_classifiers())

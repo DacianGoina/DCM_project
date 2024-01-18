@@ -22,7 +22,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="TfidfVectorizerFE module" href="TfidfVectorizerFE.html" />
-    <link rel="prev" title="ModelManager module" href="ModelManager.html" /> 
+    <link rel="prev" title="ModelWorker module" href="ModelWorker.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -49,10 +49,25 @@
 <li class="toctree-l1"><a class="reference internal" href="../docs_main/modules.html">main</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">model_classes</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="CountVectorizerFE.html">CountVectorizerFE module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Doc2VecFE.html">Doc2VecFE module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="FeaturesExtractor.html">FeaturesExtractor module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="HashingVectorizerFE.html">HashingVectorizerFE module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ModelManager.html">ModelManager module</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">StaticClassifier module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ModelWorker.html">ModelWorker module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">StaticClassifier module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#src.model_classes.StaticClassifier.StaticClassifier"><code class="docutils literal notranslate"><span class="pre">StaticClassifier</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#src.model_classes.StaticClassifier.StaticClassifier.fit_train_evaluate"><code class="docutils literal notranslate"><span class="pre">StaticClassifier.fit_train_evaluate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.model_classes.StaticClassifier.StaticClassifier.get_confusion_matrix"><code class="docutils literal notranslate"><span class="pre">StaticClassifier.get_confusion_matrix()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.model_classes.StaticClassifier.StaticClassifier.get_model_classes"><code class="docutils literal notranslate"><span class="pre">StaticClassifier.get_model_classes()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.model_classes.StaticClassifier.StaticClassifier.get_model_params"><code class="docutils literal notranslate"><span class="pre">StaticClassifier.get_model_params()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.model_classes.StaticClassifier.StaticClassifier.predict"><code class="docutils literal notranslate"><span class="pre">StaticClassifier.predict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.model_classes.StaticClassifier.StaticClassifier.predict_probabilities"><code class="docutils literal notranslate"><span class="pre">StaticClassifier.predict_probabilities()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.model_classes.StaticClassifier.StaticClassifier.set_model_params"><code class="docutils literal notranslate"><span class="pre">StaticClassifier.set_model_params()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.model_classes.StaticClassifier.StaticClassifier.short_str"><code class="docutils literal notranslate"><span class="pre">StaticClassifier.short_str()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="TfidfVectorizerFE.html">TfidfVectorizerFE module</a></li>
 </ul>
 </li>
@@ -83,15 +98,89 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="staticclassifier-module">
-<h1>StaticClassifier module<a class="headerlink" href="#staticclassifier-module" title="Permalink to this heading"></a></h1>
+  <section id="module-src.model_classes.StaticClassifier">
+<span id="staticclassifier-module"></span><h1>StaticClassifier module<a class="headerlink" href="#module-src.model_classes.StaticClassifier" title="Permalink to this heading"></a></h1>
+<p>This class represent a static classifier for a model. Static classifier in this context refer to a classical solver (model) e.g
+RandomForestClassifier, XGBoostClassifier, SVM etc; these are heavily different from a Deep Learning model or Neural Network that usually
+require a complex architecture and other things that must to be considered.</p>
+<p>This class works as a wrapper for classifiers from sklearn package; it incorporate the already implemented features from sklearn
+and allow user to use them in a proper way.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.model_classes.StaticClassifier.StaticClassifier">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.model_classes.StaticClassifier.</span></span><span class="sig-name descname"><span class="pre">StaticClassifier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_classifier</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/model_classes/StaticClassifier.html#StaticClassifier"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.model_classes.StaticClassifier.StaticClassifier" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.model_classes.StaticClassifier.StaticClassifier.fit_train_evaluate">
+<span class="sig-name descname"><span class="pre">fit_train_evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dict_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/model_classes/StaticClassifier.html#StaticClassifier.fit_train_evaluate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.model_classes.StaticClassifier.StaticClassifier.fit_train_evaluate" title="Permalink to this definition"></a></dt>
+<dd><p>Method for fitting the data, training the model, testing the result, and returning the corresponding metrics of the confusion matrix
+:param dict_data: dictionary with the data (we assume that the given data is preprocessed)
+:return: dictionary with the metrics resulted from the confusion matrix
+:rtype: build-in python dictionary</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.model_classes.StaticClassifier.StaticClassifier.get_confusion_matrix">
+<span class="sig-name descname"><span class="pre">get_confusion_matrix</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/model_classes/StaticClassifier.html#StaticClassifier.get_confusion_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.model_classes.StaticClassifier.StaticClassifier.get_confusion_matrix" title="Permalink to this definition"></a></dt>
+<dd><p>Method to get the confusion matrix
+:return: list with the confusion matrix</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.model_classes.StaticClassifier.StaticClassifier.get_model_classes">
+<span class="sig-name descname"><span class="pre">get_model_classes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/model_classes/StaticClassifier.html#StaticClassifier.get_model_classes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.model_classes.StaticClassifier.StaticClassifier.get_model_classes" title="Permalink to this definition"></a></dt>
+<dd><p>Method used to get the model classes
+:return: list with the model classes
+:rtype: build-in python list</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.model_classes.StaticClassifier.StaticClassifier.get_model_params">
+<span class="sig-name descname"><span class="pre">get_model_params</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/model_classes/StaticClassifier.html#StaticClassifier.get_model_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.model_classes.StaticClassifier.StaticClassifier.get_model_params" title="Permalink to this definition"></a></dt>
+<dd><p>Getter for the param data
+:return: a copy of the content of the data param</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.model_classes.StaticClassifier.StaticClassifier.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_point</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/model_classes/StaticClassifier.html#StaticClassifier.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.model_classes.StaticClassifier.StaticClassifier.predict" title="Permalink to this definition"></a></dt>
+<dd><p>Method used to predict the label for a value passed as a input (we assume that the given data is preprocessed )
+:param data_point: a given value
+:return: the predicted label</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.model_classes.StaticClassifier.StaticClassifier.predict_probabilities">
+<span class="sig-name descname"><span class="pre">predict_probabilities</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_point</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/model_classes/StaticClassifier.html#StaticClassifier.predict_probabilities"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.model_classes.StaticClassifier.StaticClassifier.predict_probabilities" title="Permalink to this definition"></a></dt>
+<dd><p>Method that calculates for a given data_point the predicted probabilities
+:param data_point: a given data point
+:return: list with the predicted probabilities for every label
+:rtype: build-in python list</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.model_classes.StaticClassifier.StaticClassifier.set_model_params">
+<span class="sig-name descname"><span class="pre">set_model_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_params</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/model_classes/StaticClassifier.html#StaticClassifier.set_model_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.model_classes.StaticClassifier.StaticClassifier.set_model_params" title="Permalink to this definition"></a></dt>
+<dd><p>Setter for new parameter data
+:param new_params: the new input variable; represented by a map where we have the key - model parameter name and the value - parameter value, e.g ‘n_estimators’: 200’</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.model_classes.StaticClassifier.StaticClassifier.short_str">
+<span class="sig-name descname"><span class="pre">short_str</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/model_classes/StaticClassifier.html#StaticClassifier.short_str"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.model_classes.StaticClassifier.StaticClassifier.short_str" title="Permalink to this definition"></a></dt>
+<dd><p>Name of the class
+:return: string with the name of the class
+:rtype: build-in python string</p>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="ModelManager.html" class="btn btn-neutral float-left" title="ModelManager module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ModelWorker.html" class="btn btn-neutral float-left" title="ModelWorker module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="TfidfVectorizerFE.html" class="btn btn-neutral float-right" title="TfidfVectorizerFE module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

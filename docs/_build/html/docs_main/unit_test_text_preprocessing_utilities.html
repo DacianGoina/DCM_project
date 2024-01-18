@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>unit_test_text_preprocessing_utilities module &mdash; MLO-DCM 1.0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=7da82d16"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="model_classes" href="../docs_model_classes/modules.html" />
+    <link rel="prev" title="unit_test_model_utilities module" href="unit_test_model_utilities.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            MLO-DCM
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">main</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="consts_values.html">consts_values module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="io_utilities.html">io_utilities module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="main.html">main module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model_utilities.html">model_utilities module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessing_flow.html">preprocessing_flow module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="save_model_bento_ml.html">save_model_bento_ml module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="text_preprocessing_utilities.html">text_preprocessing_utilities module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="unit_test_model_utilities.html">unit_test_model_utilities module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">unit_test_text_preprocessing_utilities module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests"><code class="docutils literal notranslate"><span class="pre">UnitTests</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_get_lowercase_words_from_str"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_get_lowercase_words_from_str()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_get_rare_tokens"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_get_rare_tokens()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_get_spacy_tokens_from_raw_text"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_get_spacy_tokens_from_raw_text()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_get_str_tokens_freq"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_get_str_tokens_freq()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_get_str_tokens_freq_for_lists"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_get_str_tokens_freq_for_lists()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_handle_rare_str_tokens"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_handle_rare_str_tokens()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_is_6digits_date"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_is_6digits_date()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_is_str_fraction"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_is_str_fraction()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_is_str_numeric"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_is_str_numeric()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_is_str_valid_date"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_is_str_valid_date()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_is_valid_resource"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_is_valid_resource()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_is_valid_url"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_is_valid_url()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_lemmatize_spacy_tokens"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_lemmatize_spacy_tokens()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_remove_excessive_space"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_remove_excessive_space()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_remove_spacy_punctuations"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_remove_spacy_punctuations()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_remove_str_tokens_len_less_than_threshold"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_remove_str_tokens_len_less_than_threshold()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_spacy_tokens_pos"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_spacy_tokens_pos()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_spacy_tokens_to_str_tokens"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_spacy_tokens_to_str_tokens()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_split_and_gather_str_tokens_by_separator"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_split_and_gather_str_tokens_by_separator()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_6digits_dates_to_date_tag"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_str_6digits_dates_to_date_tag()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_currency_to_spoken_words"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_str_currency_to_spoken_words()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_dates_to_date_tag"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_str_dates_to_date_tag()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_emails_to_email_tag"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_str_emails_to_email_tag()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_fraction_to_spoken_words"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_str_fraction_to_spoken_words()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_initial_case_to_tag"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_str_initial_case_to_tag()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_number_with_separators_to_integer_number"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_str_number_with_separators_to_integer_number()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_numeric_values_to_spoken_words"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_str_numeric_values_to_spoken_words()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_ordinal_numbers_to_spoken_words"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_str_ordinal_numbers_to_spoken_words()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_remove_common_chars"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_str_remove_common_chars()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_remove_junk_spaces"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_str_remove_junk_spaces()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_tokens_numbers_with_separators_to_spoken_words"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_str_tokens_numbers_with_separators_to_spoken_words()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_tokens_remove_stopwords"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_str_tokens_remove_stopwords()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_tokens_replace_quote_with_tag"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_str_tokens_replace_quote_with_tag()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_tokens_to_spacy_tokens"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_str_tokens_to_spacy_tokens()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_tokens_to_str"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_str_tokens_to_str()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_urls_to_url_tag"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_str_urls_to_url_tag()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_years_to_spoken_words"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_str_years_to_spoken_words()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_to_lowercase"><code class="docutils literal notranslate"><span class="pre">UnitTests.test_to_lowercase()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../docs_model_classes/modules.html">model_classes</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">MLO-DCM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">main</a></li>
+      <li class="breadcrumb-item active">unit_test_text_preprocessing_utilities module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/docs_main/unit_test_text_preprocessing_utilities.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-src.main.unit_test_text_preprocessing_utilities">
+<span id="unit-test-text-preprocessing-utilities-module"></span><h1>unit_test_text_preprocessing_utilities module<a class="headerlink" href="#module-src.main.unit_test_text_preprocessing_utilities" title="Permalink to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.main.unit_test_text_preprocessing_utilities.UnitTests">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.main.unit_test_text_preprocessing_utilities.</span></span><span class="sig-name descname"><span class="pre">UnitTests</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/unit_test_text_preprocessing_utilities.html#UnitTests"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TestCase</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.main.unit_test_text_preprocessing_utilities.UnitTests.test_get_lowercase_words_from_str">
+<span class="sig-name descname"><span class="pre">test_get_lowercase_words_from_str</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/unit_test_text_preprocessing_utilities.html#UnitTests.test_get_lowercase_words_from_str"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_get_lowercase_words_from_str" title="Permalink to this definition"></a></dt>
+<dd><p>Unit test for different cases that includes multiple lowercase words and mixed words (formed with lower and upper cases)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.main.unit_test_text_preprocessing_utilities.UnitTests.test_get_rare_tokens">
+<span class="sig-name descname"><span class="pre">test_get_rare_tokens</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/unit_test_text_preprocessing_utilities.html#UnitTests.test_get_rare_tokens"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_get_rare_tokens" title="Permalink to this definition"></a></dt>
+<dd><p>Unit test for function that extracts rare tokens</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.main.unit_test_text_preprocessing_utilities.UnitTests.test_get_spacy_tokens_from_raw_text">
+<span class="sig-name descname"><span class="pre">test_get_spacy_tokens_from_raw_text</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/unit_test_text_preprocessing_utilities.html#UnitTests.test_get_spacy_tokens_from_raw_text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_get_spacy_tokens_from_raw_text" title="Permalink to this definition"></a></dt>
+<dd><p>Unit test for functions that extracts spacy tokens from raw text</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.main.unit_test_text_preprocessing_utilities.UnitTests.test_get_str_tokens_freq">
+<span class="sig-name descname"><span class="pre">test_get_str_tokens_freq</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/unit_test_text_preprocessing_utilities.html#UnitTests.test_get_str_tokens_freq"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_get_str_tokens_freq" title="Permalink to this definition"></a></dt>
+<dd><p>Unit test for function that gets the tokens frequencies</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.main.unit_test_text_preprocessing_utilities.UnitTests.test_get_str_tokens_freq_for_lists">
+<span class="sig-name descname"><span class="pre">test_get_str_tokens_freq_for_lists</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/unit_test_text_preprocessing_utilities.html#UnitTests.test_get_str_tokens_freq_for_lists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_get_str_tokens_freq_for_lists" title="Permalink to this definition"></a></dt>
+<dd><p>Unit test for function thst the tokens frequencies from list of lists</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.main.unit_test_text_preprocessing_utilities.UnitTests.test_handle_rare_str_tokens">
+<span class="sig-name descname"><span class="pre">test_handle_rare_str_tokens</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/unit_test_text_preprocessing_utilities.html#UnitTests.test_handle_rare_str_tokens"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_handle_rare_str_tokens" title="Permalink to this definition"></a></dt>
+<dd><p>Unit test for function that eliminates or replace rare words</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.main.unit_test_text_preprocessing_utilities.UnitTests.test_is_6digits_date">
+<span class="sig-name descname"><span class="pre">test_is_6digits_date</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/unit_test_text_preprocessing_utilities.html#UnitTests.test_is_6digits_date"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_is_6digits_date" title="Permalink to this definition"></a></dt>
+<dd><p>Unit test to check if a string is a calendar date formed with  or not</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.main.unit_test_text_preprocessing_utilities.UnitTests.test_is_str_fraction">
+<span class="sig-name descname"><span class="pre">test_is_str_fraction</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/unit_test_text_preprocessing_utilities.html#UnitTests.test_is_str_fraction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_is_str_fraction" title="Permalink to this definition"></a></dt>
+<dd><p>Unit test for valid types of fractions and invalid inputs</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.main.unit_test_text_preprocessing_utilities.UnitTests.test_is_str_numeric">
+<span class="sig-name descname"><span class="pre">test_is_str_numeric</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/unit_test_text_preprocessing_utilities.html#UnitTests.test_is_str_numeric"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_is_str_numeric" title="Permalink to this definition"></a></dt>
+<dd><p>Unit test for is_str_numeric when it has numerical/non numerical values</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.main.unit_test_text_preprocessing_utilities.UnitTests.test_is_str_valid_date">
+<span class="sig-name descname"><span class="pre">test_is_str_valid_date</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/unit_test_text_preprocessing_utilities.html#UnitTests.test_is_str_valid_date"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_is_str_valid_date" title="Permalink to this definition"></a></dt>
+<dd><p>Unit test for valid/non valid dates</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.main.unit_test_text_preprocessing_utilities.UnitTests.test_is_valid_resource">
+<span class="sig-name descname"><span class="pre">test_is_valid_resource</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/unit_test_text_preprocessing_utilities.html#UnitTests.test_is_valid_resource"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_is_valid_resource" title="Permalink to this definition"></a></dt>
+<dd><p>Unit test for function that checks if an url is in small notation</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.main.unit_test_text_preprocessing_utilities.UnitTests.test_is_valid_url">
+<span class="sig-name descname"><span class="pre">test_is_valid_url</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/unit_test_text_preprocessing_utilities.html#UnitTests.test_is_valid_url"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_is_valid_url" title="Permalink to this definition"></a></dt>
+<dd><p>Unit test for function that checks if a string is a valid URL or not</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.main.unit_test_text_preprocessing_utilities.UnitTests.test_lemmatize_spacy_tokens">
+<span class="sig-name descname"><span class="pre">test_lemmatize_spacy_tokens</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/unit_test_text_preprocessing_utilities.html#UnitTests.test_lemmatize_spacy_tokens"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_lemmatize_spacy_tokens" title="Permalink to this definition"></a></dt>
+<dd><p>Unit test for list of words that contains lematized words</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.main.unit_test_text_preprocessing_utilities.UnitTests.test_remove_excessive_space">
+<span class="sig-name descname"><span class="pre">test_remove_excessive_space</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/unit_test_text_preprocessing_utilities.html#UnitTests.test_remove_excessive_space"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_remove_excessive_space" title="Permalink to this definition"></a></dt>
+<dd><p>Unit test to see if the spaces are eliminated in strings with multiple spaces</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.main.unit_test_text_preprocessing_utilities.UnitTests.test_remove_spacy_punctuations">
+<span class="sig-name descname"><span class="pre">test_remove_spacy_punctuations</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/unit_test_text_preprocessing_utilities.html#UnitTests.test_remove_spacy_punctuations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_remove_spacy_punctuations" title="Permalink to this definition"></a></dt>
+<dd><p>Unit test for list with multiple punctuations and null list</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.main.unit_test_text_preprocessing_utilities.UnitTests.test_remove_str_tokens_len_less_than_threshold">
+<span class="sig-name descname"><span class="pre">test_remove_str_tokens_len_less_than_threshold</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/unit_test_text_preprocessing_utilities.html#UnitTests.test_remove_str_tokens_len_less_than_threshold"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_remove_str_tokens_len_less_than_threshold" title="Permalink to this definition"></a></dt>
+<dd><p>Unit test for functions that removes tokens with length smaller than a threshold</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.main.unit_test_text_preprocessing_utilities.UnitTests.test_spacy_tokens_pos">
+<span class="sig-name descname"><span class="pre">test_spacy_tokens_pos</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/unit_test_text_preprocessing_utilities.html#UnitTests.test_spacy_tokens_pos"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_spacy_tokens_pos" title="Permalink to this definition"></a></dt>
+<dd><p>Unit test for function that creates a list of tuples containing token and it’s position</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.main.unit_test_text_preprocessing_utilities.UnitTests.test_spacy_tokens_to_str_tokens">
+<span class="sig-name descname"><span class="pre">test_spacy_tokens_to_str_tokens</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/unit_test_text_preprocessing_utilities.html#UnitTests.test_spacy_tokens_to_str_tokens"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_spacy_tokens_to_str_tokens" title="Permalink to this definition"></a></dt>
+<dd><p>Unit test for function that transforms spacy tokens in str tokens</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.main.unit_test_text_preprocessing_utilities.UnitTests.test_split_and_gather_str_tokens_by_separator">
+<span class="sig-name descname"><span class="pre">test_split_and_gather_str_tokens_by_separator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/unit_test_text_preprocessing_utilities.html#UnitTests.test_split_and_gather_str_tokens_by_separator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_split_and_gather_str_tokens_by_separator" title="Permalink to this definition"></a></dt>
+<dd><p>Unit test for function that split all tokens by a given separator in multiple tokens and replace that tokens with the split values</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_6digits_dates_to_date_tag">
+<span class="sig-name descname"><span class="pre">test_str_6digits_dates_to_date_tag</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/unit_test_text_preprocessing_utilities.html#UnitTests.test_str_6digits_dates_to_date_tag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_6digits_dates_to_date_tag" title="Permalink to this definition"></a></dt>
+<dd><p>Unit test for function that replace 6 digits dates appearances with c_date</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_currency_to_spoken_words">
+<span class="sig-name descname"><span class="pre">test_str_currency_to_spoken_words</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/unit_test_text_preprocessing_utilities.html#UnitTests.test_str_currency_to_spoken_words"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_currency_to_spoken_words" title="Permalink to this definition"></a></dt>
+<dd><p>Unit test for functions that transform currency in text</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_dates_to_date_tag">
+<span class="sig-name descname"><span class="pre">test_str_dates_to_date_tag</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/unit_test_text_preprocessing_utilities.html#UnitTests.test_str_dates_to_date_tag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_dates_to_date_tag" title="Permalink to this definition"></a></dt>
+<dd><p>Unit test for function that replace dates to tag date</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_emails_to_email_tag">
+<span class="sig-name descname"><span class="pre">test_str_emails_to_email_tag</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/unit_test_text_preprocessing_utilities.html#UnitTests.test_str_emails_to_email_tag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_emails_to_email_tag" title="Permalink to this definition"></a></dt>
+<dd><p>Unit test for function that replace email with an email tag</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_fraction_to_spoken_words">
+<span class="sig-name descname"><span class="pre">test_str_fraction_to_spoken_words</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/unit_test_text_preprocessing_utilities.html#UnitTests.test_str_fraction_to_spoken_words"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_fraction_to_spoken_words" title="Permalink to this definition"></a></dt>
+<dd><p>Unit test for function that transform fractions to text</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_initial_case_to_tag">
+<span class="sig-name descname"><span class="pre">test_str_initial_case_to_tag</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/unit_test_text_preprocessing_utilities.html#UnitTests.test_str_initial_case_to_tag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_initial_case_to_tag" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_number_with_separators_to_integer_number">
+<span class="sig-name descname"><span class="pre">test_str_number_with_separators_to_integer_number</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/unit_test_text_preprocessing_utilities.html#UnitTests.test_str_number_with_separators_to_integer_number"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_number_with_separators_to_integer_number" title="Permalink to this definition"></a></dt>
+<dd><p>Unit test for function that transform string numerical values separated by commas in integer values</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_numeric_values_to_spoken_words">
+<span class="sig-name descname"><span class="pre">test_str_numeric_values_to_spoken_words</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/unit_test_text_preprocessing_utilities.html#UnitTests.test_str_numeric_values_to_spoken_words"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_numeric_values_to_spoken_words" title="Permalink to this definition"></a></dt>
+<dd><p>Unit test for function that transform numerical values in test</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_ordinal_numbers_to_spoken_words">
+<span class="sig-name descname"><span class="pre">test_str_ordinal_numbers_to_spoken_words</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/unit_test_text_preprocessing_utilities.html#UnitTests.test_str_ordinal_numbers_to_spoken_words"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_ordinal_numbers_to_spoken_words" title="Permalink to this definition"></a></dt>
+<dd><p>Unit test for functions that transform ordinal number in text</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_remove_common_chars">
+<span class="sig-name descname"><span class="pre">test_str_remove_common_chars</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/unit_test_text_preprocessing_utilities.html#UnitTests.test_str_remove_common_chars"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_remove_common_chars" title="Permalink to this definition"></a></dt>
+<dd><p>Unit test for functions that removes common chars such as</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_remove_junk_spaces">
+<span class="sig-name descname"><span class="pre">test_str_remove_junk_spaces</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/unit_test_text_preprocessing_utilities.html#UnitTests.test_str_remove_junk_spaces"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_remove_junk_spaces" title="Permalink to this definition"></a></dt>
+<dd><p>Unit test for functions that removes junk spaces in list</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_tokens_numbers_with_separators_to_spoken_words">
+<span class="sig-name descname"><span class="pre">test_str_tokens_numbers_with_separators_to_spoken_words</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/unit_test_text_preprocessing_utilities.html#UnitTests.test_str_tokens_numbers_with_separators_to_spoken_words"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_tokens_numbers_with_separators_to_spoken_words" title="Permalink to this definition"></a></dt>
+<dd><p>Unit test for function that transform numbers that contains separators in spoken words</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_tokens_remove_stopwords">
+<span class="sig-name descname"><span class="pre">test_str_tokens_remove_stopwords</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/unit_test_text_preprocessing_utilities.html#UnitTests.test_str_tokens_remove_stopwords"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_tokens_remove_stopwords" title="Permalink to this definition"></a></dt>
+<dd><p>Unit test for removing stopwords from a list of tokens</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_tokens_replace_quote_with_tag">
+<span class="sig-name descname"><span class="pre">test_str_tokens_replace_quote_with_tag</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/unit_test_text_preprocessing_utilities.html#UnitTests.test_str_tokens_replace_quote_with_tag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_tokens_replace_quote_with_tag" title="Permalink to this definition"></a></dt>
+<dd><p>Unit tests for function that replace a given symbol with a specified tag</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_tokens_to_spacy_tokens">
+<span class="sig-name descname"><span class="pre">test_str_tokens_to_spacy_tokens</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/unit_test_text_preprocessing_utilities.html#UnitTests.test_str_tokens_to_spacy_tokens"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_tokens_to_spacy_tokens" title="Permalink to this definition"></a></dt>
+<dd><p>Unit test for function that transforms str tokens in spacy tokens</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_tokens_to_str">
+<span class="sig-name descname"><span class="pre">test_str_tokens_to_str</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/unit_test_text_preprocessing_utilities.html#UnitTests.test_str_tokens_to_str"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_tokens_to_str" title="Permalink to this definition"></a></dt>
+<dd><p>Unit test for function that transforms str tokens in str</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_urls_to_url_tag">
+<span class="sig-name descname"><span class="pre">test_str_urls_to_url_tag</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/unit_test_text_preprocessing_utilities.html#UnitTests.test_str_urls_to_url_tag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_urls_to_url_tag" title="Permalink to this definition"></a></dt>
+<dd><p>Unit test for function that replace URL with tag</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_years_to_spoken_words">
+<span class="sig-name descname"><span class="pre">test_str_years_to_spoken_words</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/unit_test_text_preprocessing_utilities.html#UnitTests.test_str_years_to_spoken_words"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_str_years_to_spoken_words" title="Permalink to this definition"></a></dt>
+<dd><p>Unit test for function that transform numerical year in text year</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.main.unit_test_text_preprocessing_utilities.UnitTests.test_to_lowercase">
+<span class="sig-name descname"><span class="pre">test_to_lowercase</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/main/unit_test_text_preprocessing_utilities.html#UnitTests.test_to_lowercase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.unit_test_text_preprocessing_utilities.UnitTests.test_to_lowercase" title="Permalink to this definition"></a></dt>
+<dd><p>Unit test for text lowercase</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="unit_test_model_utilities.html" class="btn btn-neutral float-left" title="unit_test_model_utilities module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../docs_model_classes/modules.html" class="btn btn-neutral float-right" title="model_classes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Ana.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

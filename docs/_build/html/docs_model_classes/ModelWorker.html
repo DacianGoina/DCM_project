@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ModelWorker module &mdash; MLO-DCM 1.0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=7da82d16"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="StaticClassifier module" href="StaticClassifier.html" />
+    <link rel="prev" title="ModelManager module" href="ModelManager.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            MLO-DCM
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../docs_main/modules.html">main</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">model_classes</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="CountVectorizerFE.html">CountVectorizerFE module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Doc2VecFE.html">Doc2VecFE module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="FeaturesExtractor.html">FeaturesExtractor module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="HashingVectorizerFE.html">HashingVectorizerFE module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ModelManager.html">ModelManager module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">ModelWorker module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#src.model_classes.ModelWorker.evaluate_classifiers"><code class="docutils literal notranslate"><span class="pre">evaluate_classifiers()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.model_classes.ModelWorker.import_classifiers"><code class="docutils literal notranslate"><span class="pre">import_classifiers()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.model_classes.ModelWorker.import_features_extractors"><code class="docutils literal notranslate"><span class="pre">import_features_extractors()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.model_classes.ModelWorker.import_model_objects"><code class="docutils literal notranslate"><span class="pre">import_model_objects()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.model_classes.ModelWorker.perform_prediction"><code class="docutils literal notranslate"><span class="pre">perform_prediction()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.model_classes.ModelWorker.predict_input_from_file"><code class="docutils literal notranslate"><span class="pre">predict_input_from_file()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.model_classes.ModelWorker.preprocess_input"><code class="docutils literal notranslate"><span class="pre">preprocess_input()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.model_classes.ModelWorker.voting_system"><code class="docutils literal notranslate"><span class="pre">voting_system()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.model_classes.ModelWorker.worker_execute"><code class="docutils literal notranslate"><span class="pre">worker_execute()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="StaticClassifier.html">StaticClassifier module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="TfidfVectorizerFE.html">TfidfVectorizerFE module</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">MLO-DCM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">model_classes</a></li>
+      <li class="breadcrumb-item active">ModelWorker module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/docs_model_classes/ModelWorker.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-src.model_classes.ModelWorker">
+<span id="modelworker-module"></span><h1>ModelWorker module<a class="headerlink" href="#module-src.model_classes.ModelWorker" title="Permalink to this heading"></a></h1>
+<p>This work as a worker / servant. It receive a raw text, preprocess it, convert to a specific numerical feature format
+and use the predefined classifiers to classify it using a voting system.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="src.model_classes.ModelWorker.evaluate_classifiers">
+<span class="sig-prename descclassname"><span class="pre">src.model_classes.ModelWorker.</span></span><span class="sig-name descname"><span class="pre">evaluate_classifiers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/model_classes/ModelWorker.html#evaluate_classifiers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.model_classes.ModelWorker.evaluate_classifiers" title="Permalink to this definition"></a></dt>
+<dd><p>Function to evaluate the classifiers (reads them and compute model performance metrics using confusions matrices)
+:return: dictionary with d[classifier_name] = dict with metrics and associated values
+:rtype: build-in python dictionary</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.model_classes.ModelWorker.import_classifiers">
+<span class="sig-prename descclassname"><span class="pre">src.model_classes.ModelWorker.</span></span><span class="sig-name descname"><span class="pre">import_classifiers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/model_classes/ModelWorker.html#import_classifiers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.model_classes.ModelWorker.import_classifiers" title="Permalink to this definition"></a></dt>
+<dd><p>Function to import the classifiers
+:return: dictionary with classifiers: d[extractor_name] = [classifiers trained on data provided by given extractor]
+:rtype: build-in python dictionary</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.model_classes.ModelWorker.import_features_extractors">
+<span class="sig-prename descclassname"><span class="pre">src.model_classes.ModelWorker.</span></span><span class="sig-name descname"><span class="pre">import_features_extractors</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/model_classes/ModelWorker.html#import_features_extractors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.model_classes.ModelWorker.import_features_extractors" title="Permalink to this definition"></a></dt>
+<dd><p>Function to import the features extractors
+:return: dictionary with features extractor: d[extractor_name] = extractor object
+:rtype: build-in python dictionary</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.model_classes.ModelWorker.import_model_objects">
+<span class="sig-prename descclassname"><span class="pre">src.model_classes.ModelWorker.</span></span><span class="sig-name descname"><span class="pre">import_model_objects</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/model_classes/ModelWorker.html#import_model_objects"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.model_classes.ModelWorker.import_model_objects" title="Permalink to this definition"></a></dt>
+<dd><p>Function to import model objects: classifiers and feature extractors as dictionaries:
+dictionary with features extractor: d[extractor_name] = extractor object,
+dictionary with classifiers: d[extractor_name] = [classifiers trained on data provided by given extractor]
+:return: tuple with classifiers and features extractors
+:rtype: build-in python tuple</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.model_classes.ModelWorker.perform_prediction">
+<span class="sig-prename descclassname"><span class="pre">src.model_classes.ModelWorker.</span></span><span class="sig-name descname"><span class="pre">perform_prediction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">processed_text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/model_classes/ModelWorker.html#perform_prediction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.model_classes.ModelWorker.perform_prediction" title="Permalink to this definition"></a></dt>
+<dd><p>Function used to predicted label, inside a dict with additional information
+:param processed_text: string that represents the preprocessed text
+:return: dictionary that includes the predicted label, top predicted labels for the given text and scores provided by all classifiers
+:rtype: build-in python dictionary</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.model_classes.ModelWorker.predict_input_from_file">
+<span class="sig-prename descclassname"><span class="pre">src.model_classes.ModelWorker.</span></span><span class="sig-name descname"><span class="pre">predict_input_from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/model_classes/ModelWorker.html#predict_input_from_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.model_classes.ModelWorker.predict_input_from_file" title="Permalink to this definition"></a></dt>
+<dd><p>Function that reads text from a file located at a given path and perform prediction on it and return the resulted dictionary
+:param file_path: the path of a file
+:return: dictionary with the predicted labels and the results
+:rtype: build-in python dictionary</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.model_classes.ModelWorker.preprocess_input">
+<span class="sig-prename descclassname"><span class="pre">src.model_classes.ModelWorker.</span></span><span class="sig-name descname"><span class="pre">preprocess_input</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raw_text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/model_classes/ModelWorker.html#preprocess_input"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.model_classes.ModelWorker.preprocess_input" title="Permalink to this definition"></a></dt>
+<dd><p>Function to preprocess the raw text received as input
+:param raw_text: string with the raw text
+:return: string with str tokens joined using ‘ ‘
+:rtype: build-in python string</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.model_classes.ModelWorker.voting_system">
+<span class="sig-prename descclassname"><span class="pre">src.model_classes.ModelWorker.</span></span><span class="sig-name descname"><span class="pre">voting_system</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dict_with_predictions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_highest_probs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/model_classes/ModelWorker.html#voting_system"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.model_classes.ModelWorker.voting_system" title="Permalink to this definition"></a></dt>
+<dd><p>Function used to predict the label based on a voting system considering labels with predicted probabilities from top n_highest_probs
+:param dict_with_predictions: dictionary with prediction results; d[classifier_extractor_name] = accuracy score scores for all classes
+:param n_highest_probs: integer representing the highest number of probability  considered
+:return: the pair with the highest occurrence and a dictionary with the highest occurred labels</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.model_classes.ModelWorker.worker_execute">
+<span class="sig-prename descclassname"><span class="pre">src.model_classes.ModelWorker.</span></span><span class="sig-name descname"><span class="pre">worker_execute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raw_text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/model_classes/ModelWorker.html#worker_execute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.model_classes.ModelWorker.worker_execute" title="Permalink to this definition"></a></dt>
+<dd><p>Root function, calls the main functions
+:param raw_text: raw text used for classification
+:return: predicted label, inside a dictionary with additional information
+:rtype: build-in python dictionary</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ModelManager.html" class="btn btn-neutral float-left" title="ModelManager module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="StaticClassifier.html" class="btn btn-neutral float-right" title="StaticClassifier module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Ana.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
