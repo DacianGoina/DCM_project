@@ -29,7 +29,7 @@ def prepare_string_result(dict_result):
     :return:
     '''
     res = "Document type: " + dict_result['predicted_label']
-    res = res + "\n\nLabel voting situation:\n"
+    res = res + "\n\nLabel votes situation:\n"
 
     for label, counter in dict_result['top_predicted_labels'].items():
         res = res + label + ": " + str(counter) + "\n"

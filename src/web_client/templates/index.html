@@ -12,7 +12,7 @@
     <div class="container">
         <div class="content">
             <h1>Document Classifier Model</h1>
-            <p class="limited-width">This is an document classifier model solution. To use the service, please upload your file below and then press the button. The file content is evaluated using a machine learning procedure and then you receive the answer about the document type.</p>
+            <p class="limited-width">This is an document classifier model solution. To use the service, upload your .txt file below and then press the button. The file content is evaluated using a machine learning procedure and then you receive the answer about the document type.</p>
 
             <form action="/" method="post" enctype="multipart/form-data">
                 <label for="file">Choose a file:</label>
@@ -24,9 +24,13 @@
 			<!-- here is the message received from flash, we can display them into an alert box -->
             {% with messages = get_flashed_messages() %}
             {% if messages %}
-            <script>
-                alert({{ messages[0]|tojson }});
-            </script>
+            <div id="custom-popup" class="popup">
+                <div class="popup-content">
+                    <span class="close" onclick="closePopup()">&times;</span>
+                    <p class="popup-text" style="font-size: 18px;">{{ messages[0]|safe }}</p>
+                </div>
+            </div>
+            <script src="{{ url_for('static', filename='script.js') }}"></script>
             {% endif %}
             {% endwith %}
 			
