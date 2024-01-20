@@ -6,10 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="0cebda5f-c239-41f2-a456-3468870c5bac" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pip.txt" beforeDir="false" afterPath="$PROJECT_DIR$/pip.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/preprocessing_flow.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/preprocessing_flow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model_classes/ModelWorker.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/model_classes/ModelWorker.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model_classes/StaticClassifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/model_classes/StaticClassifier.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/web_client/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/web_client/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/web_client/static/index_styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/web_client/static/index_styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/web_client/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/web_client/templates/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,9 +44,6 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
-  <component name="ProblemsViewState">
-    <option name="selectedIndex" value="1" />
-  </component>
   <component name="ProjectId" id="2YoeiUjp0A5j8T2ZCV4K2vXZ91P" />
   <component name="ProjectViewState">
     <option name="autoscrollFromSource" value="true" />
@@ -59,10 +55,11 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Dacian\Desktop\MLO_DCM\src" />
       <recent name="C:\Users\Dacian\Desktop\MLO_DCM\src\main" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.ModelWorker">
+  <component name="RunManager" selected="Python.app">
     <configuration name="ModelManager" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="MLO_DCM" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -145,6 +142,28 @@
       <option name="SCRIPT_NAME" value="" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="app" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="MLO_DCM" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="D:\anaconda3\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/web_client" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/web_client/app.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
       <option name="REDIRECT_INPUT" value="false" />
@@ -239,22 +258,6 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="Unittests in unit_test_text_preprocessing_utilities.py" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
-      <module name="MLO_DCM" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="D:\anaconda3\python.exe" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/main" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="_new_pattern" value="&quot;&quot;" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;$PROJECT_DIR$/src/main/unit_test_text_preprocessing_utilities.py&quot;" />
-      <option name="_new_targetType" value="&quot;PATH&quot;" />
-      <method v="2" />
-    </configuration>
     <list>
       <item itemvalue="Python.preprocessing_flow" />
       <item itemvalue="Python.main" />
@@ -263,15 +266,15 @@
       <item itemvalue="Python.main (1)" />
       <item itemvalue="Python.ModelWorker" />
       <item itemvalue="Python.RoBERTa_worker" />
-      <item itemvalue="Python tests.Unittests in unit_test_text_preprocessing_utilities.py" />
+      <item itemvalue="Python.app" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.app" />
         <item itemvalue="Python.ModelWorker" />
         <item itemvalue="Python.ModelManager" />
         <item itemvalue="Python.RoBERTa_worker" />
         <item itemvalue="Python.main (1)" />
-        <item itemvalue="Python tests.Unittests in unit_test_text_preprocessing_utilities.py" />
       </list>
     </recent_temporary>
   </component>
@@ -306,7 +309,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/src/model_classes/ModelWorker.py</url>
-          <line>69</line>
+          <line>70</line>
           <option name="timeStamp" value="26" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -317,6 +320,16 @@
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/src/main/unit_test_text_preprocessing_utilities.py</url>
           <option name="timeStamp" value="28" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/web_client/app.py</url>
+          <line>60</line>
+          <option name="timeStamp" value="32" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/web_client/app.py</url>
+          <line>63</line>
+          <option name="timeStamp" value="33" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -330,8 +343,9 @@
     <SUITE FILE_PATH="coverage/MLO_DCM$RoBERTa_worker.coverage" NAME="RoBERTa_worker Coverage Results" MODIFIED="1705165847058" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/model_classes" />
     <SUITE FILE_PATH="coverage/MLO_DCM$preprocessing_flow.coverage" NAME="preprocessing_flow Coverage Results" MODIFIED="1702888692833" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/MLO_DCM$main.coverage" NAME="main Coverage Results" MODIFIED="1704041399657" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/MLO_DCM$app.coverage" NAME="app Coverage Results" MODIFIED="1705773856387" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/web_client" />
     <SUITE FILE_PATH="coverage/MLO_DCM$ModelManager.coverage" NAME="ModelManager Coverage Results" MODIFIED="1705173057739" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/model_classes" />
     <SUITE FILE_PATH="coverage/MLO_DCM$Unittests_in_unit_test_text_preprocessing_utilities_py.coverage" NAME="Unittests in unit_test_text_preprocessing_utilities.py Coverage Results" MODIFIED="1702489694044" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/main" />
-    <SUITE FILE_PATH="coverage/MLO_DCM$ModelWorker.coverage" NAME="ModelWorker Coverage Results" MODIFIED="1705231221402" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/model_classes" />
+    <SUITE FILE_PATH="coverage/MLO_DCM$ModelWorker.coverage" NAME="ModelWorker Coverage Results" MODIFIED="1705765956650" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/model_classes" />
   </component>
 </project>
