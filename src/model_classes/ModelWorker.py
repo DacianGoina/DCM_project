@@ -30,20 +30,21 @@ def worker_execute(raw_text, use_transformer = False):
     # preprocessing: convert raw text to text tokens
     tokens_as_single_str = preprocess_input(raw_text)
 
+    classifiers, extractors = import_model_objects()
+
     # prediction using voting system
-    predictions_result = perform_prediction(tokens_as_single_str, raw_text_copy, use_transformer)
+    predictions_result = perform_prediction(tokens_as_single_str, raw_text_copy, use_transformer, classifiers, extractors)
 
     return predictions_result
 
 
-def perform_prediction(processed_text, raw_text = "", use_transformer = False):
+def perform_prediction(processed_text, raw_text = "", use_transformer = False, classifiers = {}, extractors = {}):
     '''
     Function used to predicted label, inside a dict with additional information
     :param processed_text: string that represents the preprocessed text
     :return: dictionary that includes the predicted label, top predicted labels for the given text and scores provided by all classifiers
     :rtype: build-in python dictionary
     '''
-    classifiers, extractors = import_model_objects()
 
     numerical_data = dict()
     predictions = dict() # d[classifier_extractor] = predicted_label
@@ -70,7 +71,7 @@ def perform_prediction(processed_text, raw_text = "", use_transformer = False):
         label_predicted_with_RoBERTa = RoBERTa_predict(raw_text)
         prediction_results['predicted_label_RoBERTa'] = label_predicted_with_RoBERTa
 
-    predicted_label_final, top_predicted_labels = voting_system(predictions, n_highest_probs=2)
+    predicted_label_final, top_predicted_labels = voting_system(predictions, n_highest_probs=1)
     prediction_results['predicted_label'] = predicted_label_final
     prediction_results['top_predicted_labels'] = top_predicted_labels
     prediction_results['all_predictions'] = predictions
@@ -169,7 +170,6 @@ def import_classifiers():
     return classifiers
 
 
-
 def preprocess_input(raw_text):
     '''
     Function to preprocess the raw text received as input
@@ -215,19 +215,30 @@ def predict_from_file(file_path, use_transformer = False):
     prediction_result = worker_execute(text_input, use_transformer = use_transformer)
     return prediction_result
 
+def perform_preprocessing_and_predict(raw_text = "", use_transformer = False, classifiers = [], extractors = []):
+
+    '''
+    Almost same as perform_prediction function, but here raw text is provided and preprocessed - there the text is already preprocessed.
+    '''
+
+    raw_text_copy = raw_text
+
+    # preprocessing: convert raw text to text tokens
+    tokens_as_single_str = preprocess_input(raw_text)
+
+    predictions_result = perform_prediction(tokens_as_single_str, raw_text_copy, use_transformer, classifiers, extractors)
+
+    return predictions_result
+
 if __name__ == "__main__":
     print("Model Worker")
-
     sport = "No excuses. It is a deeply ingrained part of Ange Postecoglou’s management style. Just keep fighting. And remember to be grateful. Anyone who plays football professionally is living the dream. And yet there have to be times when the Tottenham manager wants to reach for something, a little context. Now, as he navigates his first Christmas and new year programme in the Premier League, with his team feeling the burn, is one of those times. Tottenham goalkeeper Hugo Lloris Spurs looked shattered for most of the first 80 minutes at Brighton on Thursday, second best in all areas, 4-0 down, staring at humiliation. Which is what made the late rally to 4-2 so remarkable, why Postecoglou was keen to praise his players to the hilt. Spurs went close to a third goal; they hinted at the wildest of comebacks."
 
     business_doc_path = "../../testing_files//business_doc.txt"
     history_text_path = "../../testing_files//history_doc.txt"
     file_path_basketball = "../../testing_files//basketball.txt"
-    print(predict_from_file(business_doc_path, use_transformer=True))
+    print(predict_from_file(file_path_basketball, use_transformer=False))
 
-    # result1 = worker_execute(sport)
-    # print(result1)
 
-    # print('\n\n')
-    #
+    print('\n\n')
     print(evaluate_classifiers())

@@ -22,12 +22,12 @@
             </form>
 			
 			<!-- here is the message received from flash, we can display them into an alert box -->
-			{% with messages = get_flashed_messages() %}
-                {% if messages %}
-                    <script>
-                        alert("{{ messages[0] }}");
-                    </script>
-                {% endif %}
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <script>
+                alert({{ messages[0]|tojson }});
+            </script>
+            {% endif %}
             {% endwith %}
 			
         </div>
