@@ -232,12 +232,11 @@ def perform_preprocessing_and_predict(raw_text = "", use_transformer = False, cl
 
 if __name__ == "__main__":
     print("Model Worker")
-    sport = "No excuses. It is a deeply ingrained part of Ange Postecoglou’s management style. Just keep fighting. And remember to be grateful. Anyone who plays football professionally is living the dream. And yet there have to be times when the Tottenham manager wants to reach for something, a little context. Now, as he navigates his first Christmas and new year programme in the Premier League, with his team feeling the burn, is one of those times. Tottenham goalkeeper Hugo Lloris Spurs looked shattered for most of the first 80 minutes at Brighton on Thursday, second best in all areas, 4-0 down, staring at humiliation. Which is what made the late rally to 4-2 so remarkable, why Postecoglou was keen to praise his players to the hilt. Spurs went close to a third goal; they hinted at the wildest of comebacks."
 
     business_doc_path = "../../testing_files//business_doc.txt"
     history_text_path = "../../testing_files//history_doc.txt"
     file_path_basketball = "../../testing_files//basketball.txt"
-    print(predict_from_file(file_path_basketball, use_transformer=False))
+    print(predict_from_file(file_path_basketball, use_transformer=True))
 
 
     print('\n\n')
